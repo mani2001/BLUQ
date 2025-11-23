@@ -4,7 +4,7 @@ Centralized configuration for model-related settings and registry.
 """
 
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from pathlib import Path
 import yaml

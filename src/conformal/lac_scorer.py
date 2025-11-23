@@ -5,7 +5,7 @@ Implements the LAC conformal score function.
 
 import logging
 import numpy as np
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 
 from src.conformal.conformal_base import (
     BaseConformalPredictor,
