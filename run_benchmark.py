@@ -6,8 +6,9 @@ Orchestrates the complete benchmarking pipeline for SLMs with uncertainty quanti
 import logging
 import argparse
 import yaml
+import numpy as np
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import time
 
 from src.data.dataset_loader import load_all_datasets
@@ -369,7 +370,7 @@ class BenchmarkPipeline:
         
         print(report)
         
-        # Statistical analysis
+        # Statistical analysis (only if we have multiple models)
         logger.info("Performing statistical analysis...")
         analyzer = StatisticalAnalyzer()
         
@@ -379,10 +380,30 @@ class BenchmarkPipeline:
         # Save analysis
         analysis_path = self.output_dir / "statistical_analysis.json"
         import json
+        
+        # Convert aggregated results to JSON-serializable format
+        def make_json_serializable(obj):
+            """Convert objects with tuple keys to JSON-serializable format."""
+            if isinstance(obj, dict):
+                return {
+                    (str(k) if isinstance(k, tuple) else k): make_json_serializable(v)
+                    for k, v in obj.items()
+                }
+            elif isinstance(obj, (list, tuple)):
+                return [make_json_serializable(item) for item in obj]
+            elif isinstance(obj, (np.integer, np.floating)):
+                return float(obj)
+            elif isinstance(obj, np.ndarray):
+                return obj.tolist()
+            elif hasattr(obj, 'to_dict'):
+                return make_json_serializable(obj.to_dict())
+            else:
+                return obj
+        
         with open(analysis_path, 'w') as f:
             json.dump({
-                'accuracy_uncertainty_tradeoff': tradeoff,
-                'aggregated_results': aggregated.to_dict()
+                'accuracy_uncertainty_tradeoff': make_json_serializable(tradeoff),
+                'aggregated_results': make_json_serializable(aggregated.to_dict())
             }, f, indent=2)
         
         logger.info(f"Saved statistical analysis to {analysis_path}")

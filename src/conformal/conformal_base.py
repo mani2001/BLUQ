@@ -466,7 +466,7 @@ class ConformalPredictionValidator:
         }
         
         if meets_guarantee:
-            logger.info(f"✓ Coverage guarantee met: {actual:.2%} >= {target:.2%}")
+            logger.info(f"[PASS] Coverage guarantee met: {actual:.2%} >= {target:.2%}")
         else:
             logger.warning(f"✗ Coverage guarantee NOT met: {actual:.2%} < {target:.2%}")
         

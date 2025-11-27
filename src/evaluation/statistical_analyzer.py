@@ -91,7 +91,7 @@ class StatisticalAnalyzer:
             significance_level: Significance level for hypothesis tests
         """
         self.significance_level = significance_level
-        logger.info(f"Initialized StatisticalAnalyzer (α={significance_level})")
+        logger.info(f"Initialized StatisticalAnalyzer (alpha={significance_level})")
     
     def compare_two_models(
         self,
@@ -218,13 +218,17 @@ class StatisticalAnalyzer:
         accuracies = np.array(accuracies)
         set_sizes = np.array(set_sizes)
         
-        # Compute correlation
-        corr_analysis = self.compute_correlation(
-            accuracies,
-            set_sizes,
-            "accuracy",
-            "set_size"
-        )
+        # Compute correlation (need at least 2 data points)
+        if len(accuracies) < 2:
+            logger.warning("Not enough data points for correlation analysis (need at least 2, got %d)", len(accuracies))
+            corr_analysis = None
+        else:
+            corr_analysis = self.compute_correlation(
+                accuracies,
+                set_sizes,
+                "accuracy",
+                "set_size"
+            )
         
         # Find counterexamples (high accuracy but high uncertainty)
         # Define thresholds
@@ -241,15 +245,23 @@ class StatisticalAnalyzer:
                     'set_size': float(set_sizes[i])
                 })
         
-        return {
-            'correlation': corr_analysis.to_dict(),
+        # Build result dict
+        result = {
             'num_samples': len(accuracies),
             'counterexamples': counterexamples,
             'num_counterexamples': len(counterexamples),
-            'interpretation': self._interpret_accuracy_uncertainty_correlation(
+        }
+        
+        if corr_analysis is not None:
+            result['correlation'] = corr_analysis.to_dict()
+            result['interpretation'] = self._interpret_accuracy_uncertainty_correlation(
                 corr_analysis.pearson_r
             )
-        }
+        else:
+            result['correlation'] = None
+            result['interpretation'] = "Insufficient data points for correlation analysis"
+        
+        return result
     
     def _interpret_accuracy_uncertainty_correlation(self, correlation: float) -> str:
         """Interpret the correlation between accuracy and uncertainty."""

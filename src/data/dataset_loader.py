@@ -15,6 +15,12 @@ import pandas as pd
 from datasets import load_dataset, Dataset, DatasetDict
 from tqdm import tqdm
 
+try:
+    import datasets
+    DATASETS_VERSION = datasets.__version__
+except ImportError:
+    DATASETS_VERSION = "unknown"
+
 # Setup logger
 logger = logging.getLogger(__name__)
 
@@ -221,14 +227,66 @@ class CosmosQALoader(BaseDatasetLoader):
         """Load CosmosQA dataset."""
         logger.info(f"Loading CosmosQA dataset with {num_samples} samples...")
         
-        # Load dataset (train + validation since test labels not available)
-        dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir)
+        # Check datasets library version and provide guidance
+        try:
+            version_parts = DATASETS_VERSION.split(".")
+            major = int(version_parts[0]) if len(version_parts) > 0 else 0
+            minor = int(version_parts[1]) if len(version_parts) > 1 else 0
+            if major > 2 or (major == 2 and minor >= 15):
+                logger.warning(
+                    f"Detected datasets library version {DATASETS_VERSION} (>= 2.15.0). "
+                    "CosmosQA uses deprecated dataset scripts that are not supported in this version."
+                )
+        except (ValueError, AttributeError, IndexError):
+            logger.debug(f"Could not parse datasets version: {DATASETS_VERSION}")
+        
+        # Try loading the dataset
+        try:
+            dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir, trust_remote_code=True)
+        except RuntimeError as e:
+            error_str = str(e)
+            if "Dataset scripts are no longer supported" in error_str or "trust_remote_code" in error_str:
+                logger.error(
+                    "=" * 80 + "\n"
+                    "CosmosQA dataset cannot be loaded because it uses deprecated dataset scripts.\n"
+                    "This is not supported in datasets library >= 2.15.0.\n"
+                    "\n"
+                    "SOLUTIONS:\n"
+                    "1. Downgrade datasets library to a compatible version:\n"
+                    "   pip install 'datasets>=2.14.0,<2.15.0'\n"
+                    "\n"
+                    "2. Skip the 'rc' task when running the benchmark:\n"
+                    "   python run_benchmark.py --quick-test --models tinyllama-1.1b --tasks qa ci drs ds\n"
+                    "\n"
+                    "3. Or exclude 'rc' from the task list in your configuration.\n"
+                    "=" * 80
+                )
+                raise RuntimeError(
+                    f"Failed to load CosmosQA dataset: {error_str}\n\n"
+                    "The dataset uses deprecated script format not supported in datasets >= 2.15.0.\n"
+                    "Quick fix: pip install 'datasets>=2.14.0,<2.15.0'\n"
+                    "Or skip the 'rc' task: python run_benchmark.py --tasks qa ci drs ds"
+                ) from e
+            else:
+                raise
+        except Exception as e:
+            logger.error(f"Failed to load CosmosQA dataset: {e}")
+            raise RuntimeError(
+                f"Failed to load CosmosQA dataset: {e}\n"
+                "If you see 'Dataset scripts are no longer supported', try: pip install 'datasets>=2.14.0,<2.15.0'"
+            ) from e
         
         # Combine train and validation
         all_data = []
         for split in ["train", "validation"]:
             if split in dataset:
                 all_data.extend(list(dataset[split]))
+        
+        if not all_data:
+            raise RuntimeError(
+                "CosmosQA dataset loaded but contains no data. "
+                "Please check the dataset availability or skip the 'rc' task."
+            )
         
         # Sample
         sampled_data = self._sample_dataset(all_data, num_samples)

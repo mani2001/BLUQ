@@ -83,10 +83,20 @@ class TaskEvaluationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+        # Convert results_by_strategy, handling nested objects with to_dict methods
+        serialized_results = {}
+        for strategy, method_results in self.results_by_strategy.items():
+            serialized_results[strategy] = {}
+            for method, result in method_results.items():
+                if hasattr(result, 'to_dict'):
+                    serialized_results[strategy][method] = result.to_dict()
+                else:
+                    serialized_results[strategy][method] = result
+        
         return {
             'task_name': self.task_name,
             'model_name': self.model_name,
-            'results_by_strategy': self.results_by_strategy,
+            'results_by_strategy': serialized_results,
             'aggregated_metrics': self.aggregated_metrics.to_dict(),
             'num_calibration': self.num_calibration,
             'num_test': self.num_test,

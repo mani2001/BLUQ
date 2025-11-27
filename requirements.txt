@@ -1,0 +1,29 @@
+# Core dependencies
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+
+# PyTorch and transformers
+torch>=2.0.0
+transformers>=4.30.0
+accelerate>=0.20.0
+
+# HuggingFace datasets
+# Note: CosmosQA requires datasets < 2.15.0 due to deprecated dataset scripts
+# If you need a newer version, you'll need to skip the 'rc' task or find an alternative dataset
+datasets>=2.14.0,<2.15.0
+
+# Configuration and serialization
+pyyaml>=6.0
+dataclasses-json>=0.5.9
+
+# Progress bars and utilities
+tqdm>=4.65.0
+
+# Logging
+coloredlogs>=15.0
+
+# Testing (optional)
+pytest>=7.3.0
+pytest-cov>=4.1.0
+scikit-learn>=1.2.0
