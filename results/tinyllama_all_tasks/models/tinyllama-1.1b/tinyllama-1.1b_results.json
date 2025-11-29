@@ -1,0 +1,10 @@
+{
+  "model_name": "tinyllama-1.1b",
+  "task_results": {
+    "qa": {
+      "task_name": "qa",
+      "model_name": "tinyllama-1.1b",
+      "results_by_strategy": {
+        "base": {
+          "lac": {
+            "conformal_result": 

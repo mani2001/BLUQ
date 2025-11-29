@@ -1,0 +1,78 @@
+# Fast Dataset Configuration
+# Optimized for quick benchmarking on A100
+
+seed: 42
+calibration_ratio: 0.5  # 50% for calibration, 50% for test
+cache_dir: "./data/cache"
+output_dir: "./data/processed"
+stratify_split: true
+
+tasks:
+  qa:
+    task_name: "qa"
+    task_type: "qa"
+    dataset_name: "mmlu"
+    dataset_config: "all"
+    num_samples: 1000  # Reduced for faster testing (original: 10000)
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: false
+    splits_to_use: ["test"]
+    sample_strategy: "random"
+    description: "Question Answering - World knowledge"
+    
+  rc:
+    task_name: "rc"
+    task_type: "rc"
+    dataset_name: "cosmos_qa"
+    num_samples: 1000  # Reduced for faster testing
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: true
+    context_key: "context"
+    splits_to_use: ["validation"]
+    sample_strategy: "random"
+    description: "Reading Comprehension with commonsense"
+    
+  ci:
+    task_name: "ci"
+    task_type: "ci"
+    dataset_name: "hellaswag"
+    num_samples: 1000  # Reduced for faster testing
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: true
+    context_key: "context"
+    splits_to_use: ["validation"]
+    sample_strategy: "random"
+    description: "Commonsense Inference"
+    
+  drs:
+    task_name: "drs"
+    task_type: "drs"
+    dataset_name: "halueval"
+    dataset_config: "dialogue_samples"
+    num_samples: 500  # Smaller dataset
+    num_demonstrations: 3
+    max_input_length: 2048
+    has_context: true
+    context_key: "dialogue"
+    splits_to_use: ["data"]
+    sample_strategy: "random"
+    description: "Dialogue Response Selection (Hallucination Detection)"
+    
+  ds:
+    task_name: "ds"
+    task_type: "ds"
+    dataset_name: "halueval"
+    dataset_config: "summarization_samples"
+    num_samples: 500  # Smaller dataset
+    num_demonstrations: 1
+    max_input_length: 2048
+    has_context: true
+    context_key: "document"
+    splits_to_use: ["data"]
+    sample_strategy: "random"
+    description: "Document Summarization (Hallucination Detection)"
+
+

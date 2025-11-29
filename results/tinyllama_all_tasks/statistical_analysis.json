@@ -1,0 +1,131 @@
+{
+  "accuracy_uncertainty_tradeoff": {
+    "num_samples": 5,
+    "counterexamples": [
+      {
+        "model": "tinyllama-1.1b",
+        "task": "drs",
+        "accuracy": 0.5666666666666668,
+        "set_size": 5.423333333333333
+      }
+    ],
+    "num_counterexamples": 1,
+    "correlation": {
+      "metric1": "accuracy",
+      "metric2": "set_size",
+      "pearson": {
+        "r": -0.35136098008982036,
+        "p_value": 0.5620166732521286
+      },
+      "spearman": {
+        "r": 0.0,
+        "p_value": 1.0
+      },
+      "kendall": {
+        "tau": 0.0,
+        "p_value": 1.0
+      }
+    },
+    "interpretation": "Moderate negative correlation: Higher accuracy tends toward lower uncertainty"
+  },
+  "aggregated_results": {
+    "results_matrix": {
+      "('ci', 'accuracy')": {
+        "tinyllama-1.1b": 0.13071895424836602
+      },
+      "('ci', 'set_size')": {
+        "tinyllama-1.1b": 5.366013071895424
+      },
+      "('ci', 'coverage_rate')": {
+        "tinyllama-1.1b": 0.9575163398692811
+      },
+      "('drs', 'accuracy')": {
+        "tinyllama-1.1b": 0.5666666666666668
+      },
+      "('drs', 'set_size')": {
+        "tinyllama-1.1b": 5.423333333333333
+      },
+      "('drs', 'coverage_rate')": {
+        "tinyllama-1.1b": 0.93
+      },
+      "('ds', 'accuracy')": {
+        "tinyllama-1.1b": 0.44
+      },
+      "('ds', 'set_size')": {
+        "tinyllama-1.1b": 2.776666666666667
+      },
+      "('ds', 'coverage_rate')": {
+        "tinyllama-1.1b": 0.89
+      },
+      "('qa', 'accuracy')": {
+        "tinyllama-1.1b": 0.23529411764705885
+      },
+      "('qa', 'set_size')": {
+        "tinyllama-1.1b": 5.718954248366013
+      },
+      "('qa', 'coverage_rate')": {
+        "tinyllama-1.1b": 0.9640522875816994
+      },
+      "('rc', 'accuracy')": {
+        "tinyllama-1.1b": 0.30718954248366015
+      },
+      "('rc', 'set_size')": {
+        "tinyllama-1.1b": 5.366013071895426
+      },
+      "('rc', 'coverage_rate')": {
+        "tinyllama-1.1b": 0.9313725490196078
+      }
+    },
+    "model_rankings": {
+      "tinyllama-1.1b": 1
+    },
+    "task_rankings": {
+      "ci": {
+        "tinyllama-1.1b": 1
+      },
+      "drs": {
+        "tinyllama-1.1b": 1
+      },
+      "ds": {
+        "tinyllama-1.1b": 1
+      },
+      "qa": {
+        "tinyllama-1.1b": 1
+      },
+      "rc": {
+        "tinyllama-1.1b": 1
+      }
+    },
+    "summary_stats": {
+      "accuracy": {
+        "mean": 0.3359738562091504,
+        "std": 0.15305889888620777,
+        "min": 0.13071895424836602,
+        "max": 0.5666666666666668
+      },
+      "set_size": {
+        "mean": 4.930196078431373,
+        "std": 1.0847013998083175,
+        "min": 2.776666666666667,
+        "max": 5.718954248366013
+      },
+      "coverage_rate": {
+        "mean": 0.9345882352941176,
+        "std": 0.026127884049761223,
+        "min": 0.89,
+        "max": 0.9640522875816994
+      },
+      "num_models": 1,
+      "num_tasks": 5,
+      "total_evaluations": 5
+    },
+    "best_overall": "tinyllama-1.1b",
+    "best_per_task": {
+      "ci": "tinyllama-1.1b",
+      "drs": "tinyllama-1.1b",
+      "ds": "tinyllama-1.1b",
+      "qa": "tinyllama-1.1b",
+      "rc": "tinyllama-1.1b"
+    }
+  }
+}

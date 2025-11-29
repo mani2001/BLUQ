@@ -319,7 +319,7 @@ class CosmosQALoader(BaseDatasetLoader):
         
         # Try loading the dataset
         try:
-            dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir, trust_remote_code=True)
+            dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir)
         except RuntimeError as e:
             error_str = str(e)
             if "Dataset scripts are no longer supported" in error_str or "trust_remote_code" in error_str:
