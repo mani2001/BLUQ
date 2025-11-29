@@ -31,10 +31,11 @@ from src.evaluation.evaluator import ModelEvaluator, TaskEvaluator, EvaluationCo
 from src.evaluation.result_aggregator import ResultAggregator, ResultExporter
 from src.evaluation.statistical_analyzer import StatisticalAnalyzer
 
-# Setup logger
+# Setup logger with time format up to seconds only
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
     handlers=[
         logging.FileHandler('benchmark.log'),
         logging.StreamHandler()
@@ -83,8 +84,15 @@ class BenchmarkPipeline:
         logger.info("Initialized Benchmark Pipeline")
         logger.info("="*80)
         logger.info(f"Output directory: {self.output_dir}")
-        logger.info(f"Data tasks: {self.data_config_manager.get_enabled_tasks()}")
-        logger.info(f"Models: {self.model_config_manager.list_available_models()}")
+        
+        # Show available tasks and models
+        from src.data.dataset_loader import DatasetLoaderFactory
+        all_available_tasks = sorted([t for t in DatasetLoaderFactory.get_available_tasks() 
+                                     if t in ['qa', 'rc', 'ci', 'drs', 'ds']])
+        all_available_models = sorted(self.model_config_manager.list_available_models())
+        
+        logger.info(f"Available tasks: {all_available_tasks}")
+        logger.info(f"Available models: {all_available_models}")
     
     def run(
         self,
@@ -102,9 +110,20 @@ class BenchmarkPipeline:
         """
         start_time = time.time()
         
+        # Determine selected tasks and models
+        from src.data.dataset_loader import DatasetLoaderFactory
+        all_available_tasks = sorted([t for t in DatasetLoaderFactory.get_available_tasks() 
+                                     if t in ['qa', 'rc', 'ci', 'drs', 'ds']])
+        all_available_models = sorted(self.model_config_manager.list_available_models())
+        
+        selected_tasks = tasks if tasks is not None else all_available_tasks
+        selected_models = models if models is not None else all_available_models
+        
         logger.info("\n" + "="*80)
         logger.info("STARTING BENCHMARK")
         logger.info("="*80)
+        logger.info(f"Selected tasks: {selected_tasks}")
+        logger.info(f"Selected models: {selected_models}")
         
         # Step 1: Prepare data
         logger.info("\n" + "="*80)
@@ -118,7 +137,7 @@ class BenchmarkPipeline:
         logger.info("STEP 2: MODEL PREPARATION")
         logger.info("="*80)
         
-        models_to_evaluate = models or self.model_config_manager.list_available_models()
+        models_to_evaluate = selected_models
         logger.info(f"Models to evaluate: {models_to_evaluate}")
         
         # Step 3: Run evaluation for each model

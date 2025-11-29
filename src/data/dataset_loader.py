@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
+import threading
 
 import pandas as pd
 from datasets import load_dataset, Dataset, DatasetDict
@@ -54,6 +55,78 @@ class BaseDatasetLoader(ABC):
         self.cache_dir = cache_dir or "./data/cache"
         self.seed = seed
         os.makedirs(self.cache_dir, exist_ok=True)
+    
+    def _load_dataset_with_timeout(self, dataset_name: str, config: Optional[str] = None, 
+                                   timeout: int = 300, **kwargs):
+        """
+        Load dataset with timeout to prevent hanging on file locks.
+        
+        Args:
+            dataset_name: Name of the dataset
+            config: Optional dataset configuration
+            timeout: Timeout in seconds (default: 5 minutes)
+            **kwargs: Additional arguments for load_dataset
+            
+        Returns:
+            Loaded dataset
+            
+        Raises:
+            TimeoutError: If loading takes longer than timeout
+            RuntimeError: If there are lock issues with helpful error message
+        """
+        result = [None]
+        exception = [None]
+        
+        def load_worker():
+            try:
+                if config:
+                    result[0] = load_dataset(dataset_name, config, cache_dir=self.cache_dir, **kwargs)
+                else:
+                    result[0] = load_dataset(dataset_name, cache_dir=self.cache_dir, **kwargs)
+            except Exception as e:
+                exception[0] = e
+        
+        thread = threading.Thread(target=load_worker, daemon=True)
+        thread.start()
+        thread.join(timeout=timeout)
+        
+        if thread.is_alive():
+            error_msg = (
+                f"Dataset loading timed out after {timeout} seconds. "
+                "This often happens due to file lock issues.\n\n"
+                "SOLUTIONS:\n"
+                "1. Wait for any other dataset downloads to complete\n"
+                "2. Clear stale lock files:\n"
+                f"   - Check for lock files in: {self.cache_dir}\n"
+                "   - Delete any *.lock files that are older than a few minutes\n"
+                "3. Clear the dataset cache and retry:\n"
+                f"   - Delete or rename: {self.cache_dir}\n"
+                "4. Check network connection (first download may be slow)\n"
+                f"5. Try loading manually: from datasets import load_dataset; load_dataset('{dataset_name}'{', ' + repr(config) if config else ''})"
+            )
+            logger.error(error_msg)
+            raise TimeoutError(error_msg)
+        
+        if exception[0]:
+            error_str = str(exception[0])
+            if "FileLock" in error_str or "lock" in error_str.lower():
+                error_msg = (
+                    f"Dataset loading failed due to file lock: {error_str}\n\n"
+                    "SOLUTIONS:\n"
+                    "1. Wait for any other dataset downloads to complete\n"
+                    "2. Clear stale lock files:\n"
+                    f"   - Check for lock files in: {self.cache_dir}\n"
+                    "   - Delete any *.lock files\n"
+                    "3. Clear the dataset cache:\n"
+                    f"   - Delete or rename: {self.cache_dir}\n"
+                    "4. Restart the script"
+                )
+                logger.error(error_msg)
+                raise RuntimeError(error_msg) from exception[0]
+            else:
+                raise exception[0]
+        
+        return result[0]
         
     @abstractmethod
     def load(self, num_samples: int = 10000) -> TaskDataset:
@@ -94,8 +167,12 @@ class MMLULoader(BaseDatasetLoader):
         """
         logger.info(f"Loading MMLU dataset with {num_samples} samples...")
         
-        # Load MMLU dataset
-        dataset = load_dataset("cais/mmlu", "all", cache_dir=self.cache_dir)
+        # Load MMLU dataset with timeout to prevent hanging
+        try:
+            dataset = self._load_dataset_with_timeout("cais/mmlu", "all", timeout=600)
+        except (TimeoutError, RuntimeError) as e:
+            logger.error(f"Failed to load MMLU dataset: {e}")
+            raise
         
         # Categories to sample from
         categories = {
