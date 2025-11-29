@@ -1,0 +1,25 @@
+================================================================================
+MODEL COMPARISON REPORT
+================================================================================
+
+Best Overall Model: smollm-135m
+  Rank: 1
+
+Best Model Per Task:
+  CI: smollm-135m
+  DRS: smollm-135m
+  DS: smollm-135m
+  QA: smollm-1.7b
+  RC: smollm-1.7b
+
+Overall Statistics:
+  Accuracy: 37.76% ± 25.52%
+  Set Size: 3.61 ± 1.11
+  Coverage: 96.59% ± 2.27%
+
+Model Rankings (by average accuracy):
+  1. smollm-135m
+  2. smollm-1.7b
+  3. smollm-360m
+
+================================================================================

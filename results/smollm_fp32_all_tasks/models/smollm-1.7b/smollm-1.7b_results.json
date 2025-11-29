@@ -1,0 +1,10 @@
+{
+  "model_name": "smollm-1.7b",
+  "task_results": {
+    "qa": {
+      "task_name": "qa",
+      "model_name": "smollm-1.7b",
+      "results_by_strategy": {
+        "base": {
+          "lac": {
+            "conformal_result": 
