@@ -161,6 +161,63 @@ The benchmarks evaluate models across multiple NLP tasks using conformal predict
 
 ---
 
+## SmolLM Models FP32 Evaluation
+
+**Models**: SmolLM-135M, SmolLM-360M, SmolLM-1.7B  
+**Precision**: FP32 (float32)  
+**Tasks**: QA, RC, CI, DRS (Dialogue Response Selection), DS (Document Summarization)  
+**Samples**: 100 per task (quick test mode)
+
+### Accuracy Results Across All Tasks (FP32)
+
+| Model | CI | DRS | DS | QA | RC | Average | Rank |
+|-------|----|----|----|----|----|---------|------|
+| **SmolLM-135M** | 30.72% | **100.00%** | **66.00%** | 23.53% | 32.68% | **50.59%** | 1 |
+| **SmolLM-1.7B** | 19.61% | 88.67% | 38.00% | **28.76%** | **37.25%** | **42.46%** | 2 |
+| **SmolLM-360M** | 22.22% | 18.00% | 7.33% | 23.53% | 30.07% | **20.23%** | 3 |
+
+### Prediction Set Size Across All Tasks (FP32)
+
+| Model | CI | DRS | DS | QA | RC | Average | Rank |
+|-------|----|----|----|----|----|---------|------|
+| **SmolLM-360M** | 4.15 | 2.40 | 2.62 | 5.35 | 4.17 | **3.74** | 1 |
+| **SmolLM-135M** | 4.31 | **1.50** | 3.53 | 5.22 | 3.98 | **3.71** | 2 |
+| **SmolLM-1.7B** | 4.11 | 1.84 | **2.80** | **4.26** | **3.95** | **3.39** | 3 |
+
+*Note: Smaller set sizes indicate more confident predictions*
+
+### Coverage Rate Across All Tasks (FP32)
+
+| Model | CI | DRS | DS | QA | RC | Average | Rank |
+|-------|----|----|----|----|----|---------|------|
+| **SmolLM-135M** | **97.71%** | **100.00%** | **99.00%** | 92.81% | 95.10% | **96.92%** | 1 |
+| **SmolLM-1.7B** | 94.44% | 98.00% | **100.00%** | **94.12%** | **96.73%** | **96.66%** | 2 |
+| **SmolLM-360M** | 93.46% | 98.67% | 96.67% | 94.77% | 97.39% | **96.19%** | 3 |
+
+*All models meet the ≥90% coverage guarantee on all tasks*
+
+### Key Findings - SmolLM FP32 Evaluation
+
+- **Best Overall Model**: SmolLM-135M (50.59% average accuracy)
+  - Perfect performance on DRS task (100% accuracy)
+  - Strongest performance on DS task (66% accuracy)
+  - Best coverage rates overall (96.92%)
+  
+- **Model Size vs. Performance**:
+  - Smaller model (135M) outperforms larger models (360M, 1.7B) on most tasks
+  - SmolLM-1.7B shows good performance on QA and RC tasks
+  - SmolLM-360M shows inconsistent performance, particularly struggling on DS task (7.33%)
+
+- **Task Performance**:
+  - **Best Task**: DRS - SmolLM-135M achieves 100% accuracy
+  - **Most Challenging Task**: DS - varies significantly by model (7.33% to 66%)
+  - **Most Confident Predictions**: DRS task (smallest set sizes across all models)
+  - **Least Confident Predictions**: QA task (largest set sizes)
+
+- **Coverage Guarantee**: All models successfully meet ≥90% coverage on all tasks using APS method
+
+---
+
 ## Model Comparison Summary
 
 ### Model Rankings by Accuracy
@@ -204,7 +261,7 @@ The benchmarks evaluate models across multiple NLP tasks using conformal predict
 
 ## Experimental Setup
 
-- **Precision**: FP16 (float16) for most models, FP32 (float32) for TinyLlama-1.1B comparison
+- **Precision**: FP16 (float16) for most models, FP32 (float32) for TinyLlama-1.1B and SmolLM models comparison
 - **Conformal Methods**: LAC (Least Ambiguous Classifiers) and APS (Adaptive Prediction Sets)
 - **Coverage Target**: 90% (alpha = 0.1)
 - **Prompting Strategies**: Base, Shared Instruction, Task-Specific
@@ -219,6 +276,7 @@ Detailed results are available in:
 - `results/fast_benchmark/` - Fast benchmark results (3 models, 3 tasks)
 - `results/tinyllama_all_tasks/` - Complete TinyLlama evaluation (5 tasks, FP16)
 - `results/tinyllama_fp32_all_tasks/` - Complete TinyLlama evaluation (5 tasks, FP32)
+- `results/smollm_fp32_all_tasks/` - Complete SmolLM evaluation (5 tasks, FP32)
 - `results/quick_test/` - Quick test results
 
 Each directory contains:
@@ -276,4 +334,73 @@ A comparison of TinyLlama-1.1B performance at different precision levels:
 2. **Confidence**: FP32 produces smaller prediction sets (-1.70 average), indicating more confident predictions
 3. **Coverage**: FP32 maintains or improves coverage rates (+3.46% average), with all tasks meeting the 90% target
 4. **Trade-offs**: FP32 provides better accuracy and confidence at the cost of slower inference speed and higher memory usage
+
+---
+
+## Precision Comparison: FP16 vs FP32 (SmolLM Models)
+
+A comparison of SmolLM models performance at different precision levels (when available):
+
+### SmolLM-135M: FP32 Results
+
+| Task | Accuracy | Avg Set Size | Coverage Rate |
+|------|----------|--------------|---------------|
+| **DRS** | **100.00%** | **1.50** | **100.00%** |
+| **DS** | **66.00%** | 3.53 | 99.00% |
+| **RC** | **32.68%** | 3.98 | 95.10% |
+| **CI** | **30.72%** | 4.31 | 97.71% |
+| **QA** | **23.53%** | 5.22 | 92.81% |
+| **Average** | **50.59%** | **3.71** | **96.92%** |
+
+**Key Observations**:
+- Excellent performance on hallucination detection tasks (DRS: 100%, DS: 66%)
+- Smallest prediction sets on DRS task (1.50), indicating high confidence
+- Consistent coverage rates above 90% on all tasks
+
+### SmolLM-360M: FP32 Results
+
+| Task | Accuracy | Avg Set Size | Coverage Rate |
+|------|----------|--------------|---------------|
+| **RC** | **30.07%** | 4.17 | 97.39% |
+| **CI** | **22.22%** | 4.15 | 93.46% |
+| **QA** | **23.53%** | 5.35 | 94.77% |
+| **DRS** | **18.00%** | 2.40 | 98.67% |
+| **DS** | **7.33%** | 2.62 | 96.67% |
+| **Average** | **20.23%** | **3.74** | **96.19%** |
+
+**Key Observations**:
+- Struggles significantly on DS task (7.33% accuracy)
+- Lower overall accuracy compared to SmolLM-135M despite larger size
+- Good coverage rates maintained across all tasks
+
+### SmolLM-1.7B: FP32 Results
+
+| Task | Accuracy | Avg Set Size | Coverage Rate |
+|------|----------|--------------|---------------|
+| **DRS** | **88.67%** | 1.84 | 98.00% |
+| **RC** | **37.25%** | 3.95 | 96.73% |
+| **DS** | **38.00%** | 2.80 | 100.00% |
+| **QA** | **28.76%** | 4.26 | 94.12% |
+| **CI** | **19.61%** | 4.11 | 94.44% |
+| **Average** | **42.46%** | **3.39** | **96.66%** |
+
+**Key Observations**:
+- Strong performance on DRS task (88.67%)
+- Best performance among SmolLM models on QA and RC tasks
+- Most confident predictions overall (lowest average set size: 3.39)
+- Perfect coverage on DS task (100%)
+
+### Cross-Model Comparison (SmolLM FP32)
+
+| Model | Parameters | Avg Accuracy | Avg Set Size | Avg Coverage | Best At |
+|-------|------------|--------------|--------------|--------------|---------|
+| **SmolLM-135M** | 135M | **50.59%** | 3.71 | **96.92%** | DRS (100%), DS (66%) |
+| **SmolLM-1.7B** | 1.7B | **42.46%** | **3.39** | 96.66% | QA (28.76%), RC (37.25%) |
+| **SmolLM-360M** | 360M | 20.23% | 3.74 | 96.19% | RC (30.07%) |
+
+**Key Insights**:
+1. **Size doesn't always mean better**: SmolLM-135M (smallest) outperforms larger models
+2. **Task-specific strengths**: Each model excels on different tasks
+3. **Consistent coverage**: All models maintain >96% coverage across tasks
+4. **Confidence vs. Accuracy**: Smaller models can be more confident (smaller sets) despite varying accuracy
 
