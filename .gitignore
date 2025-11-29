@@ -36,7 +36,6 @@ wheels/
 # Data and Models
 data/cache/
 models/cache/
-results/
 *.pth
 *.bin
 *.safetensors

@@ -4,7 +4,7 @@ This document summarizes the benchmark results for Small Language Models (SLMs) 
 
 ## Overview
 
-The benchmarks evaluate models across multiple NLP tasks using conformal prediction methods (LAC and APS) to measure both accuracy and uncertainty. All models are evaluated at **FP16 precision** for optimal performance on A100 GPUs.
+The benchmarks evaluate models across multiple NLP tasks using conformal prediction methods (LAC and APS) to measure both accuracy and uncertainty. Most models are evaluated at **FP16 precision** for optimal performance on A100 GPUs, with some models also evaluated at **FP32 precision** for comparison.
 
 ## Fast Benchmark Results
 
@@ -105,6 +105,62 @@ The benchmarks evaluate models across multiple NLP tasks using conformal predict
 
 ---
 
+## TinyLlama-1.1B FP32 Evaluation
+
+**Model**: TinyLlama-1.1B (1.1B parameters, Instruct-tuned)  
+**Precision**: FP32 (float32)  
+**Tasks**: QA, RC, CI, DRS (Dialogue Response Selection), DS (Document Summarization)  
+**Samples**: 100 per task (quick test mode)
+
+### Accuracy Results Across All Tasks (FP32)
+
+| Task | Accuracy | Description |
+|------|----------|-------------|
+| **DRS** | **100.00%** | Dialogue Response Selection (Hallucination Detection) |
+| **DS** | **50.67%** | Document Summarization (Hallucination Detection) |
+| **QA** | **26.80%** | Question Answering (MMLU) |
+| **RC** | **25.49%** | Reading Comprehension (CosmosQA) |
+| **CI** | **23.53%** | Commonsense Inference (HellaSwag) |
+| **Average** | **45.30%** | ± 29.08% |
+
+### Prediction Set Size Across All Tasks (FP32)
+
+| Task | Avg Set Size | Description |
+|------|--------------|-------------|
+| **DRS** | **1.45** | Smallest sets (most confident) |
+| **DS** | 2.36 | |
+| **CI** | 4.25 | |
+| **RC** | 4.04 | |
+| **QA** | 4.05 | |
+| **Average** | **3.23** | ± 1.12 |
+
+### Coverage Rate Across All Tasks (FP32)
+
+| Task | Coverage Rate | Status |
+|------|---------------|--------|
+| **DRS** | **100.00%** | ✅ Exceeds target |
+| **DS** | **98.00%** | ✅ Exceeds target |
+| **QA** | **96.41%** | ✅ Exceeds target |
+| **CI** | **95.42%** | ✅ Exceeds target |
+| **RC** | **94.77%** | ✅ Exceeds target |
+| **Average** | **96.92%** | ± 1.89% |
+
+*All tasks meet the ≥90% coverage guarantee*
+
+### Key Findings - TinyLlama FP32 Evaluation
+
+- **Best Performing Task**: DRS (100% accuracy) - Perfect performance on dialogue response selection
+- **Most Challenging Task**: CI (23.53% accuracy) - Commonsense inference
+- **Most Confident Predictions**: DRS task (smallest set size: 1.45)
+- **Least Confident Predictions**: CI task (largest set size: 4.25)
+- **Coverage Guarantee**: All tasks meet ≥90% coverage
+- **FP32 vs FP16 Comparison**: 
+  - FP32 shows higher average accuracy (45.30% vs 33.60%)
+  - FP32 shows lower average set size (3.23 vs 4.93), indicating more confident predictions
+  - FP32 shows higher average coverage (96.92% vs 93.46%)
+
+---
+
 ## Model Comparison Summary
 
 ### Model Rankings by Accuracy
@@ -148,7 +204,7 @@ The benchmarks evaluate models across multiple NLP tasks using conformal predict
 
 ## Experimental Setup
 
-- **Precision**: FP16 (float16) for all models
+- **Precision**: FP16 (float16) for most models, FP32 (float32) for TinyLlama-1.1B comparison
 - **Conformal Methods**: LAC (Least Ambiguous Classifiers) and APS (Adaptive Prediction Sets)
 - **Coverage Target**: 90% (alpha = 0.1)
 - **Prompting Strategies**: Base, Shared Instruction, Task-Specific
@@ -161,7 +217,8 @@ The benchmarks evaluate models across multiple NLP tasks using conformal predict
 
 Detailed results are available in:
 - `results/fast_benchmark/` - Fast benchmark results (3 models, 3 tasks)
-- `results/tinyllama_all_tasks/` - Complete TinyLlama evaluation (5 tasks)
+- `results/tinyllama_all_tasks/` - Complete TinyLlama evaluation (5 tasks, FP16)
+- `results/tinyllama_fp32_all_tasks/` - Complete TinyLlama evaluation (5 tasks, FP32)
 - `results/quick_test/` - Quick test results
 
 Each directory contains:
@@ -173,4 +230,50 @@ Each directory contains:
 ---
 
 *Last Updated: November 29, 2025*
+
+---
+
+## Precision Comparison: FP16 vs FP32 (TinyLlama-1.1B)
+
+A comparison of TinyLlama-1.1B performance at different precision levels:
+
+### Accuracy Comparison
+
+| Task | FP16 | FP32 | Difference |
+|------|------|------|------------|
+| **DRS** | 56.67% | 100.00% | +43.33% |
+| **DS** | 44.00% | 50.67% | +6.67% |
+| **QA** | 23.53% | 26.80% | +3.27% |
+| **RC** | 30.72% | 25.49% | -5.23% |
+| **CI** | 13.07% | 23.53% | +10.46% |
+| **Average** | **33.60%** | **45.30%** | **+11.70%** |
+
+### Prediction Set Size Comparison
+
+| Task | FP16 | FP32 | Difference |
+|------|------|------|------------|
+| **DRS** | 5.42 | 1.45 | -3.97 |
+| **DS** | 2.78 | 2.36 | -0.42 |
+| **QA** | 5.72 | 4.05 | -1.67 |
+| **RC** | 5.37 | 4.04 | -1.33 |
+| **CI** | 5.37 | 4.25 | -1.12 |
+| **Average** | **4.93** | **3.23** | **-1.70** |
+
+### Coverage Rate Comparison
+
+| Task | FP16 | FP32 | Difference |
+|------|------|------|------------|
+| **DRS** | 93.00% | 100.00% | +7.00% |
+| **DS** | 89.00% | 98.00% | +9.00% |
+| **QA** | 96.41% | 96.41% | 0.00% |
+| **RC** | 93.14% | 94.77% | +1.63% |
+| **CI** | 95.75% | 95.42% | -0.33% |
+| **Average** | **93.46%** | **96.92%** | **+3.46%** |
+
+### Key Insights - Precision Comparison
+
+1. **Accuracy**: FP32 shows significantly higher accuracy (+11.70% average), with the most dramatic improvement on DRS task (+43.33%)
+2. **Confidence**: FP32 produces smaller prediction sets (-1.70 average), indicating more confident predictions
+3. **Coverage**: FP32 maintains or improves coverage rates (+3.46% average), with all tasks meeting the 90% target
+4. **Trade-offs**: FP32 provides better accuracy and confidence at the cost of slower inference speed and higher memory usage
 
