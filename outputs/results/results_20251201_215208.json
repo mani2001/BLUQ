@@ -1,0 +1,11 @@
+[
+  {
+    "model": "tinyllama-1.1b",
+    "task": "drs",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "lac",
+    "accuracy": 0.52,
+    "coverage_rate": 0.92,
+    "avg_set_size": 4.82,
+    "meets_guarantee": 
