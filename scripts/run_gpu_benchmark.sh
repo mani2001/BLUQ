@@ -28,6 +28,7 @@ OUTPUT_DIR="${PROJECT_ROOT}/outputs/results"
 SKIP_SETUP=false
 SKIP_VERIFY=false
 DRY_RUN=false
+MAX_BATCH_SIZE=""  # Empty = auto-detect from GPU tier (128 for A100/H100, 64 mid-range, 32 low-end)
 
 #===============================================================================
 # Logging Setup
@@ -108,6 +109,8 @@ OPTIONS:
     -d, --dtypes DTYPES     Data types (space-separated): float16 float32
                             Default: "float16"
     -n, --num-samples N     Number of samples (overrides mode)
+    -b, --max-batch-size N  Maximum batch size (default: auto-detect from GPU tier)
+                            A100/H100: 128, RTX 3090: 64, smaller GPUs: 32
     -o, --output DIR        Output directory for results
                             Default: ./outputs/results
     -s, --skip-setup        Skip environment setup (use if already set up)
@@ -162,6 +165,10 @@ while [[ $# -gt 0 ]]; do
             NUM_SAMPLES="$2"
             shift 2
             ;;
+        -b|--max-batch-size)
+            MAX_BATCH_SIZE="$2"
+            shift 2
+            ;;
         -o|--output)
             OUTPUT_DIR="$2"
             shift 2
@@ -204,6 +211,11 @@ echo "Skip Verify:     ${SKIP_VERIFY}"
 echo "Log File:        ${LOG_FILE}"
 if [[ -n "$NUM_SAMPLES" ]]; then
     echo "Num Samples:     ${NUM_SAMPLES}"
+fi
+if [[ -n "$MAX_BATCH_SIZE" ]]; then
+    echo "Max Batch Size:  ${MAX_BATCH_SIZE}"
+else
+    echo "Max Batch Size:  auto-detect (based on GPU tier)"
 fi
 echo ""
 
@@ -338,6 +350,10 @@ CMD+=" --output-dir ${OUTPUT_DIR}"
 
 if [[ -n "$NUM_SAMPLES" ]]; then
     CMD+=" --num-samples ${NUM_SAMPLES}"
+fi
+
+if [[ -n "$MAX_BATCH_SIZE" ]]; then
+    CMD+=" --max-batch-size ${MAX_BATCH_SIZE}"
 fi
 
 # Log the command

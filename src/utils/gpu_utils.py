@@ -5,7 +5,7 @@ Provides utilities for GPU memory management and dynamic batch size optimization
 
 import logging
 import torch
-from typing import Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
@@ -83,6 +83,68 @@ def get_device_info() -> DeviceInfo:
         )
 
 
+# GPU tier detection for automatic batch size optimization
+HIGH_END_GPUS = ['A100', 'H100', 'H200', 'A6000', 'RTX 4090', 'RTX 3090', 'L40', 'A40']
+
+GPU_TIER_CONFIG = {
+    'high_end': {'safety_margin': 0.90, 'max_batch_size': 128, 'min_vram_gb': 48},
+    'mid_range': {'safety_margin': 0.85, 'max_batch_size': 64, 'min_vram_gb': 16},
+    'low_end': {'safety_margin': 0.80, 'max_batch_size': 32, 'min_vram_gb': 0},
+}
+
+
+def get_gpu_tier(device_info: Optional['DeviceInfo'] = None) -> str:
+    """
+    Detect GPU tier based on device name and available memory.
+
+    Args:
+        device_info: Optional DeviceInfo object. If not provided, will be fetched.
+
+    Returns:
+        GPU tier: 'high_end', 'mid_range', or 'low_end'
+    """
+    if device_info is None:
+        device_info = get_device_info()
+
+    if device_info.device_type != 'cuda':
+        return 'low_end'
+
+    # Check by GPU name first
+    gpu_name = device_info.device_name.upper()
+    for high_end_gpu in HIGH_END_GPUS:
+        if high_end_gpu.upper() in gpu_name:
+            logger.info(f"Detected high-end GPU by name: {device_info.device_name}")
+            return 'high_end'
+
+    # Fallback to VRAM-based detection
+    vram_gb = device_info.total_memory_gb
+    if vram_gb >= 48:
+        logger.info(f"Detected high-end GPU by VRAM: {vram_gb:.1f}GB")
+        return 'high_end'
+    elif vram_gb >= 16:
+        logger.info(f"Detected mid-range GPU by VRAM: {vram_gb:.1f}GB")
+        return 'mid_range'
+    else:
+        logger.info(f"Detected low-end GPU by VRAM: {vram_gb:.1f}GB")
+        return 'low_end'
+
+
+def get_gpu_config(device_info: Optional['DeviceInfo'] = None) -> Dict[str, Any]:
+    """
+    Get GPU configuration based on detected tier.
+
+    Args:
+        device_info: Optional DeviceInfo object.
+
+    Returns:
+        Dictionary with safety_margin and max_batch_size for the detected tier
+    """
+    tier = get_gpu_tier(device_info)
+    config = GPU_TIER_CONFIG[tier].copy()
+    config['tier'] = tier
+    return config
+
+
 class GPUMemoryManager:
     """
     Manages GPU memory and provides dynamic batch size optimization.
@@ -101,13 +163,20 @@ class GPUMemoryManager:
     # Approximate activation memory multiplier per batch item (relative to model size)
     ACTIVATION_MULTIPLIER = 0.3
 
-    # Safety margin to avoid OOM
-    SAFETY_MARGIN = 0.85
+    # Default safety margin (will be overridden by GPU tier config)
+    DEFAULT_SAFETY_MARGIN = 0.85
 
     def __init__(self):
         """Initialize the GPU memory manager."""
         self.device_info = get_device_info()
-        logger.info(f"Initialized GPUMemoryManager:\n{self.device_info}")
+        self.gpu_config = get_gpu_config(self.device_info)
+        self.safety_margin = self.gpu_config['safety_margin']
+        logger.info(
+            f"Initialized GPUMemoryManager:\n{self.device_info}\n"
+            f"  GPU Tier: {self.gpu_config['tier']}\n"
+            f"  Safety Margin: {self.safety_margin}\n"
+            f"  Max Batch Size: {self.gpu_config['max_batch_size']}"
+        )
 
     def estimate_model_memory(
         self,
@@ -158,7 +227,7 @@ class GPUMemoryManager:
         dtype: str = 'float16',
         seq_length: int = 2048,
         min_batch_size: int = 1,
-        max_batch_size: int = 64
+        max_batch_size: Optional[int] = None
     ) -> int:
         """
         Calculate optimal batch size based on available GPU memory.
@@ -168,12 +237,16 @@ class GPUMemoryManager:
             dtype: Data type for model weights
             seq_length: Expected sequence length
             min_batch_size: Minimum batch size to return
-            max_batch_size: Maximum batch size to consider
+            max_batch_size: Maximum batch size to consider (None = auto-detect from GPU tier)
 
         Returns:
             Optimal batch size
         """
-        available_memory = self.device_info.available_memory_gb * self.SAFETY_MARGIN
+        # Use GPU tier-based max if not specified
+        if max_batch_size is None:
+            max_batch_size = self.gpu_config['max_batch_size']
+
+        available_memory = self.device_info.available_memory_gb * self.safety_margin
         model_memory = self.estimate_model_memory(num_params_billions, dtype)
 
         # Memory available for batches after loading model
@@ -245,7 +318,7 @@ def get_optimal_batch_size(
     dtype: str = 'float16',
     seq_length: int = 2048,
     min_batch_size: int = 1,
-    max_batch_size: int = 64
+    max_batch_size: Optional[int] = None
 ) -> int:
     """
     Convenience function to get optimal batch size.
@@ -255,7 +328,7 @@ def get_optimal_batch_size(
         dtype: Data type for model weights
         seq_length: Expected sequence length
         min_batch_size: Minimum batch size
-        max_batch_size: Maximum batch size
+        max_batch_size: Maximum batch size (None = auto-detect from GPU tier)
 
     Returns:
         Optimal batch size

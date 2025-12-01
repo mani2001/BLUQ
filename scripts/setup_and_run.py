@@ -227,6 +227,7 @@ def run_benchmark(
     models: list,
     dtypes: list,
     num_samples: int,
+    max_batch_size: int,
     output_dir: Path,
     strategies: list,
     conformal_methods: list
@@ -252,6 +253,9 @@ def run_benchmark(
 
     if num_samples:
         cmd.extend(['--num-samples', str(num_samples)])
+
+    if max_batch_size:
+        cmd.extend(['--max-batch-size', str(max_batch_size)])
 
     # Log the command
     print_info(f"Executing: {' '.join(cmd)}")
@@ -353,6 +357,13 @@ Examples:
     )
 
     parser.add_argument(
+        '--max-batch-size', '-b',
+        type=int,
+        default=None,
+        help='Maximum batch size (default: auto-detect from GPU tier - 128 for A100/H100, 64 mid-range, 32 low-end)'
+    )
+
+    parser.add_argument(
         '--output-dir', '-o',
         type=str,
         default='./outputs/results',
@@ -425,6 +436,10 @@ Examples:
     print(f"Skip Verify:     {args.skip_verify}")
     if args.num_samples:
         print(f"Num Samples:     {args.num_samples}")
+    if args.max_batch_size:
+        print(f"Max Batch Size:  {args.max_batch_size}")
+    else:
+        print(f"Max Batch Size:  auto-detect (based on GPU tier)")
 
     # Log configuration
     logger.info(f"Configuration: mode={args.mode}, tasks={args.tasks}, models={args.models}")
@@ -475,6 +490,7 @@ Examples:
         models=args.models,
         dtypes=args.dtypes,
         num_samples=args.num_samples,
+        max_batch_size=args.max_batch_size,
         output_dir=output_dir,
         strategies=args.strategies,
         conformal_methods=args.conformal_methods

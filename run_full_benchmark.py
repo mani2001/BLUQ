@@ -62,7 +62,7 @@ class BenchmarkConfig:
     conformal_methods: List[str]
     seed: int
     use_dynamic_batch_size: bool
-    max_batch_size: int
+    max_batch_size: Optional[int]  # None = auto-detect from GPU tier
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -101,11 +101,27 @@ class FullBenchmarkRunner:
 
     def _init_components(self):
         """Initialize benchmark components."""
-        from src.utils.gpu_utils import GPUMemoryManager, get_device_info
+        from src.utils.gpu_utils import GPUMemoryManager, get_device_info, get_gpu_config
 
         # Get device info
         self.device_info = get_device_info()
         logger.info(f"Running on: {self.device_info}")
+
+        # Get GPU tier config for auto-detection
+        self.gpu_config = get_gpu_config(self.device_info)
+        logger.info(
+            f"GPU Tier: {self.gpu_config['tier']} | "
+            f"Auto max_batch_size: {self.gpu_config['max_batch_size']} | "
+            f"Safety margin: {self.gpu_config['safety_margin']}"
+        )
+
+        # Resolve max_batch_size (auto-detect if None)
+        if self.config.max_batch_size is None:
+            self.effective_max_batch_size = self.gpu_config['max_batch_size']
+            logger.info(f"Auto-detected max_batch_size: {self.effective_max_batch_size}")
+        else:
+            self.effective_max_batch_size = self.config.max_batch_size
+            logger.info(f"Using user-specified max_batch_size: {self.effective_max_batch_size}")
 
         # Initialize GPU memory manager for dynamic batch sizing
         if self.config.use_dynamic_batch_size:
@@ -116,7 +132,7 @@ class FullBenchmarkRunner:
     def get_batch_size(self, model_name: str, dtype: str) -> int:
         """Get optimal batch size for model and dtype."""
         if not self.config.use_dynamic_batch_size or self.gpu_manager is None:
-            return self.config.max_batch_size
+            return self.effective_max_batch_size
 
         from src.utils.gpu_utils import get_model_size
         model_size = get_model_size(model_name)
@@ -126,7 +142,7 @@ class FullBenchmarkRunner:
             dtype=dtype,
             seq_length=2048,
             min_batch_size=1,
-            max_batch_size=self.config.max_batch_size
+            max_batch_size=self.effective_max_batch_size
         )
         return batch_size
 
@@ -202,6 +218,7 @@ class FullBenchmarkRunner:
         logger.info(f"Strategies: {self.config.strategies}")
         logger.info(f"Conformal methods: {self.config.conformal_methods}")
         logger.info(f"Dynamic batch sizing: {self.config.use_dynamic_batch_size}")
+        logger.info(f"Max batch size: {self.effective_max_batch_size} (GPU tier: {self.gpu_config['tier']})")
         logger.info(f"Output directory: {self.output_dir}")
 
     def _run_single_configuration(
@@ -500,8 +517,8 @@ def main():
     parser.add_argument(
         '--max-batch-size',
         type=int,
-        default=8,
-        help='Maximum batch size'
+        default=None,
+        help='Maximum batch size (default: auto-detect based on GPU tier - 128 for A100/H100, 64 for mid-range, 32 for low-end)'
     )
 
     parser.add_argument(
