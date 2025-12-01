@@ -392,14 +392,53 @@ pip install -r requirements.txt
 ### Quick Start
 
 ```bash
+# Verify setup (recommended first step)
+python scripts/verify_setup.py
+
 # Generate configuration files
 python generate_configs.py
 
-# Run quick test (100 samples)
+# Run quick test (100 samples, single model, single task)
 python run_single_task.py --task qa --model tinyllama-1.1b --num-samples 100
 
-# Run full benchmark
-python run_benchmark.py --tasks qa rc ci --models tinyllama-1.1b phi-2
+# Run short benchmark (100 samples per task - for testing)
+python run_full_benchmark.py --mode short --tasks qa --models tinyllama-1.1b
+
+# Run full benchmark (10,000 samples - production run)
+python run_full_benchmark.py --mode long --tasks qa rc ci drs ds --models tinyllama-1.1b phi-2 stablelm-2-1.6b
+```
+
+### Run Modes
+
+The benchmark supports two run modes:
+
+| Mode | Samples | Use Case |
+|------|---------|----------|
+| `short` | 100 | Quick testing, verification |
+| `long` | 10,000 | Production runs, paper results |
+
+```bash
+# Short mode (testing)
+python run_full_benchmark.py --mode short
+
+# Long mode (production)
+python run_full_benchmark.py --mode long
+
+# Custom sample count
+python run_full_benchmark.py --num-samples 500
+```
+
+### Full Benchmark Options
+
+```bash
+python run_full_benchmark.py \
+    --mode short \                    # or 'long' for 10k samples
+    --models tinyllama-1.1b phi-2 \   # models to evaluate
+    --tasks qa rc ci \                # tasks to run
+    --dtypes float16 float32 \        # data types
+    --strategies base \               # prompting strategies
+    --conformal-methods lac aps \     # conformal methods
+    --output-dir ./outputs/results    # output directory
 ```
 
 ### Configuration
@@ -430,36 +469,37 @@ models:
     device: auto
 ```
 
-### Command Line Options
+### Dynamic Batch Size
+
+The benchmark automatically adjusts batch size based on available GPU memory:
 
 ```bash
-python run_benchmark.py [OPTIONS]
+# Automatic batch sizing (default)
+python run_full_benchmark.py --mode short
 
-Options:
-  --tasks         Tasks to run (qa, rc, ci, drs, ds)
-  --models        Models to evaluate
-  --quick-test    Use 100 samples per task for testing
-  --output-dir    Directory to save results
-  --data-config   Path to dataset config file
-  --model-config  Path to model config file
+# Disable dynamic batch sizing
+python run_full_benchmark.py --mode short --no-dynamic-batch --max-batch-size 4
 ```
 
 ### Output Structure
 
 ```
-results/
-├── models/
-│   ├── phi-2/
-│   │   ├── qa_results.json
-│   │   ├── rc_results.json
-│   │   └── ...
-│   └── tinyllama-1.1b/
-│       └── ...
-├── summary_accuracy.csv
-├── summary_set_size.csv
-├── summary_coverage_rate.csv
-├── comparison_report.txt
-└── statistical_analysis.json
+outputs/
+├── results/                      # Benchmark results
+│   ├── results_YYYYMMDD_HHMMSS.json   # Raw results
+│   ├── summary_YYYYMMDD_HHMMSS.json   # Summary statistics
+│   ├── config_YYYYMMDD_HHMMSS.json    # Run configuration
+│   └── figures/                  # Visualizations
+│       ├── dashboard.png         # Comprehensive dashboard
+│       ├── heatmap_accuracy.png  # Accuracy heatmap
+│       ├── heatmap_coverage_rate.png
+│       ├── heatmap_avg_set_size.png
+│       ├── bar_comparison_accuracy.png
+│       ├── radar_chart.png
+│       ├── uncertainty_analysis.png
+│       ├── dtype_comparison_accuracy.png  # FP16 vs FP32
+│       └── results_summary.md    # Markdown summary table
+└── figures/                      # Default visualization output
 ```
 
 ---
@@ -497,31 +537,45 @@ BLUQ/
 ├── configs/                 # Configuration files
 │   ├── dataset_config.json
 │   └── model_config.yaml
+├── scripts/                 # Utility scripts
+│   └── verify_setup.py     # Setup verification
 ├── src/
 │   ├── data/               # Dataset loading and processing
 │   │   ├── dataset_loader.py
 │   │   ├── dataset_processor.py
+│   │   ├── dataset_config.py
 │   │   └── data_splitter.py
 │   ├── models/             # Model loading and inference
 │   │   ├── model_loader.py
+│   │   ├── model_config.py
 │   │   ├── inference_engine.py
 │   │   └── probability_extractor.py
 │   ├── prompting/          # Prompt building strategies
 │   │   ├── prompt_builder.py
-│   │   └── prompt_templates.py
+│   │   ├── prompt_formatter.py
+│   │   ├── prompt_templates.py
+│   │   └── demonstration_manager.py
 │   ├── conformal/          # Conformal prediction methods
 │   │   ├── conformal_base.py
 │   │   ├── lac_scorer.py
-│   │   └── aps_scorer.py
-│   └── evaluation/         # Metrics and result aggregation
-│       ├── evaluator.py
-│       ├── metrics.py
-│       └── result_aggregator.py
-├── docs/                   # Documentation and images
-│   └── images/
-├── results/                # Experiment outputs
-├── run_benchmark.py        # Main benchmark script
+│   │   ├── aps_scorer.py
+│   │   └── prediction_set_generator.py
+│   ├── evaluation/         # Metrics and result aggregation
+│   │   ├── evaluator.py
+│   │   ├── metrics.py
+│   │   ├── result_aggregator.py
+│   │   └── statistical_analyzer.py
+│   ├── utils/              # Utility modules
+│   │   └── gpu_utils.py    # GPU memory management
+│   └── visualization/      # Result visualization
+│       └── result_visualizer.py
+├── outputs/                # Generated outputs
+│   ├── results/            # Benchmark results
+│   └── figures/            # Visualizations
+├── run_benchmark.py        # Original benchmark script
+├── run_full_benchmark.py   # Full benchmark with all features
 ├── run_single_task.py      # Single task evaluation
+├── run_verification.py     # Verification script
 └── generate_configs.py     # Generate default configs
 ```
 
