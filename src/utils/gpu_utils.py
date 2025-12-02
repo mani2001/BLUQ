@@ -354,6 +354,8 @@ MODEL_SIZES = {
     'qwen-1.8b-chat': 1.8,
     'gemma-2b': 2.0,
     'gemma-2b-it': 2.0,
+    'gemma-2-9b': 9.0,
+    'gemma-2-9b-it': 9.0,
     'openelm-1.1b': 1.1,
     'smollm-135m': 0.135,
     'smollm-360m': 0.36,

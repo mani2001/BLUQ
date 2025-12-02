@@ -244,6 +244,18 @@ class DefaultModelConfigs:
                 dtype="bfloat16",
                 device="auto"
             ),
+            "gemma-2-9b": ModelLoadConfig(
+                model_id="google/gemma-2-9b",
+                name="gemma-2-9b",
+                dtype="bfloat16",
+                device="auto"
+            ),
+            "gemma-2-9b-it": ModelLoadConfig(
+                model_id="google/gemma-2-9b-it",
+                name="gemma-2-9b-it",
+                dtype="bfloat16",
+                device="auto"
+            ),
             
             # SmolLM models
             "smollm-135m": ModelLoadConfig(
