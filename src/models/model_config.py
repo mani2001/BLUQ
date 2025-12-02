@@ -256,7 +256,21 @@ class DefaultModelConfigs:
                 dtype="bfloat16",
                 device="auto"
             ),
-            
+
+            # Mistral models (ungated)
+            "mistral-7b": ModelLoadConfig(
+                model_id="mistralai/Mistral-7B-v0.1",
+                name="mistral-7b",
+                dtype="float16",
+                device="auto"
+            ),
+            "mistral-7b-instruct": ModelLoadConfig(
+                model_id="mistralai/Mistral-7B-Instruct-v0.2",
+                name="mistral-7b-instruct",
+                dtype="float16",
+                device="auto"
+            ),
+
             # SmolLM models
             "smollm-135m": ModelLoadConfig(
                 model_id="HuggingFaceTB/SmolLM-135M",

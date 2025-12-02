@@ -356,6 +356,8 @@ MODEL_SIZES = {
     'gemma-2b-it': 2.0,
     'gemma-2-9b': 9.0,
     'gemma-2-9b-it': 9.0,
+    'mistral-7b': 7.0,
+    'mistral-7b-instruct': 7.0,
     'openelm-1.1b': 1.1,
     'smollm-135m': 0.135,
     'smollm-360m': 0.36,
