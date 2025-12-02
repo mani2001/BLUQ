@@ -351,9 +351,28 @@ Another surprise:
 - Learn to express uncertainty when appropriate
 - May be more conservative in their predictions
 
+### Our SLM Results (Long Run - 10,000 samples)
+
+Our experiments with TinyLlama-1.1B and Phi-2 confirm several findings:
+
+**Finding 1: SLMs show high uncertainty on knowledge-intensive tasks**
+- Both models achieve ~20% accuracy on QA (MMLU), RC (CosmosQA), and CI (HellaSwag)
+- Average prediction set sizes of 5.2-5.6 out of 6 options indicate high uncertainty
+- This is appropriate calibration - models are uncertain when they should be
+
+**Finding 2: Task type matters more than model size**
+- Dialogue Response Selection: 42-49% accuracy (2x better than knowledge tasks)
+- Document Summarization: 48-49% accuracy
+- Pattern-based tasks are more tractable for SLMs than factual recall
+
+**Finding 3: Conformal prediction provides valid coverage guarantees**
+- LAC method: Achieves target 90% coverage precisely
+- APS method: Provides 100% coverage (more conservative)
+- 85% of all runs met the coverage guarantee
+
 ### Implications for SLMs
 
-Our experiments with Small Language Models will verify whether these findings hold at smaller scales, which has important implications for:
+Our experiments with Small Language Models verify these findings hold at smaller scales (1-3B parameters), with important implications for:
 - Edge deployment (phones, IoT devices)
 - Resource-constrained environments
 - Real-time applications
@@ -506,27 +525,46 @@ outputs/
 
 ## Results Gallery
 
-### Paper Results (LLMs)
+### Our Results (Long Run - 10,000 samples)
 
-*Include screenshots from the paper showing LLM results*
+#### Benchmark Dashboard
+![Benchmark Dashboard](outputs/results/figures/dashboard.png)
+*Figure: Comprehensive dashboard showing accuracy, coverage, and set sizes across all tasks and models*
 
-![Paper Results Table](docs/images/paper/results_table.png)
-*Table: Accuracy and uncertainty metrics for LLMs across tasks (Source: Paper)*
+#### Uncertainty Analysis
+![Uncertainty Analysis](outputs/results/figures/uncertainty_analysis.png)
+*Figure: Inverse correlation between accuracy and prediction set size validates the conformal prediction framework*
 
-### Our Results (SLMs)
+### Accuracy Results (%)
 
-*Include screenshots of our experimental results*
+| Model | QA | RC | CI | DRS | DS | Avg |
+|-------|----|----|----|----|-----|-----|
+| **Phi-2** | 21% | 22% | 22% | **49%** | **49%** | **33%** |
+| **TinyLlama-1.1B** | 21% | 22% | 22% | 42% | 48% | **31%** |
 
-![SLM Results](docs/images/results/slm_comparison.png)
-*Table: Accuracy and uncertainty metrics for SLMs across tasks*
+### Coverage Rate (%) - Target: 90%
 
-### Key Comparisons
+| Method | Phi-2 | TinyLlama-1.1B |
+|--------|-------|----------------|
+| **LAC** | 90% | 90% |
+| **APS** | 100% | 100% |
 
-| Metric | LLMs (Paper) | SLMs (Ours) |
-|--------|--------------|-------------|
-| Best Accuracy | ~70% (LLaMA-65B) | TBD |
-| Avg Set Size | 2.5-3.5 | TBD |
-| Coverage Rate | ~90% | TBD |
+### Average Prediction Set Size (out of 6 options)
+
+| Method | Phi-2 | TinyLlama-1.1B | Interpretation |
+|--------|-------|----------------|----------------|
+| **LAC** | 4.85 | 5.00 | More efficient |
+| **APS** | 5.74 | 5.76 | More conservative |
+
+### Key Comparisons with Paper
+
+| Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-3B) |
+|--------|----------------------|---------------------|
+| Best Accuracy | ~70% (LLaMA-65B) | 49% (Phi-2 on DRS) |
+| Avg Set Size | 2.5-3.5 | 4.85-5.76 |
+| Coverage Rate | ~90% | 90-100% |
+
+**Key Insight**: SLMs show 2-3x larger prediction sets than LLMs, reflecting appropriate uncertainty given their lower accuracy. The conformal prediction framework successfully captures this uncertainty.
 
 ---
 

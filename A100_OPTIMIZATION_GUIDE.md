@@ -49,16 +49,27 @@ export PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512  # Better memory allocation
 - **Time**: ~2 minutes
 - **Purpose**: Verify everything works
 
-### Fast Benchmark (1000 samples, 3 models, 3 tasks)
-- **Time**: ~15 minutes
-- **Purpose**: Get meaningful results quickly
-- **Models**: SmolLM-135M, SmolLM-360M, TinyLlama-1.1B
-- **Tasks**: QA, RC, CI
+### Short Benchmark (100 samples per task)
+- **Time**: ~5-10 minutes
+- **Purpose**: Get quick results for testing
+- **Models**: TinyLlama-1.1B, Phi-2
+- **Tasks**: QA, RC, CI, DRS, DS
+
+### Long Benchmark (10,000 samples per task) - ACTUAL RESULTS
+- **Time**: ~92 minutes (1.5 hours)
+- **Purpose**: Production-quality evaluation
+- **Models**: TinyLlama-1.1B, Phi-2
+- **Tasks**: 5 tasks (QA, RC, CI, DRS, DS)
+- **Conformal Methods**: LAC and APS
+- **Results**:
+  - Overall Accuracy: 31.7%
+  - Overall Coverage: 94.1%
+  - Average Set Size: 5.34
 
 ### Full Benchmark (All models, all tasks)
-- **Time**: ~2 hours
-- **Purpose**: Complete evaluation
-- **Models**: 9 models (135M to 2.7B parameters)
+- **Time**: ~4-6 hours
+- **Purpose**: Complete evaluation across all supported models
+- **Models**: 16+ models (135M to 2.7B parameters)
 - **Tasks**: 5 tasks (QA, RC, CI, DRS, DS)
 
 ---
@@ -183,6 +194,16 @@ tail -f results/comparison_report.txt
 - **High accuracy + large set size** = Correct but uncertain model
 - **Low accuracy + small set size** = Overconfident model (dangerous!)
 - **Coverage < 90%** = Conformal prediction not working properly
+
+### Actual Results from Long Benchmark (10,000 samples)
+
+| Task | Accuracy | Set Size (LAC) | Interpretation |
+|------|----------|----------------|----------------|
+| **DRS** | 45-49% | 4.8-5.0 | Best performance - pattern matching |
+| **DS** | 48% | 3.9-4.3 | Good accuracy, smallest sets |
+| **QA/RC/CI** | ~21% | 5.1-5.3 | Near-random, high uncertainty |
+
+**Key Finding**: SLMs show appropriate uncertainty - large prediction sets when accuracy is low, smaller sets when accuracy is higher.
 
 ---
 
