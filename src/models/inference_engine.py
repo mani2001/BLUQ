@@ -16,6 +16,9 @@ from src.models.model_loader import ModelInfo
 # Setup logger
 logger = logging.getLogger(__name__)
 
+# Memory management settings for A100 optimization
+CACHE_CLEAR_INTERVAL = 50  # Clear GPU cache every N batches to prevent fragmentation
+
 
 @dataclass
 class InferenceConfig:
@@ -277,15 +280,16 @@ class InferenceEngine:
         
         # Process in batches
         num_batches = (len(prompts) + self.config.batch_size - 1) // self.config.batch_size
-        
+
         iterator = range(0, len(prompts), self.config.batch_size)
         if show_progress:
             iterator = tqdm(iterator, total=num_batches, desc="Running inference")
-        
+
+        batch_count = 0
         for i in iterator:
             batch_prompts = prompts[i:i + self.config.batch_size]
             batch_ids = instance_ids[i:i + self.config.batch_size]
-            
+
             if self.config.batch_size == 1 or len(batch_prompts) == 1:
                 # Single inference
                 result = self.infer_single(batch_prompts[0], batch_ids[0])
@@ -294,6 +298,13 @@ class InferenceEngine:
                 # Batched inference
                 batch_results = self._infer_batch_internal(batch_prompts, batch_ids)
                 results.extend(batch_results)
+
+            batch_count += 1
+
+            # Periodic cache clearing to prevent memory fragmentation on long runs
+            if batch_count % CACHE_CLEAR_INTERVAL == 0 and torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                logger.debug(f"Cleared GPU cache after {batch_count} batches")
         
         total_time = time.time() - start_time
         avg_time = total_time / len(prompts)
@@ -318,14 +329,18 @@ class InferenceEngine:
             truncation=True,
             padding=True
         ).to(self.config.device)
-        
+
+        # For batch inference, disable KV-cache to save memory (20-30% reduction)
+        # KV-cache is only beneficial for autoregressive generation, not single-pass inference
+        use_cache = False if len(prompts) > 1 else self.config.use_cache
+
         # Run inference
         with torch.no_grad():
             if self.config.use_fp16 and torch.cuda.is_available():
                 with torch.cuda.amp.autocast():
-                    outputs = self.model(**inputs, use_cache=self.config.use_cache)
+                    outputs = self.model(**inputs, use_cache=use_cache)
             else:
-                outputs = self.model(**inputs, use_cache=self.config.use_cache)
+                outputs = self.model(**inputs, use_cache=use_cache)
         
         # Extract results for each instance in batch
         results = []

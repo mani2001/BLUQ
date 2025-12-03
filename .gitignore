@@ -3,6 +3,7 @@
 venv/
 env/
 ENV/
+CLAUDE.md
 
 # Python
 __pycache__/
@@ -44,12 +45,13 @@ models/cache/
 *.log
 benchmark.log
 
-# Config outputs
-configs/
+# NOTE: results/ and outputs/ are NOT gitignored
+# They contain benchmark results that must be preserved for analysis
+# since GPU instances use ephemeral storage
 
 # OS
 .DS_Store
 Thumbs.db
 
 .claude/
-CLAUDE.MD
+# NOTE: CLAUDE.md is tracked (contains important project documentation)

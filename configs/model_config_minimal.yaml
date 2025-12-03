@@ -1,0 +1,96 @@
+models:
+  tinyllama-1.1b:
+    name: tinyllama-1.1b
+    model_id: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+    load_config:
+      model_id: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      name: tinyllama-1.1b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: tinyllama-1.1b'
+    tags:
+    - slm
+    - tinyllama
+    - base
+    paper_reference: null
+  phi-2:
+    name: phi-2
+    model_id: microsoft/phi-2
+    load_config:
+      model_id: microsoft/phi-2
+      name: phi-2
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: phi-2'
+    tags:
+    - slm
+    - microsoft
+    - phi
+    - base
+    paper_reference: null
+cache_dir: ./models/cache
+output_dir: ./results/test
+run_sequentially: true
+save_intermediate: true
+compare_base_vs_instruct: true
+compare_different_sizes: true

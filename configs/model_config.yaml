@@ -1,0 +1,771 @@
+models:
+  phi-2:
+    name: phi-2
+    model_id: microsoft/phi-2
+    load_config:
+      model_id: microsoft/phi-2
+      name: phi-2
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: phi-2'
+    tags:
+    - slm
+    - microsoft
+    - phi
+    - base
+    paper_reference: null
+  phi-1.5:
+    name: phi-1.5
+    model_id: microsoft/phi-1_5
+    load_config:
+      model_id: microsoft/phi-1_5
+      name: phi-1.5
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: phi-1.5'
+    tags:
+    - slm
+    - microsoft
+    - phi
+    - base
+    paper_reference: null
+  stablelm-2-1.6b:
+    name: stablelm-2-1.6b
+    model_id: stabilityai/stablelm-2-1_6b
+    load_config:
+      model_id: stabilityai/stablelm-2-1_6b
+      name: stablelm-2-1.6b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: stablelm-2-1.6b'
+    tags:
+    - slm
+    - stability-ai
+    - stablelm
+    - base
+    paper_reference: null
+  stablelm-2-zephyr-1.6b:
+    name: stablelm-2-zephyr-1.6b
+    model_id: stabilityai/stablelm-2-zephyr-1_6b
+    load_config:
+      model_id: stabilityai/stablelm-2-zephyr-1_6b
+      name: stablelm-2-zephyr-1.6b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: stablelm-2-zephyr-1.6b'
+    tags:
+    - slm
+    - stability-ai
+    - stablelm
+    - instruct-tuned
+    paper_reference: null
+  tinyllama-1.1b:
+    name: tinyllama-1.1b
+    model_id: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+    load_config:
+      model_id: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      name: tinyllama-1.1b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: tinyllama-1.1b'
+    tags:
+    - slm
+    - tinyllama
+    - base
+    paper_reference: null
+  qwen-1.8b:
+    name: qwen-1.8b
+    model_id: Qwen/Qwen-1_8B
+    load_config:
+      model_id: Qwen/Qwen-1_8B
+      name: qwen-1.8b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: qwen-1.8b'
+    tags:
+    - slm
+    - alibaba
+    - qwen
+    - base
+    paper_reference: null
+  qwen-1.8b-chat:
+    name: qwen-1.8b-chat
+    model_id: Qwen/Qwen-1_8B-Chat
+    load_config:
+      model_id: Qwen/Qwen-1_8B-Chat
+      name: qwen-1.8b-chat
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: qwen-1.8b-chat'
+    tags:
+    - slm
+    - alibaba
+    - qwen
+    - instruct-tuned
+    paper_reference: null
+  gemma-2b:
+    name: gemma-2b
+    model_id: google/gemma-2b
+    load_config:
+      model_id: google/gemma-2b
+      name: gemma-2b
+      device: auto
+      dtype: bfloat16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: gemma-2b'
+    tags:
+    - slm
+    - google
+    - gemma
+    - base
+    paper_reference: null
+  gemma-2b-it:
+    name: gemma-2b-it
+    model_id: google/gemma-2b-it
+    load_config:
+      model_id: google/gemma-2b-it
+      name: gemma-2b-it
+      device: auto
+      dtype: bfloat16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: gemma-2b-it'
+    tags:
+    - slm
+    - google
+    - gemma
+    - instruct-tuned
+    paper_reference: null
+  smollm-135m:
+    name: smollm-135m
+    model_id: HuggingFaceTB/SmolLM-135M
+    load_config:
+      model_id: HuggingFaceTB/SmolLM-135M
+      name: smollm-135m
+      device: auto
+      dtype: float32
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: smollm-135m'
+    tags:
+    - slm
+    - huggingface
+    - smollm
+    - base
+    paper_reference: null
+  smollm-360m:
+    name: smollm-360m
+    model_id: HuggingFaceTB/SmolLM-360M
+    load_config:
+      model_id: HuggingFaceTB/SmolLM-360M
+      name: smollm-360m
+      device: auto
+      dtype: float32
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: smollm-360m'
+    tags:
+    - slm
+    - huggingface
+    - smollm
+    - base
+    paper_reference: null
+  smollm-1.7b:
+    name: smollm-1.7b
+    model_id: HuggingFaceTB/SmolLM-1.7B
+    load_config:
+      model_id: HuggingFaceTB/SmolLM-1.7B
+      name: smollm-1.7b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: smollm-1.7b'
+    tags:
+    - slm
+    - huggingface
+    - smollm
+    - base
+    paper_reference: null
+  openelm-270m:
+    name: openelm-270m
+    model_id: apple/OpenELM-270M
+    load_config:
+      model_id: apple/OpenELM-270M
+      name: openelm-270m
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: openelm-270m'
+    tags:
+    - slm
+    - apple
+    - openelm
+    - base
+    paper_reference: null
+  openelm-450m:
+    name: openelm-450m
+    model_id: apple/OpenELM-450M
+    load_config:
+      model_id: apple/OpenELM-450M
+      name: openelm-450m
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: openelm-450m'
+    tags:
+    - slm
+    - apple
+    - openelm
+    - base
+    paper_reference: null
+  openelm-1.1b:
+    name: openelm-1.1b
+    model_id: apple/OpenELM-1_1B
+    load_config:
+      model_id: apple/OpenELM-1_1B
+      name: openelm-1.1b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: openelm-1.1b'
+    tags:
+    - slm
+    - apple
+    - openelm
+    - base
+    paper_reference: null
+  h2o-danube-1.8b:
+    name: h2o-danube-1.8b
+    model_id: h2oai/h2o-danube-1.8b-base
+    load_config:
+      model_id: h2oai/h2o-danube-1.8b-base
+      name: h2o-danube-1.8b
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: h2o-danube-1.8b'
+    tags:
+    - slm
+    - h2o
+    - danube
+    - base
+    paper_reference: null
+  h2o-danube-1.8b-chat:
+    name: h2o-danube-1.8b-chat
+    model_id: h2oai/h2o-danube-1.8b-chat
+    load_config:
+      model_id: h2oai/h2o-danube-1.8b-chat
+      name: h2o-danube-1.8b-chat
+      device: auto
+      dtype: float16
+      quantization: null
+      trust_remote_code: true
+      use_flash_attention: false
+      low_cpu_mem_usage: true
+      cache_dir: null
+      padding_side: left
+      truncation_side: left
+      add_bos_token: true
+      add_eos_token: false
+    inference_config:
+      batch_size: 1
+      max_length: 2048
+      device: null
+      use_fp16: true
+      use_cache: true
+      temperature: 1.0
+      option_letters:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      extract_last_token_only: true
+    probability_config:
+      temperature: 1.0
+      calibration_method: null
+      normalize: true
+      min_prob: 1.0e-10
+      max_prob: 0.9999999999
+    description: 'Small Language Model: h2o-danube-1.8b-chat'
+    tags:
+    - slm
+    - h2o
+    - danube
+    - instruct-tuned
+    paper_reference: null
+cache_dir: ./models/cache
+output_dir: ./results/models
+run_sequentially: true
+save_intermediate: true
+compare_base_vs_instruct: true
+compare_different_sizes: true

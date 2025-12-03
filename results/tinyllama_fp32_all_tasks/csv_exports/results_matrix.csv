@@ -1,3 +1,0 @@
-Task,ci,ci,ci,drs,drs,drs,ds,ds,ds,qa,qa,qa,rc,rc,rc
-Metric,accuracy,set_size,coverage_rate,accuracy,set_size,coverage_rate,accuracy,set_size,coverage_rate,accuracy,set_size,coverage_rate,accuracy,set_size,coverage_rate
-tinyllama-1.1b,0.23529411764705888,4.254901960784314,0.954248366013072,1.0,1.45,1.0,0.5066666666666667,2.36,0.98,0.2679738562091503,4.045751633986928,0.9640522875816994,0.2549019607843137,4.04248366013072,0.9477124183006537

@@ -84,9 +84,17 @@ def get_device_info() -> DeviceInfo:
 
 
 # GPU tier detection for automatic batch size optimization
-HIGH_END_GPUS = ['A100', 'H100', 'H200', 'A6000', 'RTX 4090', 'RTX 3090', 'L40', 'A40']
+# A100 gets its own tier with more aggressive settings for maximum utilization
+HIGH_END_GPUS = ['H100', 'H200', 'A6000', 'RTX 4090', 'RTX 3090', 'L40', 'A40']
+A100_GPUS = ['A100']  # Separate tier for A100 with optimized settings
 
 GPU_TIER_CONFIG = {
+    'a100': {
+        'safety_margin': 0.93,       # More aggressive (vs 0.90 for high_end)
+        'max_batch_size': 192,       # Higher batch size (vs 128)
+        'min_vram_gb': 40,           # A100 comes in 40GB and 80GB variants
+        'activation_multiplier': 0.4  # Less conservative activation estimate
+    },
     'high_end': {'safety_margin': 0.90, 'max_batch_size': 128, 'min_vram_gb': 48},
     'mid_range': {'safety_margin': 0.85, 'max_batch_size': 64, 'min_vram_gb': 16},
     'low_end': {'safety_margin': 0.80, 'max_batch_size': 32, 'min_vram_gb': 0},
@@ -101,7 +109,7 @@ def get_gpu_tier(device_info: Optional['DeviceInfo'] = None) -> str:
         device_info: Optional DeviceInfo object. If not provided, will be fetched.
 
     Returns:
-        GPU tier: 'high_end', 'mid_range', or 'low_end'
+        GPU tier: 'a100', 'high_end', 'mid_range', or 'low_end'
     """
     if device_info is None:
         device_info = get_device_info()
@@ -111,6 +119,14 @@ def get_gpu_tier(device_info: Optional['DeviceInfo'] = None) -> str:
 
     # Check by GPU name first
     gpu_name = device_info.device_name.upper()
+
+    # Check for A100 first (dedicated tier with optimized settings)
+    for a100_gpu in A100_GPUS:
+        if a100_gpu.upper() in gpu_name:
+            logger.info(f"Detected A100 GPU: {device_info.device_name} - using optimized A100 settings")
+            return 'a100'
+
+    # Check other high-end GPUs
     for high_end_gpu in HIGH_END_GPUS:
         if high_end_gpu.upper() in gpu_name:
             logger.info(f"Detected high-end GPU by name: {device_info.device_name}")
@@ -160,8 +176,8 @@ class GPUMemoryManager:
         'int4': 0.5,
     }
 
-    # Approximate activation memory multiplier per batch item (relative to model size)
-    ACTIVATION_MULTIPLIER = 0.3
+    # Default activation memory multiplier (can be overridden by tier config)
+    DEFAULT_ACTIVATION_MULTIPLIER = 0.3
 
     # Default safety margin (will be overridden by GPU tier config)
     DEFAULT_SAFETY_MARGIN = 0.85
@@ -171,10 +187,15 @@ class GPUMemoryManager:
         self.device_info = get_device_info()
         self.gpu_config = get_gpu_config(self.device_info)
         self.safety_margin = self.gpu_config['safety_margin']
+        # Use tier-specific activation multiplier if available (A100 uses 0.4)
+        self.activation_multiplier = self.gpu_config.get(
+            'activation_multiplier', self.DEFAULT_ACTIVATION_MULTIPLIER
+        )
         logger.info(
             f"Initialized GPUMemoryManager:\n{self.device_info}\n"
             f"  GPU Tier: {self.gpu_config['tier']}\n"
             f"  Safety Margin: {self.safety_margin}\n"
+            f"  Activation Multiplier: {self.activation_multiplier}\n"
             f"  Max Batch Size: {self.gpu_config['max_batch_size']}"
         )
 
@@ -218,7 +239,7 @@ class GPUMemoryManager:
         """
         # Base activation memory scales with model size and batch
         model_memory = self.estimate_model_memory(num_params_billions, dtype)
-        activation_per_item = model_memory * self.ACTIVATION_MULTIPLIER * (seq_length / 2048)
+        activation_per_item = model_memory * self.activation_multiplier * (seq_length / 2048)
         return activation_per_item * batch_size
 
     def get_optimal_batch_size(
@@ -259,8 +280,8 @@ class GPUMemoryManager:
             )
             return min_batch_size
 
-        # Calculate batch size
-        activation_per_item = model_memory * self.ACTIVATION_MULTIPLIER * (seq_length / 2048)
+        # Calculate batch size using tier-specific activation multiplier
+        activation_per_item = model_memory * self.activation_multiplier * (seq_length / 2048)
 
         if activation_per_item <= 0:
             return max_batch_size
@@ -306,11 +327,42 @@ class GPUMemoryManager:
         if self.device_info.device_type == 'cuda':
             torch.cuda.empty_cache()
             torch.cuda.reset_peak_memory_stats()
-            logger.info("Cleared CUDA cache")
+            logger.debug("Cleared CUDA cache")
         elif self.device_info.device_type == 'mps':
             if hasattr(torch.mps, 'empty_cache'):
                 torch.mps.empty_cache()
-            logger.info("Cleared MPS cache")
+            logger.debug("Cleared MPS cache")
+
+    def check_memory_pressure(self, threshold: float = 0.85) -> bool:
+        """
+        Check if GPU memory usage exceeds threshold and log warning.
+
+        Args:
+            threshold: Memory utilization threshold (0-1). Default 0.85 (85%)
+
+        Returns:
+            True if memory usage exceeds threshold, False otherwise
+        """
+        usage = self.get_current_memory_usage()
+        utilization = usage.get('utilization', 0)
+
+        if utilization > threshold:
+            logger.warning(
+                f"GPU memory pressure: {utilization:.1%} utilization "
+                f"(threshold: {threshold:.0%}). "
+                f"Allocated: {usage['allocated_gb']:.2f}GB / {usage['total_gb']:.2f}GB"
+            )
+            return True
+        return False
+
+    def log_memory_status(self) -> None:
+        """Log current GPU memory status."""
+        usage = self.get_current_memory_usage()
+        logger.info(
+            f"GPU Memory: {usage['allocated_gb']:.2f}GB allocated, "
+            f"{usage['reserved_gb']:.2f}GB reserved, "
+            f"{usage['utilization']:.1%} utilization"
+        )
 
 
 def get_optimal_batch_size(

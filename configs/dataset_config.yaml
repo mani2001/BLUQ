@@ -1,0 +1,101 @@
+seed: 42
+cache_dir: ./data/cache
+output_dir: ./data/processed
+tasks:
+  qa:
+    task_name: qa
+    task_type: qa
+    dataset_name: mmlu
+    num_samples: 10000
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: false
+    context_key: null
+    description: Question answering task testing world knowledge across 57 subjects
+      in 4 categories.
+    dataset_path: cais/mmlu
+    dataset_config: all
+    splits_to_use:
+    - test
+    - validation
+    - dev
+    sample_strategy: stratified
+    category_key: subject
+  rc:
+    task_name: rc
+    task_type: rc
+    dataset_name: cosmosqa
+    num_samples: 10000
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: true
+    context_key: context
+    description: Reading comprehension task requiring understanding of everyday narratives
+      and reasoning beyond exact text spans.
+    dataset_path: cosmos_qa
+    dataset_config: null
+    splits_to_use:
+    - train
+    - validation
+    sample_strategy: random
+    category_key: null
+  ci:
+    task_name: ci
+    task_type: ci
+    dataset_name: hellaswag
+    num_samples: 10000
+    num_demonstrations: 5
+    max_input_length: 2048
+    has_context: true
+    context_key: context
+    description: Commonsense natural language inference task selecting the most likely
+      followup to an event description.
+    dataset_path: Rowan/hellaswag
+    dataset_config: null
+    splits_to_use:
+    - train
+    - validation
+    sample_strategy: random
+    category_key: null
+  drs:
+    task_name: drs
+    task_type: drs
+    dataset_name: haludial
+    num_samples: 10000
+    num_demonstrations: 3
+    max_input_length: 2048
+    has_context: true
+    context_key: dialogue
+    description: Dialogue response selection task choosing appropriate responses without
+      hallucination or non-factual information.
+    dataset_path: pminervini/HaluEval
+    dataset_config: dialogue
+    splits_to_use:
+    - data
+    sample_strategy: random
+    category_key: null
+  ds:
+    task_name: ds
+    task_type: ds
+    dataset_name: halusum
+    num_samples: 10000
+    num_demonstrations: 1
+    max_input_length: 2048
+    has_context: true
+    context_key: document
+    description: Document summarization task selecting accurate summaries without
+      hallucination or non-factual information.
+    dataset_path: pminervini/HaluEval
+    dataset_config: summarization
+    splits_to_use:
+    - data
+    sample_strategy: random
+    category_key: null
+calibration_ratio: 0.5
+stratify_split: true
+add_idk_option: true
+add_nota_option: true
+idk_text: I don't know
+nota_text: None of the above
+validate_after_processing: true
+validate_after_splitting: true
