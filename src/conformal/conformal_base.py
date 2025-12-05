@@ -127,7 +127,7 @@ class ConformalPredictionResult:
     
     def meets_coverage_guarantee(self) -> bool:
         """Check if empirical coverage meets the theoretical guarantee."""
-        return self.coverage_rate >= self.config.target_coverage
+        return bool(self.coverage_rate >= self.config.target_coverage)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
