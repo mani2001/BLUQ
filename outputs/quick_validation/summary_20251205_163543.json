@@ -1,0 +1,24 @@
+{
+  "timestamp": "20251205_163543",
+  "total_time_seconds": 693.525732755661,
+  "total_runs": 28,
+  "models": [
+    "phi-2",
+    "tinyllama-1.1b",
+    "stablelm-2-1.6b"
+  ],
+  "tasks": [
+    "ci",
+    "rc",
+    "drs",
+    "ds",
+    "qa"
+  ],
+  "dtypes": [
+    "float32"
+  ],
+  "overall_accuracy": 0.21148459383753498,
+  "overall_coverage": 0.9488795518207284,
+  "overall_set_size": 5.544117647058824,
+  "guarantee_met_ratio": 0.9285714285714286
+}
