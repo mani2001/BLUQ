@@ -63,6 +63,8 @@ class BenchmarkConfig:
     seed: int
     use_dynamic_batch_size: bool
     max_batch_size: Optional[int]  # None = auto-detect from GPU tier
+    resume: bool = False  # Resume from checkpoint if available
+    enable_profiling: bool = True  # Enable GPU profiling
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -87,6 +89,8 @@ class SingleRunResult:
 class FullBenchmarkRunner:
     """Runs the complete benchmark suite."""
 
+    CHECKPOINT_FILE = "checkpoint.json"
+
     def __init__(self, config: BenchmarkConfig):
         self.config = config
         self.output_dir = Path(config.output_dir)
@@ -94,14 +98,84 @@ class FullBenchmarkRunner:
 
         # Results storage
         self.results: List[SingleRunResult] = []
-        self.run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.completed_combinations: set = set()  # Track completed (model, task, dtype) tuples
+
+        # Check for resume
+        if config.resume:
+            self._load_checkpoint()
+            if self.completed_combinations:
+                logger.info(f"Resuming from checkpoint: {len(self.completed_combinations)} combinations already completed")
+        else:
+            self.run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         # Initialize components
         self._init_components()
 
+    def _get_checkpoint_path(self) -> Path:
+        """Get path to checkpoint file."""
+        return self.output_dir / self.CHECKPOINT_FILE
+
+    def _save_checkpoint(self):
+        """Save checkpoint with current progress."""
+        checkpoint = {
+            'timestamp': self.run_timestamp,
+            'completed_combinations': list(self.completed_combinations),
+            'results': [asdict(r) for r in self.results],
+            'config': self.config.to_dict()
+        }
+
+        checkpoint_path = self._get_checkpoint_path()
+        # Write to temp file first, then rename for atomicity
+        temp_path = checkpoint_path.with_suffix('.tmp')
+        with open(temp_path, 'w') as f:
+            json.dump(checkpoint, f, indent=2)
+        temp_path.replace(checkpoint_path)
+
+        logger.debug(f"Checkpoint saved: {len(self.completed_combinations)} combinations completed")
+
+    def _load_checkpoint(self):
+        """Load checkpoint if it exists."""
+        checkpoint_path = self._get_checkpoint_path()
+
+        if not checkpoint_path.exists():
+            logger.info("No checkpoint found, starting fresh")
+            self.run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            return
+
+        try:
+            with open(checkpoint_path, 'r') as f:
+                checkpoint = json.load(f)
+
+            self.run_timestamp = checkpoint.get('timestamp', datetime.now().strftime("%Y%m%d_%H%M%S"))
+            self.completed_combinations = set(tuple(c) for c in checkpoint.get('completed_combinations', []))
+
+            # Restore results
+            for r in checkpoint.get('results', []):
+                self.results.append(SingleRunResult(**r))
+
+            logger.info(f"Loaded checkpoint from {checkpoint_path}")
+            logger.info(f"  Timestamp: {self.run_timestamp}")
+            logger.info(f"  Completed: {len(self.completed_combinations)} combinations")
+            logger.info(f"  Results: {len(self.results)} entries")
+
+        except Exception as e:
+            logger.warning(f"Failed to load checkpoint: {e}. Starting fresh.")
+            self.run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.completed_combinations = set()
+            self.results = []
+
+    def _is_combination_completed(self, model: str, task: str, dtype: str) -> bool:
+        """Check if a combination has already been completed."""
+        return (model, task, dtype) in self.completed_combinations
+
+    def _mark_combination_completed(self, model: str, task: str, dtype: str):
+        """Mark a combination as completed."""
+        self.completed_combinations.add((model, task, dtype))
+
     def _init_components(self):
         """Initialize benchmark components."""
         from src.utils.gpu_utils import GPUMemoryManager, get_device_info, get_gpu_config
+        from src.utils.gpu_profiler import GPUProfiler
 
         # Get device info
         self.device_info = get_device_info()
@@ -128,6 +202,14 @@ class FullBenchmarkRunner:
             self.gpu_manager = GPUMemoryManager()
         else:
             self.gpu_manager = None
+
+        # Initialize GPU profiler
+        if self.config.enable_profiling:
+            self.profiler = GPUProfiler(monitoring_interval=2.0)
+            self.profiler.start_monitoring()
+            logger.info("GPU profiling enabled")
+        else:
+            self.profiler = None
 
     def get_batch_size(self, model_name: str, dtype: str) -> int:
         """Get optimal batch size for model and dtype."""
@@ -166,12 +248,22 @@ class FullBenchmarkRunner:
         current_run = 0
 
         # Run all combinations
+        skipped_count = 0
         for model_name in self.config.models:
             for dtype in self.config.dtypes:
                 for task in self.config.tasks:
                     current_run += 1
+
+                    # Check if already completed (for resume)
+                    if self._is_combination_completed(model_name, task, dtype):
+                        skipped_count += 1
+                        logger.info(f"Skipping {current_run}/{total_runs}: {model_name} | {task} | {dtype} (already completed)")
+                        continue
+
                     logger.info(f"\n{'='*80}")
                     logger.info(f"Run {current_run}/{total_runs}: {model_name} | {task} | {dtype}")
+                    if skipped_count > 0:
+                        logger.info(f"(Skipped {skipped_count} already-completed combinations)")
                     logger.info(f"{'='*80}")
 
                     try:
@@ -182,12 +274,20 @@ class FullBenchmarkRunner:
                         )
                         self.results.extend(results)
 
+                        # Mark as completed and save checkpoint
+                        self._mark_combination_completed(model_name, task, dtype)
+                        self._save_checkpoint()
+
                         # Save intermediate results
                         self._save_results()
+
+                        logger.info(f"Checkpoint saved after completing: {model_name} | {task} | {dtype}")
 
                     except Exception as e:
                         logger.error(f"Failed: {model_name} | {task} | {dtype}")
                         logger.error(f"Error: {e}", exc_info=True)
+                        # Still save checkpoint so we don't lose progress on other combinations
+                        self._save_checkpoint()
                         continue
 
         # Generate summary and visualizations
@@ -196,6 +296,16 @@ class FullBenchmarkRunner:
 
         # Generate visualizations
         self._generate_visualizations()
+
+        # Stop profiling and generate report
+        if self.profiler:
+            self.profiler.stop_monitoring()
+            self.profiler.print_summary()
+
+            # Save profiling report
+            profile_path = self.output_dir / f"gpu_profile_{self.run_timestamp}.json"
+            self.profiler.save_report(str(profile_path))
+            logger.info(f"GPU profiling report saved to: {profile_path}")
 
         logger.info(f"\n{'='*80}")
         logger.info("BENCHMARK COMPLETE")
@@ -245,16 +355,32 @@ class FullBenchmarkRunner:
 
         results = []
 
+        # Log GPU state at start
+        if self.profiler:
+            self.profiler.log_current_state(f"start_{model_name}_{task}")
+
         # Step 1: Load and process dataset
         logger.info(f"Loading {task} dataset ({self.config.num_samples} samples)...")
-        loader = DatasetLoaderFactory.create_loader(task)
-        dataset = loader.load(num_samples=self.config.num_samples)
 
-        processor = DatasetProcessor()
-        processed = processor.process_dataset(dataset)
+        if self.profiler:
+            with self.profiler.track("dataset_loading", task=task, num_samples=self.config.num_samples):
+                loader = DatasetLoaderFactory.create_loader(task)
+                dataset = loader.load(num_samples=self.config.num_samples)
+        else:
+            loader = DatasetLoaderFactory.create_loader(task)
+            dataset = loader.load(num_samples=self.config.num_samples)
 
-        splitter = DataSplitter()
-        split = splitter.split_dataset(processed, calibration_ratio=self.config.calibration_ratio)
+        if self.profiler:
+            with self.profiler.track("dataset_processing", task=task):
+                processor = DatasetProcessor()
+                processed = processor.process_dataset(dataset)
+                splitter = DataSplitter()
+                split = splitter.split_dataset(processed, calibration_ratio=self.config.calibration_ratio)
+        else:
+            processor = DatasetProcessor()
+            processed = processor.process_dataset(dataset)
+            splitter = DataSplitter()
+            split = splitter.split_dataset(processed, calibration_ratio=self.config.calibration_ratio)
 
         # Step 2: Get demonstrations
         task_config = DefaultTaskConfigs.get_all_configs()[task]
@@ -267,20 +393,33 @@ class FullBenchmarkRunner:
 
         # Step 3: Load model with specified dtype
         logger.info(f"Loading model: {model_name} ({dtype})")
-        model_loader = ModelLoader()
 
-        # Get base config and override dtype
-        base_config = DefaultModelConfigs.create_pipeline_config(model_name)
-        load_config = ModelLoadConfig(
-            model_id=base_config.load_config.model_id,
-            name=f"{model_name}_{dtype}",
-            dtype=dtype,
-            device="auto" if torch.cuda.is_available() else "cpu",
-            trust_remote_code=True,
-            low_cpu_mem_usage=True
-        )
-
-        model, tokenizer, model_info = model_loader.load_model(load_config)
+        if self.profiler:
+            with self.profiler.track("model_loading", model=model_name, dtype=dtype):
+                model_loader = ModelLoader()
+                base_config = DefaultModelConfigs.create_pipeline_config(model_name)
+                load_config = ModelLoadConfig(
+                    model_id=base_config.load_config.model_id,
+                    name=f"{model_name}_{dtype}",
+                    dtype=dtype,
+                    device="auto" if torch.cuda.is_available() else "cpu",
+                    trust_remote_code=True,
+                    low_cpu_mem_usage=True
+                )
+                model, tokenizer, model_info = model_loader.load_model(load_config)
+            self.profiler.log_current_state(f"after_model_load_{model_name}")
+        else:
+            model_loader = ModelLoader()
+            base_config = DefaultModelConfigs.create_pipeline_config(model_name)
+            load_config = ModelLoadConfig(
+                model_id=base_config.load_config.model_id,
+                name=f"{model_name}_{dtype}",
+                dtype=dtype,
+                device="auto" if torch.cuda.is_available() else "cpu",
+                trust_remote_code=True,
+                low_cpu_mem_usage=True
+            )
+            model, tokenizer, model_info = model_loader.load_model(load_config)
 
         # Get batch size
         batch_size = self.get_batch_size(model_name, dtype)
@@ -313,14 +452,39 @@ class FullBenchmarkRunner:
             inference_engine = InferenceEngine(model, tokenizer, model_info, inference_config)
 
             inference_start = time.time()
-            cal_results = inference_engine.infer_batch(cal_prompts, show_progress=True)
-            test_results = inference_engine.infer_batch(test_prompts, show_progress=True)
+
+            if self.profiler:
+                with self.profiler.track("inference_calibration",
+                                        model=model_name, strategy=strategy,
+                                        num_samples=len(cal_prompts), batch_size=batch_size):
+                    cal_results = inference_engine.infer_batch(cal_prompts, show_progress=True)
+
+                with self.profiler.track("inference_test",
+                                        model=model_name, strategy=strategy,
+                                        num_samples=len(test_prompts), batch_size=batch_size):
+                    test_results = inference_engine.infer_batch(test_prompts, show_progress=True)
+            else:
+                cal_results = inference_engine.infer_batch(cal_prompts, show_progress=True)
+                test_results = inference_engine.infer_batch(test_prompts, show_progress=True)
+
             inference_time = time.time() - inference_start
 
+            # Log throughput
+            total_samples = len(cal_prompts) + len(test_prompts)
+            throughput = total_samples / inference_time if inference_time > 0 else 0
+            logger.info(f"    Inference: {inference_time:.2f}s for {total_samples} samples "
+                       f"({throughput:.2f} samples/sec)")
+
             # Extract probabilities
-            prob_extractor = ProbabilityExtractor()
-            cal_probs = prob_extractor.extract_batch(cal_results)
-            test_probs = prob_extractor.extract_batch(test_results)
+            if self.profiler:
+                with self.profiler.track("probability_extraction", model=model_name):
+                    prob_extractor = ProbabilityExtractor()
+                    cal_probs = prob_extractor.extract_batch(cal_results)
+                    test_probs = prob_extractor.extract_batch(test_results)
+            else:
+                prob_extractor = ProbabilityExtractor()
+                cal_probs = prob_extractor.extract_batch(cal_results)
+                test_probs = prob_extractor.extract_batch(test_results)
 
             cal_prob_array = np.array([p.probabilities for p in cal_probs])
             test_prob_array = np.array([p.probabilities for p in test_probs])
@@ -518,7 +682,10 @@ def main():
         '--max-batch-size',
         type=int,
         default=None,
-        help='Maximum batch size (default: auto-detect based on GPU tier - 128 for A100/H100, 64 for mid-range, 32 for low-end)'
+        help='Maximum batch size. Defaults: auto-detect based on GPU tier. '
+             'Recommendations for A100 80GB with 2048 tokens: '
+             '<500M params: 32, 500M-1.5B: 16, 1.5B-3B: 8, 3B-7B: 4, >7B: 2. '
+             'Reduce if encountering OOM errors.'
     )
 
     parser.add_argument(
@@ -542,6 +709,18 @@ def main():
         default=['lac', 'aps'],
         choices=['lac', 'aps'],
         help='Conformal prediction methods'
+    )
+
+    parser.add_argument(
+        '--resume',
+        action='store_true',
+        help='Resume from checkpoint if available. Skips already-completed (model, task, dtype) combinations.'
+    )
+
+    parser.add_argument(
+        '--no-profiling',
+        action='store_true',
+        help='Disable GPU profiling (reduces overhead slightly)'
     )
 
     args = parser.parse_args()
@@ -583,7 +762,9 @@ def main():
         conformal_methods=args.conformal_methods,
         seed=args.seed,
         use_dynamic_batch_size=not args.no_dynamic_batch,
-        max_batch_size=args.max_batch_size
+        max_batch_size=args.max_batch_size,
+        resume=args.resume,
+        enable_profiling=not args.no_profiling
     )
 
     # Print banner

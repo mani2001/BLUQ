@@ -20,26 +20,105 @@ logger = logging.getLogger(__name__)
 CACHE_CLEAR_INTERVAL = 50  # Clear GPU cache every N batches to prevent fragmentation
 
 
+def estimate_optimal_batch_size(
+    model_params_billions: float,
+    max_length: int = 2048,
+    gpu_memory_gb: float = 80.0
+) -> int:
+    """
+    Estimate optimal batch size based on model size and GPU memory.
+
+    This is a heuristic based on typical A100 80GB memory usage patterns.
+    Actual optimal batch size may vary based on model architecture.
+
+    Args:
+        model_params_billions: Model size in billions of parameters
+        max_length: Maximum sequence length
+        gpu_memory_gb: Available GPU memory in GB
+
+    Returns:
+        Recommended batch size
+    """
+    # Base memory estimates (empirical, for FP16 with 2048 token context)
+    # These are conservative estimates to avoid OOM
+    if model_params_billions <= 0.5:
+        # <500M params: very small models
+        base_batch = 32
+    elif model_params_billions <= 1.5:
+        # 500M-1.5B params: small models (TinyLlama, SmolLM, etc.)
+        base_batch = 16
+    elif model_params_billions <= 3.0:
+        # 1.5B-3B params: medium models (Phi-2, StableLM, Gemma-2B)
+        base_batch = 8
+    elif model_params_billions <= 7.0:
+        # 3B-7B params: larger models (Mistral-7B)
+        base_batch = 4
+    else:
+        # >7B params: large models
+        base_batch = 2
+
+    # Adjust for sequence length (longer sequences need more memory)
+    if max_length > 2048:
+        length_factor = 2048 / max_length
+        base_batch = max(1, int(base_batch * length_factor))
+
+    # Adjust for GPU memory (base estimates assume 80GB)
+    memory_factor = gpu_memory_gb / 80.0
+    adjusted_batch = max(1, int(base_batch * memory_factor))
+
+    logger.debug(
+        f"Estimated batch size for {model_params_billions}B params, "
+        f"{max_length} tokens, {gpu_memory_gb}GB GPU: {adjusted_batch}"
+    )
+
+    return adjusted_batch
+
+
 @dataclass
 class InferenceConfig:
     """Configuration for inference."""
-    batch_size: int = 1
+    batch_size: int = 4  # Increased default for better GPU utilization
     max_length: int = 2048
     device: Optional[str] = None  # If None, use model's device
     use_fp16: bool = True
     use_cache: bool = True
-    
+
     # Temperature for probability calibration (if needed)
     temperature: float = 1.0
-    
+
     # Option extraction settings
     option_letters: List[str] = None
     extract_last_token_only: bool = True
-    
+
     def __post_init__(self):
         if self.option_letters is None:
             self.option_letters = ['A', 'B', 'C', 'D', 'E', 'F']
-    
+
+    @classmethod
+    def with_auto_batch_size(
+        cls,
+        model_params_billions: float,
+        max_length: int = 2048,
+        gpu_memory_gb: float = 80.0,
+        **kwargs
+    ) -> 'InferenceConfig':
+        """
+        Create config with automatically estimated batch size.
+
+        Args:
+            model_params_billions: Model size in billions of parameters
+            max_length: Maximum sequence length
+            gpu_memory_gb: Available GPU memory in GB
+            **kwargs: Additional config parameters
+
+        Returns:
+            InferenceConfig with optimal batch size
+        """
+        batch_size = estimate_optimal_batch_size(
+            model_params_billions, max_length, gpu_memory_gb
+        )
+        return cls(batch_size=batch_size, max_length=max_length, **kwargs)
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
         return {

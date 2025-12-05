@@ -20,24 +20,24 @@ logger = logging.getLogger(__name__)
 class APSScorer(BaseConformalPredictor):
     """
     Adaptive Prediction Sets (APS) conformal predictor.
-    
+
     Score function: s(X, Y) = Σ P(Y') for all Y' with P(Y') ≥ P(Y)
-    
-    This method produces prediction sets that are more adaptive to the 
+
+    This method produces prediction sets that are more adaptive to the
     probability distribution compared to LAC. It addresses LAC's limitation
-    of potentially undercovering hard instances, but typically produces 
+    of potentially undercovering hard instances, but typically produces
     larger average set sizes.
-    
+
     Reference:
-    Romano, Y., Sesia, M., & Candes, E. (2020). Classification with valid 
-    and adaptive coverage. Advances in Neural Information Processing Systems, 
+    Romano, Y., Sesia, M., & Candes, E. (2020). Classification with valid
+    and adaptive coverage. Advances in Neural Information Processing Systems,
     33, 3581-3591.
     """
-    
+
     def __init__(self, config: Optional[ConformalConfig] = None):
         """
         Initialize APS scorer.
-        
+
         Args:
             config: Configuration for conformal prediction
         """
@@ -49,9 +49,32 @@ class APSScorer(BaseConformalPredictor):
                 f"but APS scorer requires 'aps'. Overriding."
             )
             config.score_function = 'aps'
-        
+
         super().__init__(config)
         logger.info("Initialized APS (Adaptive Prediction Sets) scorer")
+
+        # Track empty set fallbacks
+        self._empty_set_count = 0
+        self._total_predictions = 0
+
+    def reset_empty_set_stats(self) -> None:
+        """Reset empty set statistics."""
+        self._empty_set_count = 0
+        self._total_predictions = 0
+
+    def get_empty_set_stats(self) -> Dict[str, Any]:
+        """
+        Get statistics about empty prediction set occurrences.
+
+        Returns:
+            Dictionary with empty set statistics
+        """
+        rate = self._empty_set_count / self._total_predictions if self._total_predictions > 0 else 0.0
+        return {
+            'empty_set_count': self._empty_set_count,
+            'total_predictions': self._total_predictions,
+            'empty_set_rate': rate
+        }
     
     def compute_score(
         self,
@@ -108,9 +131,12 @@ class APSScorer(BaseConformalPredictor):
         Returns:
             PredictionSet object
         """
+        # Track total predictions
+        self._total_predictions += 1
+
         # Sort indices by probability (descending)
         sorted_indices = np.argsort(probabilities)[::-1]
-        
+
         # Compute scores for all options (for metadata)
         scores = {}
         for i, letter in enumerate(option_letters):
@@ -118,34 +144,37 @@ class APSScorer(BaseConformalPredictor):
             true_prob = probabilities[i]
             score = np.sum(probabilities[probabilities >= true_prob])
             scores[letter] = float(score)
-        
+
         # Build prediction set by adding options in order of probability
         included_options = []
         cumulative_prob = 0.0
-        
+
         for idx in sorted_indices:
             letter = option_letters[idx]
             prob = probabilities[idx]
-            
+
             # Add this option
             included_options.append(letter)
             cumulative_prob += prob
-            
+
             # Check if we've exceeded the threshold
             # We need: cumulative_prob > threshold
             # But we include at least one option
             if cumulative_prob > threshold and len(included_options) > 0:
                 break
-        
+
         # Ensure at least one option is included
+        empty_set_fallback = False
         if len(included_options) == 0:
             best_idx = sorted_indices[0]
             included_options = [option_letters[best_idx]]
+            empty_set_fallback = True
+            self._empty_set_count += 1
             logger.debug(
                 f"Empty prediction set for {instance_id}, "
                 f"adding highest probability option: {included_options[0]}"
             )
-        
+
         return PredictionSet(
             instance_id=instance_id,
             options=included_options,
@@ -154,6 +183,7 @@ class APSScorer(BaseConformalPredictor):
             size=len(included_options),
             metadata={
                 'method': 'aps',
+                'empty_set_fallback': empty_set_fallback,
                 'cumulative_prob': float(cumulative_prob),
                 'sorted_order': [option_letters[i] for i in sorted_indices]
             }

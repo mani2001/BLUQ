@@ -29,41 +29,101 @@ class ProcessedDataInstance:
     original_num_options: int = 4
 
 
+def _compute_string_similarity(s1: str, s2: str) -> float:
+    """
+    Compute simple string similarity ratio between two strings.
+    Uses character-level comparison for efficiency.
+
+    Args:
+        s1: First string
+        s2: Second string
+
+    Returns:
+        Similarity ratio between 0 and 1
+    """
+    if not s1 or not s2:
+        return 0.0
+
+    # Normalize strings
+    s1_lower = s1.lower().strip()
+    s2_lower = s2.lower().strip()
+
+    # Exact match
+    if s1_lower == s2_lower:
+        return 1.0
+
+    # Compute Jaccard similarity on character trigrams
+    def get_trigrams(s):
+        if len(s) < 3:
+            return {s}
+        return {s[i:i+3] for i in range(len(s) - 2)}
+
+    trigrams1 = get_trigrams(s1_lower)
+    trigrams2 = get_trigrams(s2_lower)
+
+    if not trigrams1 or not trigrams2:
+        return 0.0
+
+    intersection = len(trigrams1 & trigrams2)
+    union = len(trigrams1 | trigrams2)
+
+    return intersection / union if union > 0 else 0.0
+
+
 class DatasetProcessor:
     """Processes datasets to standardized 6-option format."""
-    
+
+    # Similarity threshold for considering options as duplicates
+    OPTION_SIMILARITY_THRESHOLD = 0.8
+
     def __init__(self, seed: int = 42):
         """
         Initialize the dataset processor.
-        
+
         Args:
             seed: Random seed for reproducibility
         """
         self.seed = seed
         random.seed(seed)
-        
+
         # Standard additional options
         self.option_e = "I don't know"
         self.option_f = "None of the above"
+
+        # Statistics tracking for option expansion
+        self._expansion_stats = {
+            'instances_expanded': 0,
+            'total_options_sampled': 0,
+            'duplicate_options_avoided': 0,
+            'fallback_options_used': 0
+        }
     
     def process_dataset(self, dataset: TaskDataset) -> TaskDataset:
         """
         Process a TaskDataset to 6-option format.
-        
+
         Args:
             dataset: Original TaskDataset with 4 or 2 options
-            
+
         Returns:
             TaskDataset with all instances converted to 6 options
         """
         logger.info(f"Processing {dataset.task_name} dataset to 6-option format...")
-        
+
+        # Reset expansion stats for this dataset
+        self._expansion_stats = {
+            'instances_expanded': 0,
+            'total_options_sampled': 0,
+            'duplicate_options_avoided': 0,
+            'fallback_options_used': 0
+        }
+
         processed_instances = []
-        
+
         for instance in dataset.instances:
             processed = self._process_instance(instance, dataset)
             processed_instances.append(processed)
-        
+
         # Create new dataset with processed instances
         processed_dataset = TaskDataset(
             task_name=dataset.task_name,
@@ -71,9 +131,22 @@ class DatasetProcessor:
             task_type=dataset.task_type,
             num_original_options=6  # Now all have 6 options
         )
-        
+
         logger.info(f"Processed {len(processed_instances)} instances for {dataset.task_name}")
+
+        # Log expansion statistics if any expansion occurred
+        if self._expansion_stats['instances_expanded'] > 0:
+            logger.info(f"Option expansion statistics for {dataset.task_name}:")
+            logger.info(f"  Instances expanded (2→4 options): {self._expansion_stats['instances_expanded']}")
+            logger.info(f"  Total options sampled: {self._expansion_stats['total_options_sampled']}")
+            logger.info(f"  Duplicate options avoided: {self._expansion_stats['duplicate_options_avoided']}")
+            logger.info(f"  Fallback options used: {self._expansion_stats['fallback_options_used']}")
+
         return processed_dataset
+
+    def get_expansion_stats(self) -> Dict:
+        """Get statistics about option expansion from the last process_dataset call."""
+        return self._expansion_stats.copy()
     
     def _process_instance(
         self,
@@ -82,22 +155,26 @@ class DatasetProcessor:
     ) -> DataInstance:
         """
         Process a single instance to 6-option format.
-        
+
         Args:
             instance: Original DataInstance
             dataset: Parent TaskDataset for context
-            
+
         Returns:
             Processed DataInstance with 6 options
+
+        Raises:
+            ValueError: If the answer is not A, B, C, or D (per paper specification)
         """
         # Start with existing options
         options = instance.options.copy()
         num_original = len(options)
-        
+
         # If original has only 2 options (HaluDial, HaluSum), expand to 4 first
-        if num_original == 2:
+        if num_original == 2 or (num_original > 2 and any(not opt for opt in options[:4])):
             options = self._expand_to_four_options(instance, dataset)
-        
+            self._expansion_stats['instances_expanded'] += 1
+
         # Ensure we have exactly 4 options before adding E and F
         if len(options) != 4:
             logger.warning(
@@ -105,21 +182,25 @@ class DatasetProcessor:
                 f"expected 4. Adjusting..."
             )
             options = self._normalize_to_four_options(options)
-        
+
         # Add options E and F
         options.append(self.option_e)
         options.append(self.option_f)
-        
-        # Verify answer is still valid (should be A, B, C, or D)
+
+        # CRITICAL: Validate answer is A, B, C, or D (per paper specification)
+        # The correct answer should NEVER be E ("I don't know") or F ("None of the above")
         if instance.answer not in ['A', 'B', 'C', 'D']:
-            logger.error(
-                f"Instance {instance.id} has invalid answer: {instance.answer}. "
-                f"Defaulting to A."
+            error_msg = (
+                f"Instance {instance.id} has invalid answer: '{instance.answer}'. "
+                f"Per paper specification, correct answers must be A, B, C, or D only "
+                f"(never E or F). This indicates a data loading or processing issue."
             )
-            answer = 'A'
-        else:
-            answer = instance.answer
-        
+            logger.error(error_msg)
+            # Raise error instead of silently defaulting - this is a critical issue
+            raise ValueError(error_msg)
+
+        answer = instance.answer
+
         # Create new instance with updated options
         return DataInstance(
             id=instance.id,
@@ -192,45 +273,85 @@ class DatasetProcessor:
     ) -> List[str]:
         """
         Sample additional options from other instances in the dataset.
-        
+        Validates that sampled options are not too similar to existing options.
+
         Args:
             instance: Current instance
             dataset: Parent dataset
             num_needed: Number of additional options needed
-            
+
         Returns:
             List of sampled options
         """
+        # Get existing options to check similarity against
+        existing_options = [opt for opt in instance.options if opt]
+
         # Get all other instances
         other_instances = [
-            inst for inst in dataset.instances 
+            inst for inst in dataset.instances
             if inst.id != instance.id
         ]
-        
+
         if not other_instances:
             logger.warning(
                 f"No other instances available to sample from for {instance.id}. "
                 f"Using placeholder options."
             )
+            self._expansion_stats['fallback_options_used'] += num_needed
             return [f"Option {i}" for i in range(num_needed)]
-        
-        # Sample random instances
-        sampled_instances = random.sample(
-            other_instances,
-            min(num_needed, len(other_instances))
-        )
-        
-        # Extract options from sampled instances
+
+        # Shuffle to ensure randomness
+        shuffled_instances = other_instances.copy()
+        random.shuffle(shuffled_instances)
+
+        # Extract options from sampled instances, checking for similarity
         additional_options = []
-        for sampled in sampled_instances:
-            # Take the first option from each sampled instance
-            if sampled.options and sampled.options[0]:
-                additional_options.append(sampled.options[0])
-        
-        # If we don't have enough, pad with placeholders
+        candidates_checked = 0
+        max_candidates = min(len(shuffled_instances), num_needed * 10)  # Check up to 10x needed
+
+        for sampled in shuffled_instances[:max_candidates]:
+            if len(additional_options) >= num_needed:
+                break
+
+            candidates_checked += 1
+
+            # Take the first non-empty option from the sampled instance
+            candidate_option = None
+            if sampled.options:
+                for opt in sampled.options:
+                    if opt:
+                        candidate_option = opt
+                        break
+
+            if not candidate_option:
+                continue
+
+            # Check similarity against existing and already-added options
+            all_current_options = existing_options + additional_options
+            is_duplicate = False
+
+            for existing in all_current_options:
+                similarity = _compute_string_similarity(candidate_option, existing)
+                if similarity >= self.OPTION_SIMILARITY_THRESHOLD:
+                    is_duplicate = True
+                    self._expansion_stats['duplicate_options_avoided'] += 1
+                    logger.debug(
+                        f"Skipping similar option (similarity={similarity:.2f}): "
+                        f"'{candidate_option[:50]}...' similar to '{existing[:50]}...'"
+                    )
+                    break
+
+            if not is_duplicate:
+                additional_options.append(candidate_option)
+                self._expansion_stats['total_options_sampled'] += 1
+
+        # If we don't have enough valid options, pad with placeholders
         while len(additional_options) < num_needed:
-            additional_options.append(f"Alternative option {len(additional_options) + 1}")
-        
+            placeholder = f"Alternative option {len(additional_options) + 1}"
+            additional_options.append(placeholder)
+            self._expansion_stats['fallback_options_used'] += 1
+            logger.debug(f"Using placeholder option for {instance.id}: {placeholder}")
+
         return additional_options[:num_needed]
     
     def _normalize_to_four_options(self, options: List[str]) -> List[str]:

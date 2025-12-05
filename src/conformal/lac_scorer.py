@@ -5,7 +5,7 @@ Implements the LAC conformal score function.
 
 import logging
 import numpy as np
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.conformal.conformal_base import (
     BaseConformalPredictor,
@@ -20,22 +20,22 @@ logger = logging.getLogger(__name__)
 class LACScorer(BaseConformalPredictor):
     """
     Least Ambiguous set-valued Classifiers (LAC) conformal predictor.
-    
+
     Score function: s(X, Y) = 1 - P(Y)
-    
+
     This produces the smallest average set size among valid conformal methods.
     However, it may undercover hard instances and overcover easy ones.
-    
+
     Reference:
-    Sadinle, M., Lei, J., & Wasserman, L. (2019). Least ambiguous set-valued 
-    classifiers with bounded error levels. Journal of the American Statistical 
+    Sadinle, M., Lei, J., & Wasserman, L. (2019). Least ambiguous set-valued
+    classifiers with bounded error levels. Journal of the American Statistical
     Association, 114(525), 223-234.
     """
-    
+
     def __init__(self, config: Optional[ConformalConfig] = None):
         """
         Initialize LAC scorer.
-        
+
         Args:
             config: Configuration for conformal prediction
         """
@@ -47,9 +47,32 @@ class LACScorer(BaseConformalPredictor):
                 f"but LAC scorer requires 'lac'. Overriding."
             )
             config.score_function = 'lac'
-        
+
         super().__init__(config)
         logger.info("Initialized LAC (Least Ambiguous set-valued Classifiers) scorer")
+
+        # Track empty set fallbacks
+        self._empty_set_count = 0
+        self._total_predictions = 0
+
+    def reset_empty_set_stats(self) -> None:
+        """Reset empty set statistics."""
+        self._empty_set_count = 0
+        self._total_predictions = 0
+
+    def get_empty_set_stats(self) -> Dict[str, Any]:
+        """
+        Get statistics about empty prediction set occurrences.
+
+        Returns:
+            Dictionary with empty set statistics
+        """
+        rate = self._empty_set_count / self._total_predictions if self._total_predictions > 0 else 0.0
+        return {
+            'empty_set_count': self._empty_set_count,
+            'total_predictions': self._total_predictions,
+            'empty_set_rate': rate
+        }
     
     def compute_score(
         self,
@@ -96,30 +119,36 @@ class LACScorer(BaseConformalPredictor):
         Returns:
             PredictionSet object
         """
+        # Track total predictions
+        self._total_predictions += 1
+
         # Compute scores for all options
         scores = {}
         included_options = []
-        
+
         min_prob = 1.0 - threshold
-        
+
         for i, (letter, prob) in enumerate(zip(option_letters, probabilities)):
             score = 1.0 - prob
             scores[letter] = float(score)
-            
+
             # Include option if score ≤ threshold (i.e., prob ≥ 1 - threshold)
             if score <= threshold:
                 included_options.append(letter)
-        
+
         # Handle empty set case
         # If no options meet the threshold, include the option with highest probability
+        empty_set_fallback = False
         if len(included_options) == 0:
             best_idx = np.argmax(probabilities)
             included_options = [option_letters[best_idx]]
+            empty_set_fallback = True
+            self._empty_set_count += 1
             logger.debug(
                 f"Empty prediction set for {instance_id}, "
                 f"adding highest probability option: {included_options[0]}"
             )
-        
+
         return PredictionSet(
             instance_id=instance_id,
             options=included_options,
@@ -128,7 +157,8 @@ class LACScorer(BaseConformalPredictor):
             size=len(included_options),
             metadata={
                 'method': 'lac',
-                'min_required_prob': min_prob
+                'min_required_prob': min_prob,
+                'empty_set_fallback': empty_set_fallback
             }
         )
     

@@ -23,6 +23,71 @@ from transformers import (
 logger = logging.getLogger(__name__)
 
 
+def is_flash_attention_available() -> bool:
+    """
+    Check if Flash Attention 2 is available in the environment.
+
+    Returns:
+        True if Flash Attention 2 can be used, False otherwise
+    """
+    try:
+        import importlib.util
+        # Check if flash_attn is installed
+        if importlib.util.find_spec("flash_attn") is None:
+            return False
+
+        # Check if we have a compatible GPU
+        if not torch.cuda.is_available():
+            return False
+
+        # Flash Attention 2 requires compute capability >= 8.0 (Ampere+)
+        # A100 is compute capability 8.0
+        device = torch.cuda.current_device()
+        compute_capability = torch.cuda.get_device_capability(device)
+        major, minor = compute_capability
+
+        if major < 8:
+            logger.debug(
+                f"GPU compute capability {major}.{minor} < 8.0, "
+                "Flash Attention 2 not supported"
+            )
+            return False
+
+        logger.debug(f"Flash Attention 2 available (compute capability {major}.{minor})")
+        return True
+
+    except Exception as e:
+        logger.debug(f"Flash Attention availability check failed: {e}")
+        return False
+
+
+def check_model_supports_flash_attention(model_id: str) -> bool:
+    """
+    Check if a specific model architecture supports Flash Attention 2.
+
+    Some model architectures may not support Flash Attention even if it's installed.
+
+    Args:
+        model_id: HuggingFace model ID
+
+    Returns:
+        True if the model likely supports Flash Attention
+    """
+    # Models known to NOT support Flash Attention 2 well
+    unsupported_patterns = [
+        "openelm",  # OpenELM uses custom attention
+        "rwkv",     # RWKV is not attention-based
+    ]
+
+    model_id_lower = model_id.lower()
+    for pattern in unsupported_patterns:
+        if pattern in model_id_lower:
+            logger.debug(f"Model {model_id} may not support Flash Attention 2")
+            return False
+
+    return True
+
+
 @dataclass
 class ModelInfo:
     """Information about a loaded model."""
@@ -249,10 +314,22 @@ class ModelLoader:
                 )
                 logger.info("Using 4-bit quantization")
             
-            # Flash attention (if supported)
-            if config.use_flash_attention:
-                model_kwargs['attn_implementation'] = "flash_attention_2"
-                logger.info("Using Flash Attention 2")
+            # Flash attention - auto-enable if available and not explicitly disabled
+            use_flash = config.use_flash_attention
+            if not use_flash and is_flash_attention_available():
+                # Auto-enable if model supports it
+                if check_model_supports_flash_attention(config.model_id):
+                    use_flash = True
+                    logger.info("Auto-enabling Flash Attention 2 (detected compatible GPU and library)")
+
+            if use_flash:
+                try:
+                    model_kwargs['attn_implementation'] = "flash_attention_2"
+                    logger.info("Using Flash Attention 2")
+                except Exception as e:
+                    logger.warning(f"Failed to enable Flash Attention 2: {e}. Falling back to default attention.")
+                    if 'attn_implementation' in model_kwargs:
+                        del model_kwargs['attn_implementation']
             
             # Load the model
             model = AutoModelForCausalLM.from_pretrained(**model_kwargs)

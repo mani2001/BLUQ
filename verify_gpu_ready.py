@@ -93,16 +93,16 @@ def main():
     for name, check_func in checks:
         logger.info(f"\n--- Checking {name} ---")
         if check_func():
-            logger.info(f"✅ {name} Passed")
+            logger.info(f"[OK] {name} Passed")
         else:
-            logger.error(f"❌ {name} Failed")
+            logger.error(f"[FAIL] {name} Failed")
             all_passed = False
-            
+
     print("\n" + "="*40)
     if all_passed:
-        print("✅ SYSTEM IS READY FOR GPU DEPLOYMENT")
+        print("[OK] SYSTEM IS READY FOR GPU DEPLOYMENT")
     else:
-        print("❌ SYSTEM IS NOT READY")
+        print("[FAIL] SYSTEM IS NOT READY")
     print("="*40)
     
     sys.exit(0 if all_passed else 1)

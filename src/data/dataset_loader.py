@@ -317,40 +317,53 @@ class CosmosQALoader(BaseDatasetLoader):
         except (ValueError, AttributeError, IndexError):
             logger.debug(f"Could not parse datasets version: {DATASETS_VERSION}")
         
-        # Try loading the dataset
+        # Try loading the dataset with fallback for newer datasets versions
+        dataset = None
+
+        # First attempt: standard loading
         try:
             dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir)
-        except RuntimeError as e:
+            logger.info("CosmosQA loaded successfully with standard method")
+        except (RuntimeError, ValueError) as e:
             error_str = str(e)
             if "Dataset scripts are no longer supported" in error_str or "trust_remote_code" in error_str:
-                logger.error(
-                    "=" * 80 + "\n"
-                    "CosmosQA dataset cannot be loaded because it uses deprecated dataset scripts.\n"
-                    "This is not supported in datasets library >= 2.15.0.\n"
-                    "\n"
-                    "SOLUTIONS:\n"
-                    "1. Downgrade datasets library to a compatible version:\n"
-                    "   pip install 'datasets>=2.14.0,<2.15.0'\n"
-                    "\n"
-                    "2. Skip the 'rc' task when running the benchmark:\n"
-                    "   python run_benchmark.py --quick-test --models tinyllama-1.1b --tasks qa ci drs ds\n"
-                    "\n"
-                    "3. Or exclude 'rc' from the task list in your configuration.\n"
-                    "=" * 80
+                logger.warning(
+                    "Standard loading failed due to deprecated dataset scripts. "
+                    "Attempting fallback with trust_remote_code=True..."
                 )
-                raise RuntimeError(
-                    f"Failed to load CosmosQA dataset: {error_str}\n\n"
-                    "The dataset uses deprecated script format not supported in datasets >= 2.15.0.\n"
-                    "Quick fix: pip install 'datasets>=2.14.0,<2.15.0'\n"
-                    "Or skip the 'rc' task: python run_benchmark.py --tasks qa ci drs ds"
-                ) from e
+                # Fallback: try with trust_remote_code=True
+                try:
+                    dataset = load_dataset("cosmos_qa", cache_dir=self.cache_dir, trust_remote_code=True)
+                    logger.info("CosmosQA loaded successfully with trust_remote_code=True")
+                except Exception as fallback_e:
+                    logger.error(
+                        "=" * 80 + "\n"
+                        "CosmosQA dataset cannot be loaded.\n"
+                        "Both standard and fallback methods failed.\n"
+                        "\n"
+                        "SOLUTIONS:\n"
+                        "1. Downgrade datasets library to a compatible version:\n"
+                        "   pip install 'datasets>=2.10.0,<2.15.0'\n"
+                        "\n"
+                        "2. Skip the 'rc' task when running the benchmark:\n"
+                        "   python run_benchmark.py --quick-test --models tinyllama-1.1b --tasks qa ci drs ds\n"
+                        "\n"
+                        "3. Or exclude 'rc' from the task list in your configuration.\n"
+                        "=" * 80
+                    )
+                    raise RuntimeError(
+                        f"Failed to load CosmosQA dataset: {fallback_e}\n\n"
+                        "The dataset uses deprecated script format.\n"
+                        "Quick fix: pip install 'datasets>=2.10.0,<2.15.0'\n"
+                        "Or skip the 'rc' task: python run_benchmark.py --tasks qa ci drs ds"
+                    ) from fallback_e
             else:
                 raise
         except Exception as e:
             logger.error(f"Failed to load CosmosQA dataset: {e}")
             raise RuntimeError(
                 f"Failed to load CosmosQA dataset: {e}\n"
-                "If you see 'Dataset scripts are no longer supported', try: pip install 'datasets>=2.14.0,<2.15.0'"
+                "If you see 'Dataset scripts are no longer supported', try: pip install 'datasets>=2.10.0,<2.15.0'"
             ) from e
         
         # Combine train and validation
