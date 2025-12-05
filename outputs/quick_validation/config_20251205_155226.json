@@ -1,6 +1,6 @@
 {
   "models": [
-    "stablelm-2-1.6b"
+    "qwen-1.8b"
   ],
   "tasks": [
     "qa",
@@ -10,7 +10,7 @@
     "ds"
   ],
   "dtypes": [
-    "float32"
+    "float16"
   ],
   "num_samples": 100,
   "alpha": 0.1,

@@ -2,6 +2,86 @@
   "timestamp": "20251205_155226",
   "completed_combinations": [
     [
+      "stablelm-2-1.6b",
+      "drs",
+      "float16"
+    ],
+    [
+      "tinyllama-1.1b",
+      "drs",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "ds",
+      "float16"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "ds",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "qa",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "ds",
+      "float16"
+    ],
+    [
+      "tinyllama-1.1b",
+      "ds",
+      "float16"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "qa",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "rc",
+      "float16"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "rc",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "ci",
+      "float32"
+    ],
+    [
+      "tinyllama-1.1b",
+      "qa",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "qa",
+      "float16"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "rc",
+      "float16"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "ci",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "ci",
+      "float16"
+    ],
+    [
       "tinyllama-1.1b",
       "ci",
       "float16"
@@ -17,63 +97,8 @@
       "float16"
     ],
     [
-      "phi-2",
-      "ds",
-      "float16"
-    ],
-    [
-      "tinyllama-1.1b",
-      "drs",
-      "float16"
-    ],
-    [
-      "stablelm-2-1.6b",
-      "ds",
-      "float32"
-    ],
-    [
-      "tinyllama-1.1b",
-      "ds",
-      "float16"
-    ],
-    [
-      "stablelm-2-1.6b",
-      "rc",
-      "float32"
-    ],
-    [
-      "phi-2",
-      "qa",
-      "float16"
-    ],
-    [
-      "phi-2",
-      "ci",
-      "float16"
-    ],
-    [
-      "tinyllama-1.1b",
-      "qa",
-      "float16"
-    ],
-    [
-      "stablelm-2-1.6b",
-      "ci",
-      "float32"
-    ],
-    [
       "stablelm-2-1.6b",
       "drs",
-      "float32"
-    ],
-    [
-      "phi-2",
-      "rc",
-      "float16"
-    ],
-    [
-      "stablelm-2-1.6b",
-      "qa",
       "float32"
     ]
   ],
@@ -467,11 +492,141 @@
       "meets_guarantee": true,
       "inference_time": 6.429916620254517,
       "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "qa",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 0.9215686274509803,
+      "avg_set_size": 5.313725490196078,
+      "meets_guarantee": true,
+      "inference_time": 3.516242504119873,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "qa",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 1.0,
+      "avg_set_size": 6.0,
+      "meets_guarantee": true,
+      "inference_time": 3.516242504119873,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "rc",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.2549019607843137,
+      "coverage_rate": 0.9215686274509803,
+      "avg_set_size": 5.529411764705882,
+      "meets_guarantee": true,
+      "inference_time": 2.7256953716278076,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "rc",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.2549019607843137,
+      "coverage_rate": 1.0,
+      "avg_set_size": 6.0,
+      "meets_guarantee": true,
+      "inference_time": 2.7256953716278076,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ci",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 0.9411764705882353,
+      "avg_set_size": 5.470588235294118,
+      "meets_guarantee": true,
+      "inference_time": 3.582073450088501,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ci",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 0.9607843137254902,
+      "avg_set_size": 5.882352941176471,
+      "meets_guarantee": true,
+      "inference_time": 3.582073450088501,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "drs",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.17647058823529413,
+      "coverage_rate": 0.803921568627451,
+      "avg_set_size": 4.96078431372549,
+      "meets_guarantee": false,
+      "inference_time": 1.8582706451416016,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "drs",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.17647058823529413,
+      "coverage_rate": 0.8823529411764706,
+      "avg_set_size": 5.333333333333333,
+      "meets_guarantee": false,
+      "inference_time": 1.8582706451416016,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ds",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.21568627450980393,
+      "coverage_rate": 0.9607843137254902,
+      "avg_set_size": 5.196078431372549,
+      "meets_guarantee": true,
+      "inference_time": 6.198607444763184,
+      "num_samples": 51
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ds",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.21568627450980393,
+      "coverage_rate": 1.0,
+      "avg_set_size": 5.745098039215686,
+      "meets_guarantee": true,
+      "inference_time": 6.198607444763184,
+      "num_samples": 51
     }
   ],
   "config": {
     "models": [
-      "stablelm-2-1.6b"
+      "qwen-1.8b"
     ],
     "tasks": [
       "qa",
@@ -481,7 +636,7 @@
       "ds"
     ],
     "dtypes": [
-      "float32"
+      "float16"
     ],
     "num_samples": 100,
     "alpha": 0.1,
