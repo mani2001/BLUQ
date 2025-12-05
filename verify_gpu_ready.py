@@ -71,9 +71,9 @@ def run_minimal_inference():
         engine = InferenceEngine(model, tokenizer, info)
         
         prompt = "Question: What is 2+2?\nA. 3\nB. 4\nAnswer:"
-        result = engine.infer(prompt)
-        
-        logger.info(f"Inference successful. Output: {result.generated_text}")
+        result = engine.infer_single(prompt)
+
+        logger.info(f"Inference successful. Predicted option: {result.predicted_option}")
         return True
         
     except Exception as e:
