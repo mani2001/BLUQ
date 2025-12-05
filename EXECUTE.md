@@ -113,9 +113,7 @@ git commit -m "Quick validation results: 5 models x 5 tasks x 100 samples
 Models: tinyllama-1.1b, phi-2, stablelm-2-1.6b, gemma-2b, qwen-1.8b
 Tasks: qa, rc, ci, drs, ds
 Samples: 100 per task
-Strategy: base
-
-🤖 Generated with Claude Code"
+Strategy: base"
 
 # Push
 git push origin main
