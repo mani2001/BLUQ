@@ -411,20 +411,17 @@ pip install -r requirements.txt
 ### Quick Start
 
 ```bash
-# Verify setup (recommended first step)
-python scripts/verify_setup.py
-
-# Generate configuration files
-python generate_configs.py
+# Verify GPU setup (recommended first step)
+python verify_gpu_ready.py
 
 # Run quick test (100 samples, single model, single task)
 python run_single_task.py --task qa --model tinyllama-1.1b --num-samples 100
 
 # Run short benchmark (100 samples per task - for testing)
-python run_full_benchmark.py --mode short --tasks qa --models tinyllama-1.1b
+python run_benchmark.py --mode short --tasks qa --models tinyllama-1.1b
 
 # Run full benchmark (10,000 samples - production run)
-python run_full_benchmark.py --mode long --tasks qa rc ci drs ds --models tinyllama-1.1b phi-2 stablelm-2-1.6b
+python run_benchmark.py --mode long --tasks qa rc ci drs ds --models tinyllama-1.1b phi-2 stablelm-2-1.6b
 ```
 
 ### Run Modes
@@ -438,19 +435,19 @@ The benchmark supports two run modes:
 
 ```bash
 # Short mode (testing)
-python run_full_benchmark.py --mode short
+python run_benchmark.py --mode short
 
 # Long mode (production)
-python run_full_benchmark.py --mode long
+python run_benchmark.py --mode long
 
 # Custom sample count
-python run_full_benchmark.py --num-samples 500
+python run_benchmark.py --num-samples 500
 ```
 
 ### Full Benchmark Options
 
 ```bash
-python run_full_benchmark.py \
+python run_benchmark.py \
     --mode short \                    # or 'long' for 10k samples
     --models tinyllama-1.1b phi-2 \   # models to evaluate
     --tasks qa rc ci \                # tasks to run
@@ -494,10 +491,10 @@ The benchmark automatically adjusts batch size based on available GPU memory:
 
 ```bash
 # Automatic batch sizing (default)
-python run_full_benchmark.py --mode short
+python run_benchmark.py --mode short
 
 # Disable dynamic batch sizing
-python run_full_benchmark.py --mode short --no-dynamic-batch --max-batch-size 4
+python run_benchmark.py --mode short --no-dynamic-batch --max-batch-size 4
 ```
 
 ### Output Structure
@@ -573,10 +570,8 @@ outputs/
 ```
 BLUQ/
 ├── configs/                 # Configuration files
-│   ├── dataset_config.json
+│   ├── dataset_config.yaml
 │   └── model_config.yaml
-├── scripts/                 # Utility scripts
-│   └── verify_setup.py     # Setup verification
 ├── src/
 │   ├── data/               # Dataset loading and processing
 │   │   ├── dataset_loader.py
@@ -595,8 +590,7 @@ BLUQ/
 │   │   └── demonstration_manager.py
 │   ├── conformal/          # Conformal prediction methods
 │   │   ├── conformal_base.py
-│   │   ├── lac_scorer.py
-│   │   ├── aps_scorer.py
+│   │   ├── scorers.py      # LAC and APS scorers
 │   │   └── prediction_set_generator.py
 │   ├── evaluation/         # Metrics and result aggregation
 │   │   ├── evaluator.py
@@ -604,17 +598,17 @@ BLUQ/
 │   │   ├── result_aggregator.py
 │   │   └── statistical_analyzer.py
 │   ├── utils/              # Utility modules
-│   │   └── gpu_utils.py    # GPU memory management
+│   │   └── gpu.py          # GPU memory management and profiling
 │   └── visualization/      # Result visualization
 │       └── result_visualizer.py
+├── tests/                  # Unit tests
+│   └── test_conformal.py
 ├── outputs/                # Generated outputs
 │   ├── results/            # Benchmark results
 │   └── figures/            # Visualizations
-├── run_benchmark.py        # Original benchmark script
-├── run_full_benchmark.py   # Full benchmark with all features
+├── run_benchmark.py        # Main benchmark runner
 ├── run_single_task.py      # Single task evaluation
-├── run_verification.py     # Verification script
-└── generate_configs.py     # Generate default configs
+└── verify_gpu_ready.py     # GPU setup verification
 ```
 
 ---

@@ -16,8 +16,7 @@ from src.conformal.conformal_base import (
     ConformalPredictionResult,
     ConformalPredictionValidator
 )
-from src.conformal.lac_scorer import LACScorer
-from src.conformal.aps_scorer import APSScorer
+from src.conformal.scorers import LACScorer, APSScorer
 
 # Setup logger
 logger = logging.getLogger(__name__)

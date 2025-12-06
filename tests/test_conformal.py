@@ -14,8 +14,7 @@ import pytest
 from typing import List
 
 # Import conformal prediction modules
-from src.conformal.lac_scorer import LACScorer
-from src.conformal.aps_scorer import APSScorer
+from src.conformal.scorers import LACScorer, APSScorer
 from src.conformal.conformal_base import ConformalConfig
 
 
