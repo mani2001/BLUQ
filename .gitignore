@@ -41,13 +41,16 @@ models/cache/
 *.bin
 *.safetensors
 
-# Logs
-*.log
+# Logs (except outputs/results/logs which we want to track)
 benchmark.log
 
 # NOTE: results/ and outputs/ are NOT gitignored
 # They contain benchmark results that must be preserved for analysis
 # since GPU instances use ephemeral storage
+# Log files in outputs/results/logs/ are tracked for analysis
+
+# Windows artifacts
+nul
 
 # OS
 .DS_Store

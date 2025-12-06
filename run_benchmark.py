@@ -18,7 +18,57 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
-# Setup logging
+
+def setup_logging(output_dir: str, run_timestamp: str) -> Path:
+    """
+    Setup logging to both console and file.
+
+    Args:
+        output_dir: Directory to store log files
+        run_timestamp: Timestamp string for the log filename
+
+    Returns:
+        Path to the log file
+    """
+    # Create logs directory
+    logs_dir = Path(output_dir) / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    log_file = logs_dir / f"benchmark_{run_timestamp}.log"
+
+    # Create formatters
+    file_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    console_formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%H:%M:%S'
+    )
+
+    # Setup root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+
+    # Clear any existing handlers
+    root_logger.handlers = []
+
+    # File handler - captures everything
+    file_handler = logging.FileHandler(log_file, mode='w', encoding='utf-8')
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(file_formatter)
+    root_logger.addHandler(file_handler)
+
+    # Console handler
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(console_formatter)
+    root_logger.addHandler(console_handler)
+
+    return log_file
+
+
+# Temporary basic logging until setup_logging is called
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -748,6 +798,10 @@ def main():
             logger.error(f"Unknown task: {task}. Available: {AVAILABLE_TASKS}")
             sys.exit(1)
 
+    # Setup logging to file
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = setup_logging(args.output_dir, run_timestamp)
+
     # Create configuration
     config = BenchmarkConfig(
         models=models,
@@ -766,30 +820,49 @@ def main():
         enable_profiling=not args.no_profiling
     )
 
-    # Print banner
-    print("\n" + "="*80)
-    print("BLUQ: Benchmarking Language models via Uncertainty Quantification")
-    print("="*80)
-    print(f"Mode: {args.mode} ({num_samples} samples per task)")
-    print(f"Models: {len(models)} | Tasks: {len(tasks)} | Dtypes: {len(args.dtypes)}")
-    print(f"Total configurations: {len(models) * len(tasks) * len(args.dtypes)}")
-    print("="*80 + "\n")
+    # Print and log banner
+    banner = f"""
+{'='*80}
+BLUQ: Benchmarking Language models via Uncertainty Quantification
+{'='*80}
+Mode: {args.mode} ({num_samples} samples per task)
+Models: {len(models)} | Tasks: {len(tasks)} | Dtypes: {len(args.dtypes)}
+Total configurations: {len(models) * len(tasks) * len(args.dtypes)}
+Log file: {log_file}
+{'='*80}
+"""
+    print(banner)
+    logger.info(f"Starting benchmark run")
+    logger.info(f"Log file: {log_file}")
+    logger.info(f"Mode: {args.mode}, Samples: {num_samples}")
+    logger.info(f"Models: {models}")
+    logger.info(f"Tasks: {tasks}")
+    logger.info(f"Dtypes: {args.dtypes}")
 
     # Run benchmark
     runner = FullBenchmarkRunner(config)
     summary = runner.run()
 
-    # Print final summary
-    print("\n" + "="*80)
-    print("FINAL SUMMARY")
-    print("="*80)
-    print(f"Total runs: {summary['total_runs']}")
-    print(f"Overall accuracy: {summary['overall_accuracy']:.2%}")
-    print(f"Overall coverage: {summary['overall_coverage']:.2%}")
-    print(f"Overall set size: {summary['overall_set_size']:.2f}")
-    print(f"Guarantee met: {summary['guarantee_met_ratio']:.2%}")
-    print(f"Total time: {summary['total_time_seconds']/60:.2f} minutes")
-    print("="*80)
+    # Print and log final summary
+    summary_text = f"""
+{'='*80}
+FINAL SUMMARY
+{'='*80}
+Total runs: {summary['total_runs']}
+Overall accuracy: {summary['overall_accuracy']:.2%}
+Overall coverage: {summary['overall_coverage']:.2%}
+Overall set size: {summary['overall_set_size']:.2f}
+Guarantee met: {summary['guarantee_met_ratio']:.2%}
+Total time: {summary['total_time_seconds']/60:.2f} minutes
+Log file: {log_file}
+{'='*80}
+"""
+    print(summary_text)
+    logger.info("Benchmark completed successfully")
+    logger.info(f"Total runs: {summary['total_runs']}")
+    logger.info(f"Overall accuracy: {summary['overall_accuracy']:.2%}")
+    logger.info(f"Overall coverage: {summary['overall_coverage']:.2%}")
+    logger.info(f"Log file saved to: {log_file}")
 
 
 if __name__ == "__main__":
