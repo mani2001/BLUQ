@@ -1,0 +1,518 @@
+{
+  "timestamp": "2025-12-06T20:09:47.167449",
+  "summary": {
+    "total_operations": 30,
+    "total_time_ms": 385721.43699900026,
+    "operations": {
+      "dataset_loading": {
+        "count": 5,
+        "total_time_ms": 353392.4537759999,
+        "avg_time_ms": 70678.49075519998,
+        "min_time_ms": 1523.4036249999008,
+        "max_time_ms": 126032.35519300005,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 5,
+        "total_time_ms": 74.47054500039485,
+        "avg_time_ms": 14.89410900007897,
+        "min_time_ms": 2.35896899994259,
+        "max_time_ms": 48.59393600008843,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 5,
+        "total_time_ms": 14859.202856999673,
+        "avg_time_ms": 2971.8405713999346,
+        "min_time_ms": 2549.836060999951,
+        "max_time_ms": 3743.032163999942,
+        "avg_memory_delta_mb": 2098.17626953125
+      },
+      "inference_calibration": {
+        "count": 5,
+        "total_time_ms": 9044.669968000107,
+        "avg_time_ms": 1808.9339936000215,
+        "min_time_ms": 1306.3276390000738,
+        "max_time_ms": 2557.7135240000644,
+        "avg_memory_delta_mb": 1.625
+      },
+      "inference_test": {
+        "count": 5,
+        "total_time_ms": 8332.582507000097,
+        "avg_time_ms": 1666.5165014000195,
+        "min_time_ms": 1049.333856999965,
+        "max_time_ms": 2721.902137000143,
+        "avg_memory_delta_mb": 0.0
+      },
+      "probability_extraction": {
+        "count": 5,
+        "total_time_ms": 18.05734599997777,
+        "avg_time_ms": 3.611469199995554,
+        "min_time_ms": 2.667964000011125,
+        "max_time_ms": 4.903126000044722,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 8483.8955078125,
+      "avg_allocated_mb": 292.9823772723858,
+      "avg_utilization_percent": -1,
+      "snapshots_count": 208
+    },
+    "bottlenecks": [
+      {
+        "operation": "dataset_loading",
+        "time_percent": 91.61856715184742,
+        "recommendation": "Model loading is expected to be slow. Consider caching or using quantization."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4729.157339000039,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 3.1959079999523965,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 3743.032163999942,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 2098.17626953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1976.4160649999667,
+      "gpu_memory_before_mb": 2098.17626953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 8.125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1468.154137999818,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 3.4433799999078474,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 126032.35519300005,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 2.35896899994259,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2938.0838269999003,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1306.3276390000738,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1311.0286220000944,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 2.667964000011125,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 114126.16723299993,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 2.5433860000703135,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2549.836060999951,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1829.853118000301,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1782.1637530000771,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 4.903126000044722,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 106981.37038599998,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 17.778346000341116,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2842.6015380000536,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1374.3596219997016,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1049.333856999965,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 3.0376800000340154,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 1523.4036249999008,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 48.59393600008843,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2785.649266999826,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 2557.7135240000644,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 2721.902137000143,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 4.00519599998006,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 208,
+    "memory_allocated_mb": [
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      494.1484375,
+      6521.712890625,
+      2106.30126953125,
+      619.17626953125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      8.125,
+      1836.26953125,
+      4370.8681640625,
+      1711.27783203125,
+      871.19970703125,
+      8.125,
+      258.125,
+      1982.28515625,
+      8233.8330078125,
+      8483.8955078125,
+      973.20751953125,
+      8.125,
+      8.125,
+      8.125
+    ],
+    "utilization_percent": []
+  }
+}

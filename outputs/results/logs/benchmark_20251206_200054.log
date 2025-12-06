@@ -1,0 +1,6 @@
+2025-12-06 20:00:54 - __main__ - INFO - Starting benchmark run
+2025-12-06 20:00:54 - __main__ - INFO - Log file: outputs/results/logs/benchmark_20251206_200054.log
+2025-12-06 20:00:54 - __main__ - INFO - Mode: short, Samples: 100
+2025-12-06 20:00:54 - __main__ - INFO - Models: ['tinyllama-1.1b']
+2025-12-06 20:00:54 - __main__ - INFO - Tasks: ['qa']
+2025-12-06 20:00:54 - __main__ - INFO - Dtypes: ['float16']
