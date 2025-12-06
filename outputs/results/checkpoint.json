@@ -1,0 +1,65 @@
+{
+  "timestamp": "20251206_195225",
+  "completed_combinations": [
+    [
+      "tinyllama-1.1b",
+      "qa",
+      "float16"
+    ]
+  ],
+  "results": [
+    {
+      "model": "tinyllama-1.1b",
+      "task": "qa",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 0.9607843137254902,
+      "avg_set_size": 5.647058823529412,
+      "meets_guarantee": true,
+      "inference_time": 3.408350944519043,
+      "num_samples": 51
+    },
+    {
+      "model": "tinyllama-1.1b",
+      "task": "qa",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.23529411764705882,
+      "coverage_rate": 1.0,
+      "avg_set_size": 6.0,
+      "meets_guarantee": true,
+      "inference_time": 3.408350944519043,
+      "num_samples": 51
+    }
+  ],
+  "config": {
+    "models": [
+      "tinyllama-1.1b"
+    ],
+    "tasks": [
+      "qa"
+    ],
+    "dtypes": [
+      "float16"
+    ],
+    "num_samples": 100,
+    "alpha": 0.1,
+    "calibration_ratio": 0.5,
+    "output_dir": "./outputs/results",
+    "strategies": [
+      "base"
+    ],
+    "conformal_methods": [
+      "lac",
+      "aps"
+    ],
+    "seed": 42,
+    "use_dynamic_batch_size": true,
+    "max_batch_size": null,
+    "resume": false,
+    "enable_profiling": true
+  }
+}

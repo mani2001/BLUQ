@@ -1,0 +1,28 @@
+[
+  {
+    "model": "tinyllama-1.1b",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "lac",
+    "accuracy": 0.23529411764705882,
+    "coverage_rate": 0.9607843137254902,
+    "avg_set_size": 5.647058823529412,
+    "meets_guarantee": true,
+    "inference_time": 3.408350944519043,
+    "num_samples": 51
+  },
+  {
+    "model": "tinyllama-1.1b",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "aps",
+    "accuracy": 0.23529411764705882,
+    "coverage_rate": 1.0,
+    "avg_set_size": 6.0,
+    "meets_guarantee": true,
+    "inference_time": 3.408350944519043,
+    "num_samples": 51
+  }
+]

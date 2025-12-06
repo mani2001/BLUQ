@@ -1,0 +1,251 @@
+{
+  "timestamp": "2025-12-06T19:57:02.768310",
+  "summary": {
+    "total_operations": 6,
+    "total_time_ms": 251464.44208599973,
+    "operations": {
+      "dataset_loading": {
+        "count": 1,
+        "total_time_ms": 111719.57274400006,
+        "avg_time_ms": 111719.57274400006,
+        "min_time_ms": 111719.57274400006,
+        "max_time_ms": 111719.57274400006,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 1,
+        "total_time_ms": 3.187165999861463,
+        "avg_time_ms": 3.187165999861463,
+        "min_time_ms": 3.187165999861463,
+        "max_time_ms": 3.187165999861463,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 1,
+        "total_time_ms": 136332.216301,
+        "avg_time_ms": 136332.216301,
+        "min_time_ms": 136332.216301,
+        "max_time_ms": 136332.216301,
+        "avg_memory_delta_mb": 2098.17626953125
+      },
+      "inference_calibration": {
+        "count": 1,
+        "total_time_ms": 1976.257723999879,
+        "avg_time_ms": 1976.257723999879,
+        "min_time_ms": 1976.257723999879,
+        "max_time_ms": 1976.257723999879,
+        "avg_memory_delta_mb": 8.125
+      },
+      "inference_test": {
+        "count": 1,
+        "total_time_ms": 1429.6312490000673,
+        "avg_time_ms": 1429.6312490000673,
+        "min_time_ms": 1429.6312490000673,
+        "max_time_ms": 1429.6312490000673,
+        "avg_memory_delta_mb": 0.0
+      },
+      "probability_extraction": {
+        "count": 1,
+        "total_time_ms": 3.5769019998497242,
+        "avg_time_ms": 3.5769019998497242,
+        "min_time_ms": 3.5769019998497242,
+        "max_time_ms": 3.5769019998497242,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 5889.29150390625,
+      "avg_allocated_mb": 80.60045934606481,
+      "avg_utilization_percent": -1,
+      "snapshots_count": 135
+    },
+    "bottlenecks": [
+      {
+        "operation": "dataset_loading",
+        "time_percent": 44.42758261058336,
+        "recommendation": "Model loading is expected to be slow. Consider caching or using quantization."
+      },
+      {
+        "operation": "model_loading",
+        "time_percent": 54.21530581821783,
+        "recommendation": "Model loading is expected to be slow. Consider caching or using quantization."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 111719.57274400006,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 100
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 3.187165999861463,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 136332.216301,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 2098.17626953125,
+      "gpu_memory_delta_mb": 2098.17626953125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1976.257723999879,
+      "gpu_memory_before_mb": 2098.17626953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 8.125,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 49,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1429.6312490000673,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b",
+        "strategy": "base",
+        "num_samples": 51,
+        "batch_size": 81
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 3.5769019998497242,
+      "gpu_memory_before_mb": 2106.30126953125,
+      "gpu_memory_after_mb": 2106.30126953125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "tinyllama-1.1b"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 135,
+    "memory_allocated_mb": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      822.0546875,
+      2437.94140625,
+      5889.29150390625,
+      1300.23876953125,
+      407.16064453125,
+      8.125,
+      8.125,
+      8.125
+    ],
+    "utilization_percent": []
+  }
+}
