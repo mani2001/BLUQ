@@ -9,13 +9,10 @@
 git clone https://github.com/YOUR_USERNAME/BLUQ.git
 cd BLUQ
 
-# 2. Install dependencies
+# 2. Install dependencies (includes nvidia-ml-py for GPU monitoring)
 pip install -r requirements.txt
 
-# 3. (Optional) Install pynvml for GPU utilization monitoring
-pip install pynvml
-
-# 4. Verify GPU is ready
+# 3. Verify GPU is ready
 python verify_gpu_ready.py
 ```
 

@@ -71,7 +71,7 @@ class GPUSnapshot:
     memory_allocated_mb: float
     memory_reserved_mb: float
     memory_free_mb: float
-    utilization_percent: float  # If available via pynvml
+    utilization_percent: float  # If available via nvidia-ml-py
 
 
 # =============================================================================
@@ -557,6 +557,7 @@ class GPUProfiler:
             logger.warning("CUDA not available. GPU profiling will be limited.")
 
         # Try to initialize pynvml for GPU utilization metrics
+        # Note: pynvml is provided by the nvidia-ml-py package
         self.nvml_available = False
         if enable_nvml and self.cuda_available:
             try:
@@ -567,7 +568,7 @@ class GPUProfiler:
                 logger.info("NVML initialized for GPU utilization monitoring")
             except ImportError:
                 logger.debug("pynvml not installed. GPU utilization monitoring disabled. "
-                           "Install with: pip install pynvml")
+                           "Install with: pip install nvidia-ml-py")
             except Exception as e:
                 logger.debug(f"Failed to initialize NVML: {e}")
 
@@ -600,7 +601,7 @@ class GPUProfiler:
         return 0.0
 
     def _get_gpu_utilization(self) -> float:
-        """Get GPU utilization percentage (requires pynvml)."""
+        """Get GPU utilization percentage (requires nvidia-ml-py)."""
         if self.nvml_available:
             try:
                 import pynvml
