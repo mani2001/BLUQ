@@ -1,0 +1,1154 @@
+2025-12-06 20:25:23 - __main__ - INFO - Starting benchmark run
+2025-12-06 20:25:23 - __main__ - INFO - Log file: outputs/results/logs/benchmark_20251206_202523.log
+2025-12-06 20:25:23 - __main__ - INFO - Mode: short, Samples: 100
+2025-12-06 20:25:23 - __main__ - INFO - Models: ['tinyllama-1.1b']
+2025-12-06 20:25:23 - __main__ - INFO - Tasks: ['qa', 'rc', 'ci', 'drs', 'ds']
+2025-12-06 20:25:23 - __main__ - INFO - Dtypes: ['float32', 'float16']
+2025-12-06 20:25:30 - __main__ - INFO - Running on: Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+2025-12-06 20:25:30 - src.utils.gpu - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+2025-12-06 20:25:30 - __main__ - INFO - GPU Tier: a100 | Auto max_batch_size: 192 | Safety margin: 0.93
+2025-12-06 20:25:30 - __main__ - INFO - Auto-detected max_batch_size: 192
+2025-12-06 20:25:30 - src.utils.gpu - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+2025-12-06 20:25:30 - src.utils.gpu - INFO - Initialized GPUMemoryManager:
+Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+  GPU Tier: a100
+  Safety Margin: 0.93
+  Activation Multiplier: 0.4
+  Max Batch Size: 192
+2025-12-06 20:25:30 - src.utils.gpu - INFO - NVML initialized for GPU utilization monitoring
+2025-12-06 20:25:30 - src.utils.gpu - INFO - GPUProfiler initialized (CUDA: True, NVML: True)
+2025-12-06 20:25:30 - src.utils.gpu - INFO - Started GPU monitoring
+2025-12-06 20:25:30 - __main__ - INFO - GPU profiling enabled
+2025-12-06 20:25:30 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:25:30 - __main__ - INFO - FULL BENCHMARK CONFIGURATION
+2025-12-06 20:25:30 - __main__ - INFO - ================================================================================
+2025-12-06 20:25:30 - __main__ - INFO - Models (1): ['tinyllama-1.1b']
+2025-12-06 20:25:30 - __main__ - INFO - Tasks (5): ['qa', 'rc', 'ci', 'drs', 'ds']
+2025-12-06 20:25:30 - __main__ - INFO - Data types: ['float32', 'float16']
+2025-12-06 20:25:30 - __main__ - INFO - Samples per task: 100
+2025-12-06 20:25:30 - __main__ - INFO - Alpha (error rate): 0.1
+2025-12-06 20:25:30 - __main__ - INFO - Strategies: ['base']
+2025-12-06 20:25:30 - __main__ - INFO - Conformal methods: ['lac', 'aps']
+2025-12-06 20:25:30 - __main__ - INFO - Dynamic batch sizing: True
+2025-12-06 20:25:30 - __main__ - INFO - Max batch size: 192 (GPU tier: a100)
+2025-12-06 20:25:30 - __main__ - INFO - Output directory: outputs/results
+2025-12-06 20:25:30 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:25:30 - __main__ - INFO - Run 1/10: tinyllama-1.1b | qa | float32
+2025-12-06 20:25:30 - __main__ - INFO - ================================================================================
+2025-12-06 20:25:38 - src.utils.gpu - INFO - [start_tinyllama-1.1b_qa] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81152.8MB | Utilization: 0.0%
+2025-12-06 20:25:38 - __main__ - INFO - Loading qa dataset (100 samples)...
+2025-12-06 20:25:38 - src.data.dataset_loader - INFO - Loading MMLU dataset with 100 samples...
+2025-12-06 20:25:52 - src.data.dataset_loader - INFO - Loaded 100 MMLU instances
+2025-12-06 20:25:52 - src.utils.gpu - INFO - [dataset_loading] Duration: 13900.38ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+2025-12-06 20:25:52 - src.data.dataset_processor - INFO - Processing qa dataset to 6-option format...
+2025-12-06 20:25:52 - src.data.dataset_processor - INFO - Processed 100 instances for qa
+2025-12-06 20:25:52 - src.data.data_splitter - INFO - Splitting qa dataset (calibration: 50%, test: 50%)
+2025-12-06 20:25:52 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:25:52 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:25:52 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:25:52 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:25:52 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 12, 'C': 12, 'D': 12}
+2025-12-06 20:25:52 - src.data.data_splitter - INFO -   Test: {'A': 14, 'B': 13, 'C': 12, 'D': 12}
+2025-12-06 20:25:52 - src.utils.gpu - INFO - [dataset_processing] Duration: 3.12ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:25:52 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for qa
+2025-12-06 20:25:52 - __main__ - INFO - Loading model: tinyllama-1.1b (float32)
+2025-12-06 20:25:52 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float32 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:25:52 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:25:53 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:25:53 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:25:53 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:25:53 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:25:53 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:25:53 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:25:55 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:25:55 - src.models.model_loader - INFO -   GPU Memory: 4.10GB allocated, 4.17GB reserved
+2025-12-06 20:25:55 - src.utils.gpu - INFO - [model_loading] Duration: 3129.57ms | GPU Memory: 0.0MB -> 4196.4MB (delta +4196.4MB)
+2025-12-06 20:25:55 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 4196.4MB | Reserved: 4266.0MB | Free: 76956.4MB | Utilization: 3.0%
+2025-12-06 20:25:55 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float32): 39
+  Available memory: 73.70GB
+  Model memory: 4.40GB
+  Memory per batch item: 1.760GB
+2025-12-06 20:25:55 - __main__ - INFO - Using batch size: 39
+2025-12-06 20:25:55 - __main__ - INFO -   Strategy: base
+2025-12-06 20:25:55 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: qa
+2025-12-06 20:25:55 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:25:55 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:25:55 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float32
+2025-12-06 20:25:55 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:25:55 - src.models.inference_engine - INFO -   Batch size: 39
+2025-12-06 20:25:55 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:25:58 - src.utils.gpu - INFO - [inference_calibration] Duration: 2267.13ms | GPU Memory: 4196.4MB -> 4204.5MB (delta +8.1MB)
+2025-12-06 20:25:59 - src.utils.gpu - INFO - [inference_test] Duration: 1623.90ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:25:59 - __main__ - INFO -     Inference: 3.89s for 100 samples (25.69 samples/sec)
+2025-12-06 20:25:59 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:25:59 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:25:59 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:25:59 - src.utils.gpu - INFO - [probability_extraction] Duration: 2.90ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:25:59 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Threshold: 0.9870
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Score range: [0.0548, 0.9999]
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Average set size: 5.69
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:25:59 - __main__ - INFO -     LAC: Acc=23.53%, CR=96.08%, SS=5.69
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:25:59 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Score range: [0.3459, 1.0000]
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:25:59 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Average set size: 6.00
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Coverage rate: 100.00%
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:25:59 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 100.00% >= 90.00%
+2025-12-06 20:25:59 - __main__ - INFO -     APS: Acc=23.53%, CR=100.00%, SS=6.00
+2025-12-06 20:26:07 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float32
+2025-12-06 20:26:07 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | qa | float32
+2025-12-06 20:26:07 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:26:07 - __main__ - INFO - Run 2/10: tinyllama-1.1b | rc | float32
+2025-12-06 20:26:07 - __main__ - INFO - ================================================================================
+2025-12-06 20:26:07 - src.utils.gpu - INFO - [start_tinyllama-1.1b_rc] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 5.0%
+2025-12-06 20:26:07 - __main__ - INFO - Loading rc dataset (100 samples)...
+2025-12-06 20:26:07 - src.data.dataset_loader - INFO - Loading CosmosQA dataset with 100 samples...
+2025-12-06 20:27:48 - src.data.dataset_loader - INFO - CosmosQA loaded successfully with standard method
+2025-12-06 20:27:49 - src.data.dataset_loader - INFO - Loaded 100 CosmosQA instances
+2025-12-06 20:27:49 - src.utils.gpu - INFO - [dataset_loading] Duration: 101594.36ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:27:49 - src.data.dataset_processor - INFO - Processing rc dataset to 6-option format...
+2025-12-06 20:27:49 - src.data.dataset_processor - INFO - Processed 100 instances for rc
+2025-12-06 20:27:49 - src.data.data_splitter - INFO - Splitting rc dataset (calibration: 50%, test: 50%)
+2025-12-06 20:27:49 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:27:49 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:27:49 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:27:49 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:27:49 - src.data.data_splitter - INFO -   Calibration: {'A': 11, 'B': 15, 'C': 14, 'D': 9}
+2025-12-06 20:27:49 - src.data.data_splitter - INFO -   Test: {'A': 11, 'B': 16, 'C': 14, 'D': 10}
+2025-12-06 20:27:49 - src.utils.gpu - INFO - [dataset_processing] Duration: 2.18ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:27:49 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for rc
+2025-12-06 20:27:49 - __main__ - INFO - Loading model: tinyllama-1.1b (float32)
+2025-12-06 20:27:49 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float32 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:27:49 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:27:49 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:27:49 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:27:49 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:27:49 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:27:49 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:27:49 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:27:51 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:27:51 - src.models.model_loader - INFO -   GPU Memory: 4.11GB allocated, 4.17GB reserved
+2025-12-06 20:27:51 - src.utils.gpu - INFO - [model_loading] Duration: 2379.54ms | GPU Memory: 8.1MB -> 4204.5MB (delta +4196.4MB)
+2025-12-06 20:27:51 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 4204.5MB | Reserved: 4266.0MB | Free: 76948.3MB | Utilization: 4.0%
+2025-12-06 20:27:51 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float32): 39
+  Available memory: 73.70GB
+  Model memory: 4.40GB
+  Memory per batch item: 1.760GB
+2025-12-06 20:27:51 - __main__ - INFO - Using batch size: 39
+2025-12-06 20:27:51 - __main__ - INFO -   Strategy: base
+2025-12-06 20:27:51 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: rc
+2025-12-06 20:27:51 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:27:51 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:27:51 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float32
+2025-12-06 20:27:51 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:27:51 - src.models.inference_engine - INFO -   Batch size: 39
+2025-12-06 20:27:51 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:27:52 - src.utils.gpu - INFO - [inference_calibration] Duration: 1358.04ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:27:54 - src.utils.gpu - INFO - [inference_test] Duration: 1430.05ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:27:54 - __main__ - INFO -     Inference: 2.79s for 100 samples (35.84 samples/sec)
+2025-12-06 20:27:54 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:27:54 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:27:54 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:27:54 - src.utils.gpu - INFO - [probability_extraction] Duration: 4.20ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:27:54 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Threshold: 0.9600
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Score range: [0.0006, 0.9993]
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Average set size: 4.55
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Coverage rate: 74.51%
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-06 20:27:54 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 74.51% < 90.00%
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - WARNING - LAC does not meet coverage guarantee: 74.51% < 90.00%
+2025-12-06 20:27:54 - __main__ - INFO -     LAC: Acc=11.76%, CR=74.51%, SS=4.55
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:27:54 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Threshold: 0.9995
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Score range: [0.2542, 1.0000]
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:27:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Average set size: 5.57
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Coverage rate: 92.16%
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:27:54 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 92.16% >= 90.00%
+2025-12-06 20:27:54 - __main__ - INFO -     APS: Acc=11.76%, CR=92.16%, SS=5.57
+2025-12-06 20:28:00 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float32
+2025-12-06 20:28:00 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | rc | float32
+2025-12-06 20:28:00 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:28:00 - __main__ - INFO - Run 3/10: tinyllama-1.1b | ci | float32
+2025-12-06 20:28:00 - __main__ - INFO - ================================================================================
+2025-12-06 20:28:00 - src.utils.gpu - INFO - [start_tinyllama-1.1b_ci] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 0.0%
+2025-12-06 20:28:00 - __main__ - INFO - Loading ci dataset (100 samples)...
+2025-12-06 20:28:00 - src.data.dataset_loader - INFO - Loading HellaSwag dataset with 100 samples...
+2025-12-06 20:28:08 - src.data.dataset_loader - INFO - Loaded 100 HellaSwag instances
+2025-12-06 20:28:08 - src.utils.gpu - INFO - [dataset_loading] Duration: 8194.48ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:28:08 - src.data.dataset_processor - INFO - Processing ci dataset to 6-option format...
+2025-12-06 20:28:08 - src.data.dataset_processor - INFO - Processed 100 instances for ci
+2025-12-06 20:28:08 - src.data.data_splitter - INFO - Splitting ci dataset (calibration: 50%, test: 50%)
+2025-12-06 20:28:08 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:28:08 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:28:08 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:28:08 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:28:08 - src.data.data_splitter - INFO -   Calibration: {'A': 14, 'B': 11, 'C': 9, 'D': 15}
+2025-12-06 20:28:08 - src.data.data_splitter - INFO -   Test: {'A': 14, 'B': 11, 'C': 10, 'D': 16}
+2025-12-06 20:28:08 - src.utils.gpu - INFO - [dataset_processing] Duration: 2.55ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:28:08 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for ci
+2025-12-06 20:28:08 - __main__ - INFO - Loading model: tinyllama-1.1b (float32)
+2025-12-06 20:28:08 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float32 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:28:08 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:28:08 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:28:08 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:28:08 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:28:08 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:28:08 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:28:08 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:28:10 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:28:10 - src.models.model_loader - INFO -   GPU Memory: 4.11GB allocated, 4.17GB reserved
+2025-12-06 20:28:10 - src.utils.gpu - INFO - [model_loading] Duration: 2361.41ms | GPU Memory: 8.1MB -> 4204.5MB (delta +4196.4MB)
+2025-12-06 20:28:10 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 4204.5MB | Reserved: 4266.0MB | Free: 76948.3MB | Utilization: 4.0%
+2025-12-06 20:28:10 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float32): 39
+  Available memory: 73.70GB
+  Model memory: 4.40GB
+  Memory per batch item: 1.760GB
+2025-12-06 20:28:10 - __main__ - INFO - Using batch size: 39
+2025-12-06 20:28:10 - __main__ - INFO -   Strategy: base
+2025-12-06 20:28:10 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ci
+2025-12-06 20:28:10 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:28:10 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:28:10 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float32
+2025-12-06 20:28:10 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:28:10 - src.models.inference_engine - INFO -   Batch size: 39
+2025-12-06 20:28:10 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:28:12 - src.utils.gpu - INFO - [inference_calibration] Duration: 1922.44ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:14 - src.utils.gpu - INFO - [inference_test] Duration: 1917.52ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:14 - __main__ - INFO -     Inference: 3.84s for 100 samples (26.03 samples/sec)
+2025-12-06 20:28:14 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:28:14 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:28:14 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:28:14 - src.utils.gpu - INFO - [probability_extraction] Duration: 4.10ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:28:14 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Threshold: 0.9835
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Score range: [0.0381, 0.9988]
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Average set size: 5.43
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:28:14 - __main__ - INFO -     LAC: Acc=15.69%, CR=96.08%, SS=5.43
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:28:14 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Threshold: 0.9842
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Score range: [0.2815, 1.0000]
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:28:14 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Average set size: 5.51
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Coverage rate: 98.04%
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:28:14 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.04% >= 90.00%
+2025-12-06 20:28:14 - __main__ - INFO -     APS: Acc=15.69%, CR=98.04%, SS=5.51
+2025-12-06 20:28:20 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float32
+2025-12-06 20:28:20 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | ci | float32
+2025-12-06 20:28:20 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:28:20 - __main__ - INFO - Run 4/10: tinyllama-1.1b | drs | float32
+2025-12-06 20:28:20 - __main__ - INFO - ================================================================================
+2025-12-06 20:28:20 - src.utils.gpu - INFO - [start_tinyllama-1.1b_drs] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 6.0%
+2025-12-06 20:28:20 - __main__ - INFO - Loading drs dataset (100 samples)...
+2025-12-06 20:28:20 - src.data.dataset_loader - INFO - Loading HaluDial dataset with 100 samples...
+2025-12-06 20:28:32 - src.data.dataset_loader - INFO - Loaded 100 HaluDial instances
+2025-12-06 20:28:32 - src.utils.gpu - INFO - [dataset_loading] Duration: 11628.25ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO - Processing drs dataset to 6-option format...
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO - Processed 100 instances for drs
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO - Option expansion statistics for drs:
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 100
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO -   Total options sampled: 200
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO -   Duplicate options avoided: 0
+2025-12-06 20:28:32 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-06 20:28:32 - src.data.data_splitter - INFO - Splitting drs dataset (calibration: 50%, test: 50%)
+2025-12-06 20:28:32 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:28:32 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:28:32 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:28:32 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:28:32 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 11, 'C': 11, 'D': 14}
+2025-12-06 20:28:32 - src.data.data_splitter - INFO -   Test: {'A': 13, 'B': 11, 'C': 12, 'D': 15}
+2025-12-06 20:28:32 - src.utils.gpu - INFO - [dataset_processing] Duration: 17.80ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO - Selecting 3 demonstrations using 'random' strategy
+2025-12-06 20:28:32 - src.prompting.demonstration_manager - INFO - Selected and cached 3 demonstrations for drs
+2025-12-06 20:28:32 - __main__ - INFO - Loading model: tinyllama-1.1b (float32)
+2025-12-06 20:28:32 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float32 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:28:32 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:28:32 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:28:32 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:28:32 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:28:32 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:28:32 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:28:32 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:28:34 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:28:34 - src.models.model_loader - INFO -   GPU Memory: 4.11GB allocated, 4.17GB reserved
+2025-12-06 20:28:34 - src.utils.gpu - INFO - [model_loading] Duration: 2656.70ms | GPU Memory: 8.1MB -> 4204.5MB (delta +4196.4MB)
+2025-12-06 20:28:34 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 4204.5MB | Reserved: 4266.0MB | Free: 76948.3MB | Utilization: 0.0%
+2025-12-06 20:28:34 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float32): 39
+  Available memory: 73.70GB
+  Model memory: 4.40GB
+  Memory per batch item: 1.760GB
+2025-12-06 20:28:34 - __main__ - INFO - Using batch size: 39
+2025-12-06 20:28:34 - __main__ - INFO -   Strategy: base
+2025-12-06 20:28:34 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: drs
+2025-12-06 20:28:34 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:28:34 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 3 demonstrations
+2025-12-06 20:28:34 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float32
+2025-12-06 20:28:34 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:28:34 - src.models.inference_engine - INFO -   Batch size: 39
+2025-12-06 20:28:34 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:28:35 - src.utils.gpu - INFO - [inference_calibration] Duration: 1064.52ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:36 - src.utils.gpu - INFO - [inference_test] Duration: 1047.47ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:36 - __main__ - INFO -     Inference: 2.11s for 100 samples (47.30 samples/sec)
+2025-12-06 20:28:36 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:28:36 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:28:36 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:28:36 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.55ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:28:36 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Threshold: 0.9759
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Score range: [0.2325, 1.0000]
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Average set size: 5.20
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Coverage rate: 92.16%
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 92.16% >= 90.00%
+2025-12-06 20:28:36 - __main__ - INFO -     LAC: Acc=23.53%, CR=92.16%, SS=5.20
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:28:36 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Threshold: 0.9996
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Score range: [0.3220, 1.0000]
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:28:36 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Average set size: 5.82
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Coverage rate: 98.04%
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:28:36 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.04% >= 90.00%
+2025-12-06 20:28:36 - __main__ - INFO -     APS: Acc=23.53%, CR=98.04%, SS=5.82
+2025-12-06 20:28:42 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float32
+2025-12-06 20:28:42 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | drs | float32
+2025-12-06 20:28:42 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:28:42 - __main__ - INFO - Run 5/10: tinyllama-1.1b | ds | float32
+2025-12-06 20:28:42 - __main__ - INFO - ================================================================================
+2025-12-06 20:28:42 - src.utils.gpu - INFO - [start_tinyllama-1.1b_ds] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 6.0%
+2025-12-06 20:28:42 - __main__ - INFO - Loading ds dataset (100 samples)...
+2025-12-06 20:28:42 - src.data.dataset_loader - INFO - Loading HaluSum dataset with 100 samples...
+2025-12-06 20:30:23 - src.data.dataset_loader - INFO - Loaded 100 HaluSum instances
+2025-12-06 20:30:23 - src.utils.gpu - INFO - [dataset_loading] Duration: 100674.55ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO - Processing ds dataset to 6-option format...
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO - Processed 100 instances for ds
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO - Option expansion statistics for ds:
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 100
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO -   Total options sampled: 200
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO -   Duplicate options avoided: 0
+2025-12-06 20:30:23 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-06 20:30:23 - src.data.data_splitter - INFO - Splitting ds dataset (calibration: 50%, test: 50%)
+2025-12-06 20:30:23 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:30:23 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:30:23 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:30:23 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:30:23 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 11, 'C': 11, 'D': 14}
+2025-12-06 20:30:23 - src.data.data_splitter - INFO -   Test: {'A': 13, 'B': 11, 'C': 12, 'D': 15}
+2025-12-06 20:30:23 - src.utils.gpu - INFO - [dataset_processing] Duration: 61.52ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO - Selecting 1 demonstrations using 'random' strategy
+2025-12-06 20:30:23 - src.prompting.demonstration_manager - INFO - Selected and cached 1 demonstrations for ds
+2025-12-06 20:30:23 - __main__ - INFO - Loading model: tinyllama-1.1b (float32)
+2025-12-06 20:30:23 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float32 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:30:23 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:30:23 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:30:23 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:30:23 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:30:23 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:30:23 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:30:23 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:30:26 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:30:26 - src.models.model_loader - INFO -   GPU Memory: 4.11GB allocated, 4.17GB reserved
+2025-12-06 20:30:26 - src.utils.gpu - INFO - [model_loading] Duration: 2680.18ms | GPU Memory: 8.1MB -> 4204.5MB (delta +4196.4MB)
+2025-12-06 20:30:26 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 4204.5MB | Reserved: 4266.0MB | Free: 76948.3MB | Utilization: 3.0%
+2025-12-06 20:30:26 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float32): 39
+  Available memory: 73.70GB
+  Model memory: 4.40GB
+  Memory per batch item: 1.760GB
+2025-12-06 20:30:26 - __main__ - INFO - Using batch size: 39
+2025-12-06 20:30:26 - __main__ - INFO -   Strategy: base
+2025-12-06 20:30:26 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ds
+2025-12-06 20:30:26 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:30:26 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 1 demonstrations
+2025-12-06 20:30:26 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float32
+2025-12-06 20:30:26 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:30:26 - src.models.inference_engine - INFO -   Batch size: 39
+2025-12-06 20:30:26 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:30:28 - src.utils.gpu - INFO - [inference_calibration] Duration: 2679.29ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:30:31 - src.utils.gpu - INFO - [inference_test] Duration: 2811.21ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:30:31 - __main__ - INFO -     Inference: 5.49s for 100 samples (18.21 samples/sec)
+2025-12-06 20:30:31 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:30:31 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:30:31 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:30:31 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.16ms | GPU Memory: 4204.5MB -> 4204.5MB (delta +0.0MB)
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:30:31 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Threshold: 0.9722
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Score range: [0.5618, 0.9998]
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Average set size: 5.25
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:30:31 - __main__ - INFO -     LAC: Acc=13.73%, CR=96.08%, SS=5.25
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:30:31 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Threshold: 0.9754
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Score range: [0.2909, 1.0000]
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:30:31 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Average set size: 5.37
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Coverage rate: 98.04%
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:30:31 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.04% >= 90.00%
+2025-12-06 20:30:31 - __main__ - INFO -     APS: Acc=13.73%, CR=98.04%, SS=5.37
+2025-12-06 20:30:38 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float32
+2025-12-06 20:30:38 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | ds | float32
+2025-12-06 20:30:38 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:30:38 - __main__ - INFO - Run 6/10: tinyllama-1.1b | qa | float16
+2025-12-06 20:30:38 - __main__ - INFO - ================================================================================
+2025-12-06 20:30:38 - src.utils.gpu - INFO - [start_tinyllama-1.1b_qa] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 5.0%
+2025-12-06 20:30:38 - __main__ - INFO - Loading qa dataset (100 samples)...
+2025-12-06 20:30:38 - src.data.dataset_loader - INFO - Loading MMLU dataset with 100 samples...
+2025-12-06 20:30:53 - src.data.dataset_loader - INFO - Loaded 100 MMLU instances
+2025-12-06 20:30:53 - src.utils.gpu - INFO - [dataset_loading] Duration: 15001.15ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:30:53 - src.data.dataset_processor - INFO - Processing qa dataset to 6-option format...
+2025-12-06 20:30:53 - src.data.dataset_processor - INFO - Processed 100 instances for qa
+2025-12-06 20:30:53 - src.data.data_splitter - INFO - Splitting qa dataset (calibration: 50%, test: 50%)
+2025-12-06 20:30:53 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:30:53 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:30:53 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:30:53 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:30:53 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 12, 'C': 12, 'D': 12}
+2025-12-06 20:30:53 - src.data.data_splitter - INFO -   Test: {'A': 14, 'B': 13, 'C': 12, 'D': 12}
+2025-12-06 20:30:53 - src.utils.gpu - INFO - [dataset_processing] Duration: 1.67ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:30:53 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for qa
+2025-12-06 20:30:53 - __main__ - INFO - Loading model: tinyllama-1.1b (float16)
+2025-12-06 20:30:53 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:30:53 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:30:53 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:30:53 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:30:53 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:30:53 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:30:53 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:30:53 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:30:56 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:30:56 - src.models.model_loader - INFO -   GPU Memory: 2.06GB allocated, 3.90GB reserved
+2025-12-06 20:30:56 - src.utils.gpu - INFO - [model_loading] Duration: 2769.83ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+2025-12-06 20:30:56 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 3992.0MB | Free: 79046.4MB | Utilization: 5.0%
+2025-12-06 20:30:56 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float16): 81
+  Available memory: 73.70GB
+  Model memory: 2.20GB
+  Memory per batch item: 0.880GB
+2025-12-06 20:30:56 - __main__ - INFO - Using batch size: 81
+2025-12-06 20:30:56 - __main__ - INFO -   Strategy: base
+2025-12-06 20:30:56 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: qa
+2025-12-06 20:30:56 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:30:56 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:30:56 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+2025-12-06 20:30:56 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:30:56 - src.models.inference_engine - INFO -   Batch size: 81
+2025-12-06 20:30:56 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:30:57 - src.utils.gpu - INFO - [inference_calibration] Duration: 1568.14ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:30:59 - src.utils.gpu - INFO - [inference_test] Duration: 1455.68ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:30:59 - __main__ - INFO -     Inference: 3.03s for 100 samples (33.05 samples/sec)
+2025-12-06 20:30:59 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:30:59 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:30:59 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:30:59 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.49ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:30:59 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Threshold: 0.9806
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Score range: [0.0548, 0.9999]
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Average set size: 5.65
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:30:59 - __main__ - INFO -     LAC: Acc=23.53%, CR=96.08%, SS=5.65
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:30:59 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Score range: [0.3230, 1.0000]
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:30:59 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Average set size: 6.00
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Coverage rate: 100.00%
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:30:59 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 100.00% >= 90.00%
+2025-12-06 20:30:59 - __main__ - INFO -     APS: Acc=23.53%, CR=100.00%, SS=6.00
+2025-12-06 20:31:03 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float16
+2025-12-06 20:31:03 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | qa | float16
+2025-12-06 20:31:03 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:31:03 - __main__ - INFO - Run 7/10: tinyllama-1.1b | rc | float16
+2025-12-06 20:31:03 - __main__ - INFO - ================================================================================
+2025-12-06 20:31:03 - src.utils.gpu - INFO - [start_tinyllama-1.1b_rc] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 6.0%
+2025-12-06 20:31:03 - __main__ - INFO - Loading rc dataset (100 samples)...
+2025-12-06 20:31:03 - src.data.dataset_loader - INFO - Loading CosmosQA dataset with 100 samples...
+2025-12-06 20:32:48 - src.data.dataset_loader - INFO - CosmosQA loaded successfully with standard method
+2025-12-06 20:32:49 - src.data.dataset_loader - INFO - Loaded 100 CosmosQA instances
+2025-12-06 20:32:49 - src.utils.gpu - INFO - [dataset_loading] Duration: 106528.08ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:32:49 - src.data.dataset_processor - INFO - Processing rc dataset to 6-option format...
+2025-12-06 20:32:49 - src.data.dataset_processor - INFO - Processed 100 instances for rc
+2025-12-06 20:32:49 - src.data.data_splitter - INFO - Splitting rc dataset (calibration: 50%, test: 50%)
+2025-12-06 20:32:49 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:32:49 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:32:49 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:32:49 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:32:49 - src.data.data_splitter - INFO -   Calibration: {'A': 11, 'B': 15, 'C': 14, 'D': 9}
+2025-12-06 20:32:49 - src.data.data_splitter - INFO -   Test: {'A': 11, 'B': 16, 'C': 14, 'D': 10}
+2025-12-06 20:32:49 - src.utils.gpu - INFO - [dataset_processing] Duration: 2.00ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:32:49 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for rc
+2025-12-06 20:32:49 - __main__ - INFO - Loading model: tinyllama-1.1b (float16)
+2025-12-06 20:32:49 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:32:49 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:32:50 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:32:50 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:32:50 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:32:50 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:32:50 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:32:50 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:32:52 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:32:52 - src.models.model_loader - INFO -   GPU Memory: 2.06GB allocated, 3.90GB reserved
+2025-12-06 20:32:52 - src.utils.gpu - INFO - [model_loading] Duration: 2444.53ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+2025-12-06 20:32:52 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 3992.0MB | Free: 79046.4MB | Utilization: 2.0%
+2025-12-06 20:32:52 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float16): 81
+  Available memory: 73.70GB
+  Model memory: 2.20GB
+  Memory per batch item: 0.880GB
+2025-12-06 20:32:52 - __main__ - INFO - Using batch size: 81
+2025-12-06 20:32:52 - __main__ - INFO -   Strategy: base
+2025-12-06 20:32:52 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: rc
+2025-12-06 20:32:52 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:32:52 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:32:52 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+2025-12-06 20:32:52 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:32:52 - src.models.inference_engine - INFO -   Batch size: 81
+2025-12-06 20:32:52 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:32:53 - src.utils.gpu - INFO - [inference_calibration] Duration: 1239.20ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:32:54 - src.utils.gpu - INFO - [inference_test] Duration: 1340.86ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:32:54 - __main__ - INFO -     Inference: 2.58s for 100 samples (38.72 samples/sec)
+2025-12-06 20:32:54 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:32:54 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:32:54 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:32:54 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.12ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:32:54 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Threshold: 0.9636
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Score range: [0.0006, 0.9995]
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Average set size: 4.90
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Coverage rate: 80.39%
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-06 20:32:54 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 80.39% < 90.00%
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - WARNING - LAC does not meet coverage guarantee: 80.39% < 90.00%
+2025-12-06 20:32:54 - __main__ - INFO -     LAC: Acc=13.73%, CR=80.39%, SS=4.90
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:32:54 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Score range: [0.2533, 1.0000]
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:32:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Average set size: 6.00
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Coverage rate: 100.00%
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:32:54 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 100.00% >= 90.00%
+2025-12-06 20:32:54 - __main__ - INFO -     APS: Acc=13.73%, CR=100.00%, SS=6.00
+2025-12-06 20:32:58 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float16
+2025-12-06 20:32:58 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | rc | float16
+2025-12-06 20:32:58 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:32:58 - __main__ - INFO - Run 8/10: tinyllama-1.1b | ci | float16
+2025-12-06 20:32:58 - __main__ - INFO - ================================================================================
+2025-12-06 20:32:58 - src.utils.gpu - INFO - [start_tinyllama-1.1b_ci] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 5.0%
+2025-12-06 20:32:58 - __main__ - INFO - Loading ci dataset (100 samples)...
+2025-12-06 20:32:58 - src.data.dataset_loader - INFO - Loading HellaSwag dataset with 100 samples...
+2025-12-06 20:33:00 - src.data.dataset_loader - INFO - Loaded 100 HellaSwag instances
+2025-12-06 20:33:00 - src.utils.gpu - INFO - [dataset_loading] Duration: 2490.18ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:00 - src.data.dataset_processor - INFO - Processing ci dataset to 6-option format...
+2025-12-06 20:33:00 - src.data.dataset_processor - INFO - Processed 100 instances for ci
+2025-12-06 20:33:00 - src.data.data_splitter - INFO - Splitting ci dataset (calibration: 50%, test: 50%)
+2025-12-06 20:33:00 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:33:00 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:33:00 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:33:00 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:33:00 - src.data.data_splitter - INFO -   Calibration: {'A': 14, 'B': 11, 'C': 9, 'D': 15}
+2025-12-06 20:33:00 - src.data.data_splitter - INFO -   Test: {'A': 14, 'B': 11, 'C': 10, 'D': 16}
+2025-12-06 20:33:00 - src.utils.gpu - INFO - [dataset_processing] Duration: 3.17ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-06 20:33:00 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for ci
+2025-12-06 20:33:00 - __main__ - INFO - Loading model: tinyllama-1.1b (float16)
+2025-12-06 20:33:00 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:33:00 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:00 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:33:00 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:33:00 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:33:00 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:33:00 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:00 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:33:03 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:33:03 - src.models.model_loader - INFO -   GPU Memory: 2.06GB allocated, 3.90GB reserved
+2025-12-06 20:33:03 - src.utils.gpu - INFO - [model_loading] Duration: 2654.05ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+2025-12-06 20:33:03 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 3992.0MB | Free: 79046.4MB | Utilization: 11.0%
+2025-12-06 20:33:03 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float16): 81
+  Available memory: 73.70GB
+  Model memory: 2.20GB
+  Memory per batch item: 0.880GB
+2025-12-06 20:33:03 - __main__ - INFO - Using batch size: 81
+2025-12-06 20:33:03 - __main__ - INFO -   Strategy: base
+2025-12-06 20:33:03 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ci
+2025-12-06 20:33:03 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:33:03 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 5 demonstrations
+2025-12-06 20:33:03 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+2025-12-06 20:33:03 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:33:03 - src.models.inference_engine - INFO -   Batch size: 81
+2025-12-06 20:33:03 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:33:05 - src.utils.gpu - INFO - [inference_calibration] Duration: 1797.13ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:06 - src.utils.gpu - INFO - [inference_test] Duration: 1869.30ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:06 - __main__ - INFO -     Inference: 3.67s for 100 samples (27.26 samples/sec)
+2025-12-06 20:33:06 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:33:06 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:33:06 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:33:06 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.49ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:06 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Threshold: 0.9860
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Score range: [0.0378, 0.9988]
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Average set size: 5.57
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:33:06 - __main__ - INFO -     LAC: Acc=17.65%, CR=96.08%, SS=5.57
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:06 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Threshold: 0.9899
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Score range: [0.2815, 1.0000]
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:06 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Average set size: 5.69
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Coverage rate: 98.04%
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:33:06 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.04% >= 90.00%
+2025-12-06 20:33:06 - __main__ - INFO -     APS: Acc=17.65%, CR=98.04%, SS=5.69
+2025-12-06 20:33:09 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float16
+2025-12-06 20:33:10 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | ci | float16
+2025-12-06 20:33:10 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:33:10 - __main__ - INFO - Run 9/10: tinyllama-1.1b | drs | float16
+2025-12-06 20:33:10 - __main__ - INFO - ================================================================================
+2025-12-06 20:33:10 - src.utils.gpu - INFO - [start_tinyllama-1.1b_drs] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 5.0%
+2025-12-06 20:33:10 - __main__ - INFO - Loading drs dataset (100 samples)...
+2025-12-06 20:33:10 - src.data.dataset_loader - INFO - Loading HaluDial dataset with 100 samples...
+2025-12-06 20:33:20 - src.data.dataset_loader - INFO - Loaded 100 HaluDial instances
+2025-12-06 20:33:20 - src.utils.gpu - INFO - [dataset_loading] Duration: 10589.96ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO - Processing drs dataset to 6-option format...
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO - Processed 100 instances for drs
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO - Option expansion statistics for drs:
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 100
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO -   Total options sampled: 200
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO -   Duplicate options avoided: 0
+2025-12-06 20:33:20 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-06 20:33:20 - src.data.data_splitter - INFO - Splitting drs dataset (calibration: 50%, test: 50%)
+2025-12-06 20:33:20 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:33:20 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:33:20 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:33:20 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:33:20 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 11, 'C': 11, 'D': 14}
+2025-12-06 20:33:20 - src.data.data_splitter - INFO -   Test: {'A': 13, 'B': 11, 'C': 12, 'D': 15}
+2025-12-06 20:33:20 - src.utils.gpu - INFO - [dataset_processing] Duration: 17.14ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO - Selecting 3 demonstrations using 'random' strategy
+2025-12-06 20:33:20 - src.prompting.demonstration_manager - INFO - Selected and cached 3 demonstrations for drs
+2025-12-06 20:33:20 - __main__ - INFO - Loading model: tinyllama-1.1b (float16)
+2025-12-06 20:33:20 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:33:20 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:20 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:33:20 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:33:20 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:33:20 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:33:20 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:20 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:33:23 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:33:23 - src.models.model_loader - INFO -   GPU Memory: 2.06GB allocated, 3.90GB reserved
+2025-12-06 20:33:23 - src.utils.gpu - INFO - [model_loading] Duration: 2615.37ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+2025-12-06 20:33:23 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 3992.0MB | Free: 79046.4MB | Utilization: 2.0%
+2025-12-06 20:33:23 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float16): 81
+  Available memory: 73.70GB
+  Model memory: 2.20GB
+  Memory per batch item: 0.880GB
+2025-12-06 20:33:23 - __main__ - INFO - Using batch size: 81
+2025-12-06 20:33:23 - __main__ - INFO -   Strategy: base
+2025-12-06 20:33:23 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: drs
+2025-12-06 20:33:23 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:33:23 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 3 demonstrations
+2025-12-06 20:33:23 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+2025-12-06 20:33:23 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:33:23 - src.models.inference_engine - INFO -   Batch size: 81
+2025-12-06 20:33:23 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:33:24 - src.utils.gpu - INFO - [inference_calibration] Duration: 959.11ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:25 - src.utils.gpu - INFO - [inference_test] Duration: 931.88ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:25 - __main__ - INFO -     Inference: 1.89s for 100 samples (52.81 samples/sec)
+2025-12-06 20:33:25 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:33:25 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:33:25 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:33:25 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.79ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:25 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Threshold: 0.9653
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Score range: [0.0008, 1.0000]
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Average set size: 4.94
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Coverage rate: 88.24%
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-06 20:33:25 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 88.24% < 90.00%
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - WARNING - LAC does not meet coverage guarantee: 88.24% < 90.00%
+2025-12-06 20:33:25 - __main__ - INFO -     LAC: Acc=21.57%, CR=88.24%, SS=4.94
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:25 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Score range: [0.3329, 1.0000]
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:25 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Average set size: 6.00
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Coverage rate: 100.00%
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:33:25 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 100.00% >= 90.00%
+2025-12-06 20:33:25 - __main__ - INFO -     APS: Acc=21.57%, CR=100.00%, SS=6.00
+2025-12-06 20:33:28 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float16
+2025-12-06 20:33:28 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | drs | float16
+2025-12-06 20:33:28 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:33:28 - __main__ - INFO - Run 10/10: tinyllama-1.1b | ds | float16
+2025-12-06 20:33:28 - __main__ - INFO - ================================================================================
+2025-12-06 20:33:28 - src.utils.gpu - INFO - [start_tinyllama-1.1b_ds] GPU State: Allocated: 8.1MB | Reserved: 3946.0MB | Free: 81144.6MB | Utilization: 7.0%
+2025-12-06 20:33:28 - __main__ - INFO - Loading ds dataset (100 samples)...
+2025-12-06 20:33:28 - src.data.dataset_loader - INFO - Loading HaluSum dataset with 100 samples...
+2025-12-06 20:33:29 - src.data.dataset_loader - INFO - Loaded 100 HaluSum instances
+2025-12-06 20:33:29 - src.utils.gpu - INFO - [dataset_loading] Duration: 608.15ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO - Processing ds dataset to 6-option format...
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO - Processed 100 instances for ds
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO - Option expansion statistics for ds:
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 100
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO -   Total options sampled: 200
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO -   Duplicate options avoided: 0
+2025-12-06 20:33:29 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-06 20:33:29 - src.data.data_splitter - INFO - Splitting ds dataset (calibration: 50%, test: 50%)
+2025-12-06 20:33:29 - src.data.data_splitter - INFO - Split complete:
+2025-12-06 20:33:29 - src.data.data_splitter - INFO -   Calibration: 49 instances
+2025-12-06 20:33:29 - src.data.data_splitter - INFO -   Test: 51 instances
+2025-12-06 20:33:29 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-06 20:33:29 - src.data.data_splitter - INFO -   Calibration: {'A': 13, 'B': 11, 'C': 11, 'D': 14}
+2025-12-06 20:33:29 - src.data.data_splitter - INFO -   Test: {'A': 13, 'B': 11, 'C': 12, 'D': 15}
+2025-12-06 20:33:29 - src.utils.gpu - INFO - [dataset_processing] Duration: 47.24ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO - Selecting 1 demonstrations using 'random' strategy
+2025-12-06 20:33:29 - src.prompting.demonstration_manager - INFO - Selected and cached 1 demonstrations for ds
+2025-12-06 20:33:29 - __main__ - INFO - Loading model: tinyllama-1.1b (float16)
+2025-12-06 20:33:29 - src.models.model_loader - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+2025-12-06 20:33:29 - src.models.model_loader - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:29 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-06 20:33:29 - src.models.model_loader - INFO -   Vocab size: 32000
+2025-12-06 20:33:29 - src.models.model_loader - INFO -   Padding side: left
+2025-12-06 20:33:29 - src.models.model_loader - INFO -   PAD token: </s> (ID: 2)
+2025-12-06 20:33:29 - src.models.model_loader - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+2025-12-06 20:33:29 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-06 20:33:31 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-06 20:33:31 - src.models.model_loader - INFO -   GPU Memory: 2.06GB allocated, 3.90GB reserved
+2025-12-06 20:33:31 - src.utils.gpu - INFO - [model_loading] Duration: 2757.79ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+2025-12-06 20:33:31 - src.utils.gpu - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 3992.0MB | Free: 79046.4MB | Utilization: 0.0%
+2025-12-06 20:33:31 - src.utils.gpu - INFO - Optimal batch size for 1.1B model (float16): 81
+  Available memory: 73.70GB
+  Model memory: 2.20GB
+  Memory per batch item: 0.880GB
+2025-12-06 20:33:31 - __main__ - INFO - Using batch size: 81
+2025-12-06 20:33:31 - __main__ - INFO -   Strategy: base
+2025-12-06 20:33:31 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ds
+2025-12-06 20:33:31 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-06 20:33:31 - src.prompting.prompt_builder - INFO - Building 100 prompts using 'base' strategy with 1 demonstrations
+2025-12-06 20:33:31 - src.models.inference_engine - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+2025-12-06 20:33:31 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-06 20:33:31 - src.models.inference_engine - INFO -   Batch size: 81
+2025-12-06 20:33:31 - src.models.inference_engine - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+2025-12-06 20:33:36 - src.utils.gpu - INFO - [inference_calibration] Duration: 4429.53ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:39 - src.utils.gpu - INFO - [inference_test] Duration: 3036.63ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:39 - __main__ - INFO -     Inference: 7.47s for 100 samples (13.39 samples/sec)
+2025-12-06 20:33:39 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-06 20:33:39 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-06 20:33:39 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-06 20:33:39 - src.utils.gpu - INFO - [probability_extraction] Duration: 3.53ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:39 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Threshold: 0.9722
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Score range: [0.5608, 0.9998]
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Average set size: 5.25
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Coverage rate: 96.08%
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 96.08% >= 90.00%
+2025-12-06 20:33:39 - __main__ - INFO -     LAC: Acc=13.73%, CR=96.08%, SS=5.25
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-06 20:33:39 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Calibrating with 49 samples...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Threshold: 0.9755
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Score range: [0.2913, 1.0000]
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-06 20:33:39 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Generating prediction sets for 51 test instances...
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Average set size: 5.37
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Coverage rate: 98.04%
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-06 20:33:39 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.04% >= 90.00%
+2025-12-06 20:33:39 - __main__ - INFO -     APS: Acc=13.73%, CR=98.04%, SS=5.37
+2025-12-06 20:33:45 - src.models.model_loader - INFO - Unloaded model: tinyllama-1.1b_float16
+2025-12-06 20:33:45 - __main__ - INFO - Checkpoint saved after completing: tinyllama-1.1b | ds | float16
+2025-12-06 20:33:46 - src.visualization.result_visualizer - INFO - Generating all visualizations...
+2025-12-06 20:33:46 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_accuracy.png
+2025-12-06 20:33:47 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_coverage_rate.png
+2025-12-06 20:33:47 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_avg_set_size.png
+2025-12-06 20:33:49 - src.visualization.result_visualizer - INFO - Saved dashboard to outputs/results/figures/dashboard.png
+2025-12-06 20:33:49 - src.visualization.result_visualizer - INFO - Saved bar chart to outputs/results/figures/bar_comparison_accuracy.png
+2025-12-06 20:33:49 - src.visualization.result_visualizer - INFO - Saved bar chart to outputs/results/figures/bar_comparison_avg_set_size.png
+2025-12-06 20:33:50 - src.visualization.result_visualizer - INFO - Saved radar chart to outputs/results/figures/radar_chart.png
+2025-12-06 20:33:51 - src.visualization.result_visualizer - INFO - Saved uncertainty analysis to outputs/results/figures/uncertainty_analysis.png
+2025-12-06 20:33:51 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary.md
+2025-12-06 20:33:51 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary_lac.md
+2025-12-06 20:33:51 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary_aps.md
+2025-12-06 20:33:52 - src.visualization.result_visualizer - INFO - Saved dtype comparison to outputs/results/figures/dtype_comparison_accuracy.png
+2025-12-06 20:33:53 - src.visualization.result_visualizer - INFO - Saved dtype comparison to outputs/results/figures/dtype_comparison_avg_set_size.png
+2025-12-06 20:33:53 - src.visualization.result_visualizer - INFO - All visualizations saved to outputs/results/figures
+2025-12-06 20:33:53 - __main__ - INFO - Visualizations saved to: outputs/results/figures
+2025-12-06 20:33:54 - src.utils.gpu - INFO - Stopped GPU monitoring. Collected 248 snapshots.
+2025-12-06 20:33:54 - src.utils.gpu - INFO - Saved GPU profiling report to outputs/results/gpu_profile_20251206_202523.json
+2025-12-06 20:33:54 - __main__ - INFO - GPU profiling report saved to: outputs/results/gpu_profile_20251206_202523.json
+2025-12-06 20:33:54 - __main__ - INFO - 
+================================================================================
+2025-12-06 20:33:54 - __main__ - INFO - BENCHMARK COMPLETE
+2025-12-06 20:33:54 - __main__ - INFO - ================================================================================
+2025-12-06 20:33:54 - __main__ - INFO - Total time: 8.25 minutes
+2025-12-06 20:33:54 - __main__ - INFO - Results saved to: outputs/results
+2025-12-06 20:33:54 - __main__ - INFO - Benchmark completed successfully
+2025-12-06 20:33:54 - __main__ - INFO - Total runs: 20
+2025-12-06 20:33:54 - __main__ - INFO - Overall accuracy: 17.84%
+2025-12-06 20:33:54 - __main__ - INFO - Overall coverage: 94.71%
+2025-12-06 20:33:54 - __main__ - INFO - Log file saved to: outputs/results/logs/benchmark_20251206_202523.log

@@ -1,0 +1,23 @@
+{
+  "timestamp": "20251206_203127",
+  "total_time_seconds": 415.40951347351074,
+  "total_runs": 20,
+  "models": [
+    "smollm-1.7b"
+  ],
+  "tasks": [
+    "rc",
+    "qa",
+    "ci",
+    "drs",
+    "ds"
+  ],
+  "dtypes": [
+    "float32",
+    "float16"
+  ],
+  "overall_accuracy": 0.18823529411764703,
+  "overall_coverage": 0.9490196078431372,
+  "overall_set_size": 5.606862745098039,
+  "guarantee_met_ratio": 0.85
+}
