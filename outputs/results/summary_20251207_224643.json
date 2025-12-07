@@ -1,0 +1,22 @@
+{
+  "timestamp": "20251207_224643",
+  "total_time_seconds": 1485.8526265621185,
+  "total_runs": 10,
+  "models": [
+    "tinyllama-1.1b"
+  ],
+  "tasks": [
+    "ci",
+    "ds",
+    "drs",
+    "qa",
+    "rc"
+  ],
+  "dtypes": [
+    "float16"
+  ],
+  "overall_accuracy": 0.2115489497062603,
+  "overall_coverage": 0.9036833576907168,
+  "overall_set_size": 4.982701024769057,
+  "guarantee_met_ratio": 0.7
+}
