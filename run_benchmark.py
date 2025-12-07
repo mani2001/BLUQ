@@ -232,11 +232,26 @@ class FullBenchmarkRunner:
 
         # Get GPU tier config for auto-detection
         self.gpu_config = get_gpu_config(self.device_info)
-        logger.info(
-            f"GPU Tier: {self.gpu_config['tier']} | "
-            f"Auto max_batch_size: {self.gpu_config['max_batch_size']} | "
-            f"Safety margin: {self.gpu_config['safety_margin']}"
-        )
+
+        # Adjust config display based on device type
+        if self.device_info.device_type == 'mps':
+            logger.info(
+                f"Device: Apple Silicon (MPS) | "
+                f"Max batch_size: {self.gpu_config['max_batch_size']} | "
+                f"System memory: {self.device_info.total_memory_gb:.1f}GB"
+            )
+        elif self.device_info.device_type == 'cpu':
+            logger.info(
+                f"Device: CPU | "
+                f"Max batch_size: {self.gpu_config['max_batch_size']} | "
+                f"System memory: {self.device_info.total_memory_gb:.1f}GB"
+            )
+        else:
+            logger.info(
+                f"GPU Tier: {self.gpu_config['tier']} | "
+                f"Auto max_batch_size: {self.gpu_config['max_batch_size']} | "
+                f"Safety margin: {self.gpu_config['safety_margin']}"
+            )
 
         # Resolve max_batch_size (auto-detect if None)
         if self.config.max_batch_size is None:
@@ -252,15 +267,17 @@ class FullBenchmarkRunner:
         else:
             self.gpu_manager = None
 
-        # Initialize GPU profiler
-        if self.config.enable_profiling:
+        # Initialize GPU profiler (only useful for CUDA)
+        if self.config.enable_profiling and self.device_info.device_type == 'cuda':
             self.profiler = GPUProfiler(monitoring_interval=2.0)
             self.profiler.start_monitoring()
             logger.info("GPU profiling enabled")
         else:
             self.profiler = None
+            if self.config.enable_profiling and self.device_info.device_type != 'cuda':
+                logger.info("GPU profiling disabled (only available for CUDA devices)")
 
-    def get_batch_size(self, model_name: str, dtype: str) -> int:
+    def get_batch_size(self, model_name: str, dtype: str, vocab_size: int = 32000) -> int:
         """Get optimal batch size for model and dtype."""
         if not self.config.use_dynamic_batch_size or self.gpu_manager is None:
             return self.effective_max_batch_size
@@ -273,7 +290,8 @@ class FullBenchmarkRunner:
             dtype=dtype,
             seq_length=2048,
             min_batch_size=1,
-            max_batch_size=self.effective_max_batch_size
+            max_batch_size=self.effective_max_batch_size,
+            vocab_size=vocab_size
         )
         return batch_size
 
@@ -443,6 +461,14 @@ class FullBenchmarkRunner:
         # Step 3: Load model with specified dtype
         logger.info(f"Loading model: {model_name} ({dtype})")
 
+        # Determine the best device
+        if torch.cuda.is_available():
+            device = "auto"
+        elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+            device = "mps"
+        else:
+            device = "cpu"
+
         if self.profiler:
             with self.profiler.track("model_loading", model=model_name, dtype=dtype):
                 model_loader = ModelLoader()
@@ -451,7 +477,7 @@ class FullBenchmarkRunner:
                     model_id=base_config.load_config.model_id,
                     name=f"{model_name}_{dtype}",
                     dtype=dtype,
-                    device="auto" if torch.cuda.is_available() else "cpu",
+                    device=device,
                     trust_remote_code=True,
                     low_cpu_mem_usage=True
                 )
@@ -464,14 +490,14 @@ class FullBenchmarkRunner:
                 model_id=base_config.load_config.model_id,
                 name=f"{model_name}_{dtype}",
                 dtype=dtype,
-                device="auto" if torch.cuda.is_available() else "cpu",
+                device=device,
                 trust_remote_code=True,
                 low_cpu_mem_usage=True
             )
             model, tokenizer, model_info = model_loader.load_model(load_config)
 
-        # Get batch size
-        batch_size = self.get_batch_size(model_name, dtype)
+        # Get batch size (use vocab_size for accurate memory estimation)
+        batch_size = self.get_batch_size(model_name, dtype, vocab_size=model_info.vocab_size)
         logger.info(f"Using batch size: {batch_size}")
 
         # Step 4: Run for each strategy
@@ -597,6 +623,8 @@ class FullBenchmarkRunner:
         model_loader.unload_model(f"{model_name}_{dtype}")
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
+        elif hasattr(torch.mps, 'empty_cache'):
+            torch.mps.empty_cache()
 
         return results
 

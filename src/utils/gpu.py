@@ -300,13 +300,17 @@ class GPUMemoryManager:
         activation_per_item = model_memory * self.activation_multiplier * (seq_length / 2048)
         return activation_per_item * batch_size
 
+    # Baseline vocabulary size for memory estimation (most models use ~32k)
+    BASELINE_VOCAB_SIZE = 32000
+
     def get_optimal_batch_size(
         self,
         num_params_billions: float,
         dtype: str = 'float16',
         seq_length: int = 2048,
         min_batch_size: int = 1,
-        max_batch_size: Optional[int] = None
+        max_batch_size: Optional[int] = None,
+        vocab_size: int = 32000
     ) -> int:
         """
         Calculate optimal batch size based on available GPU memory.
@@ -317,6 +321,7 @@ class GPUMemoryManager:
             seq_length: Expected sequence length
             min_batch_size: Minimum batch size to return
             max_batch_size: Maximum batch size to consider (None = auto-detect from GPU tier)
+            vocab_size: Model vocabulary size (affects lm_head memory usage)
 
         Returns:
             Optimal batch size
@@ -338,8 +343,12 @@ class GPUMemoryManager:
             )
             return min_batch_size
 
+        # Calculate vocab multiplier for models with large vocabularies
+        # Models like gemma (256k vocab) need much more memory for lm_head outputs
+        vocab_multiplier = max(1.0, vocab_size / self.BASELINE_VOCAB_SIZE)
+
         # Calculate batch size using tier-specific activation multiplier
-        activation_per_item = model_memory * self.activation_multiplier * (seq_length / 2048)
+        activation_per_item = model_memory * self.activation_multiplier * (seq_length / 2048) * vocab_multiplier
 
         if activation_per_item <= 0:
             return max_batch_size
@@ -352,6 +361,7 @@ class GPUMemoryManager:
             f"  Available memory: {available_memory:.2f}GB\n"
             f"  Model memory: {model_memory:.2f}GB\n"
             f"  Memory per batch item: {activation_per_item:.3f}GB"
+            + (f"\n  Vocab multiplier: {vocab_multiplier:.2f}x (vocab_size={vocab_size})" if vocab_multiplier > 1.0 else "")
         )
 
         return optimal_batch
@@ -432,7 +442,8 @@ def get_optimal_batch_size(
     dtype: str = 'float16',
     seq_length: int = 2048,
     min_batch_size: int = 1,
-    max_batch_size: Optional[int] = None
+    max_batch_size: Optional[int] = None,
+    vocab_size: int = 32000
 ) -> int:
     """
     Convenience function to get optimal batch size.
@@ -443,6 +454,7 @@ def get_optimal_batch_size(
         seq_length: Expected sequence length
         min_batch_size: Minimum batch size
         max_batch_size: Maximum batch size (None = auto-detect from GPU tier)
+        vocab_size: Model vocabulary size (affects lm_head memory usage)
 
     Returns:
         Optimal batch size
@@ -453,7 +465,8 @@ def get_optimal_batch_size(
         dtype=dtype,
         seq_length=seq_length,
         min_batch_size=min_batch_size,
-        max_batch_size=max_batch_size
+        max_batch_size=max_batch_size,
+        vocab_size=vocab_size
     )
 
 
@@ -485,6 +498,31 @@ MODEL_SIZES = {
     'gpt-neo-1.3b': 1.3,
 }
 
+# Model vocabulary size lookup table
+# Large vocab models (like gemma with 256k) need significantly more memory for lm_head
+MODEL_VOCAB_SIZES = {
+    'tinyllama-1.1b': 32000,
+    'phi-1.5': 51200,
+    'phi-2': 51200,
+    'stablelm-2-1.6b': 100352,
+    'stablelm-2-zephyr-1.6b': 100352,
+    'qwen-1.8b': 151936,
+    'qwen-1.8b-chat': 151936,
+    'gemma-2b': 256000,      # Very large vocab - needs special handling
+    'gemma-2b-it': 256000,
+    'gemma-2-9b': 256000,
+    'gemma-2-9b-it': 256000,
+    'mistral-7b': 32000,
+    'mistral-7b-instruct': 32000,
+    'openelm-1.1b': 32000,
+    'smollm-135m': 49152,
+    'smollm-360m': 49152,
+    'smollm-1.7b': 49152,
+    'opt-1.3b': 50272,
+    'pythia-1.4b': 50304,
+    'gpt-neo-1.3b': 50257,
+}
+
 
 def get_model_size(model_name: str) -> float:
     """
@@ -510,6 +548,31 @@ def get_model_size(model_name: str) -> float:
     # Default to 1B if unknown
     logger.warning(f"Unknown model size for {model_name}, defaulting to 1B")
     return 1.0
+
+
+def get_model_vocab_size(model_name: str) -> int:
+    """
+    Get approximate vocabulary size for a model.
+
+    Args:
+        model_name: Name of the model
+
+    Returns:
+        Vocabulary size (default 32000 if unknown)
+    """
+    model_name_lower = model_name.lower()
+
+    # Check direct match
+    if model_name_lower in MODEL_VOCAB_SIZES:
+        return MODEL_VOCAB_SIZES[model_name_lower]
+
+    # Try to extract from name
+    for key, vocab_size in MODEL_VOCAB_SIZES.items():
+        if key in model_name_lower:
+            return vocab_size
+
+    # Default to 32k if unknown (conservative estimate)
+    return 32000
 
 
 # =============================================================================
