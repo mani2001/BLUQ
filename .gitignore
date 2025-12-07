@@ -58,3 +58,6 @@ Thumbs.db
 
 .claude/
 # NOTE: CLAUDE.md is tracked (contains important project documentation)
+
+# Local setup scripts (contain user-specific config)
+startup.sh
