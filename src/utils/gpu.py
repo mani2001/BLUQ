@@ -88,11 +88,11 @@ GPU_TIER_CONFIG = {
         'safety_margin': 0.93,       # More aggressive (vs 0.90 for high_end)
         'max_batch_size': 192,       # Higher batch size (vs 128)
         'min_vram_gb': 40,           # A100 comes in 40GB and 80GB variants
-        'activation_multiplier': 0.7  # More aggressive activation estimate for larger batches
+        'activation_multiplier': 0.6  # More aggressive activation estimate for larger batches
     },
-    'high_end': {'safety_margin': 0.90, 'max_batch_size': 128, 'min_vram_gb': 48, 'activation_multiplier': 0.7},
-    'mid_range': {'safety_margin': 0.85, 'max_batch_size': 64, 'min_vram_gb': 16, 'activation_multiplier': 0.7},
-    'low_end': {'safety_margin': 0.80, 'max_batch_size': 32, 'min_vram_gb': 0, 'activation_multiplier': 0.7},
+    'high_end': {'safety_margin': 0.90, 'max_batch_size': 128, 'min_vram_gb': 48, 'activation_multiplier': 0.6},
+    'mid_range': {'safety_margin': 0.85, 'max_batch_size': 64, 'min_vram_gb': 16, 'activation_multiplier': 0.6},
+    'low_end': {'safety_margin': 0.80, 'max_batch_size': 32, 'min_vram_gb': 0, 'activation_multiplier': 0.6},
 }
 
 
