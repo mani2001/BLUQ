@@ -575,6 +575,19 @@ class FullBenchmarkRunner:
                 for inst in split.test.instances
             ])
 
+            # Save raw probabilities for later analysis
+            self._save_raw_probabilities(
+                model_name=model_name,
+                task=task,
+                dtype=dtype,
+                strategy=strategy,
+                cal_probs=cal_prob_array,
+                test_probs=test_prob_array,
+                cal_labels=cal_labels,
+                test_labels=test_labels,
+                option_letters=option_letters
+            )
+
             # Compute accuracy
             predictions = np.argmax(test_prob_array, axis=1)
             accuracy = (predictions == test_labels).mean()
@@ -635,6 +648,64 @@ class FullBenchmarkRunner:
         results_data = [asdict(r) for r in self.results]
         with open(results_path, 'w') as f:
             json.dump(results_data, f, indent=2)
+
+    def _save_raw_probabilities(
+        self,
+        model_name: str,
+        task: str,
+        dtype: str,
+        strategy: str,
+        cal_probs: np.ndarray,
+        test_probs: np.ndarray,
+        cal_labels: np.ndarray,
+        test_labels: np.ndarray,
+        option_letters: List[str]
+    ):
+        """
+        Save raw probabilities for later analysis.
+
+        Saves calibration and test probabilities as .npz files with metadata.
+        This enables post-hoc analysis of conformal scores, alternative methods,
+        and detailed per-instance analysis.
+
+        Args:
+            model_name: Name of the model
+            task: Task identifier
+            dtype: Data type used
+            strategy: Prompting strategy
+            cal_probs: Calibration set probabilities (n_cal, n_options)
+            test_probs: Test set probabilities (n_test, n_options)
+            cal_labels: Calibration set true labels (n_cal,)
+            test_labels: Test set true labels (n_test,)
+            option_letters: List of option labels (e.g., ['A', 'B', 'C', 'D', 'E', 'F'])
+        """
+        # Create probabilities directory
+        probs_dir = self.output_dir / "probabilities"
+        probs_dir.mkdir(parents=True, exist_ok=True)
+
+        # Create filename with all identifying info
+        filename = f"probs_{model_name}_{task}_{dtype}_{strategy}_{self.run_timestamp}.npz"
+        filepath = probs_dir / filename
+
+        # Save as compressed numpy archive
+        np.savez_compressed(
+            filepath,
+            cal_probs=cal_probs,
+            test_probs=test_probs,
+            cal_labels=cal_labels,
+            test_labels=test_labels,
+            option_letters=np.array(option_letters),
+            # Metadata as separate arrays for easy access
+            model=np.array([model_name]),
+            task=np.array([task]),
+            dtype=np.array([dtype]),
+            strategy=np.array([strategy]),
+            timestamp=np.array([self.run_timestamp]),
+            alpha=np.array([self.config.alpha]),
+            calibration_ratio=np.array([self.config.calibration_ratio])
+        )
+
+        logger.info(f"    Raw probabilities saved to: {filepath}")
 
     def _generate_summary(self, total_time: float) -> Dict:
         """Generate summary statistics."""

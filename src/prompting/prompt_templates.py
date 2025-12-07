@@ -268,66 +268,111 @@ class PromptFormatter:
 class ChatPromptFormatter:
     """
     Formatter for instruction-tuned models using chat format.
-    
+
     Converts prompts to chat format for models like Llama-2-Chat, Qwen-Chat, etc.
+
+    IMPORTANT: For log-likelihood extraction, the "Answer:" prefix must appear
+    OUTSIDE the instruction block (after [/INST] or as assistant turn start).
+    Chat models are trained to respond after instruction tags, not complete
+    text inside them.
     """
-    
+
+    @staticmethod
+    def _split_answer_prefix(prompt: str) -> tuple:
+        """
+        Split prompt into question part and answer prefix.
+
+        Args:
+            prompt: Full prompt ending with "Answer:" or "Answer: "
+
+        Returns:
+            Tuple of (question_part, answer_prefix)
+        """
+        # Handle both "Answer:" and "Answer: " (with trailing space)
+        if prompt.rstrip().endswith("Answer:"):
+            # Find where "Answer:" starts
+            idx = prompt.rstrip().rfind("Answer:")
+            question_part = prompt[:idx].rstrip()
+            # Preserve trailing space if present in original
+            if prompt.endswith(" "):
+                answer_prefix = "Answer: "
+            else:
+                answer_prefix = "Answer: "  # Always add space for proper tokenization
+            return question_part, answer_prefix
+        return prompt, ""
+
     @staticmethod
     def format_for_llama2_chat(prompt: str) -> str:
         """
         Format prompt for Llama-2-Chat model.
-        
+
+        Places "Answer:" outside [/INST] so the model predicts the answer
+        as part of its response, not as completion inside the instruction.
+
         Args:
-            prompt: Base prompt
-            
+            prompt: Base prompt (ending with "Answer:" or "Answer: ")
+
         Returns:
             Chat-formatted prompt
         """
-        # Llama-2-Chat format
+        question_part, answer_prefix = ChatPromptFormatter._split_answer_prefix(prompt)
+
+        # Llama-2-Chat format: Answer: appears AFTER [/INST]
         formatted = (
             "[INST] <<SYS>>\n"
-            "You are a helpful assistant.\n"
+            "You are a helpful assistant. Answer the multiple-choice question "
+            "by selecting the correct option letter (A, B, C, D, E, or F).\n"
             "<</SYS>>\n\n"
-            f"{prompt} [/INST]"
+            f"{question_part} [/INST] {answer_prefix}"
         )
         return formatted
-    
+
     @staticmethod
     def format_for_qwen_chat(prompt: str) -> str:
         """
         Format prompt for Qwen-Chat model.
-        
+
+        Places "Answer:" as the start of the assistant turn.
+
         Args:
-            prompt: Base prompt
-            
+            prompt: Base prompt (ending with "Answer:" or "Answer: ")
+
         Returns:
             Chat-formatted prompt
         """
-        # Qwen-Chat format
+        question_part, answer_prefix = ChatPromptFormatter._split_answer_prefix(prompt)
+
+        # Qwen-Chat format: Answer: appears as pre-filled assistant response
         formatted = (
             "<|im_start|>system\n"
-            "You are a helpful assistant.<|im_end|>\n"
+            "You are a helpful assistant. Answer multiple-choice questions "
+            "by selecting the correct option letter.<|im_end|>\n"
             "<|im_start|>user\n"
-            f"{prompt}<|im_end|>\n"
-            "<|im_start|>assistant\n"
+            f"{question_part}<|im_end|>\n"
+            f"<|im_start|>assistant\n{answer_prefix}"
         )
         return formatted
-    
+
     @staticmethod
     def format_for_phi2(prompt: str) -> str:
         """
         Format prompt for Phi-2 model.
-        
+
+        Phi-2 uses simple "Instruct:/Output:" format without special tokens.
+        The "Answer:" prefix should appear after "Output:".
+
         Args:
-            prompt: Base prompt
-            
+            prompt: Base prompt (ending with "Answer:" or "Answer: ")
+
         Returns:
-            Formatted prompt (Phi-2 doesn't use special chat tokens)
+            Formatted prompt
         """
-        # Phi-2 uses simple "Instruct:" format
-        formatted = f"Instruct: {prompt}\nOutput:"
+        question_part, answer_prefix = ChatPromptFormatter._split_answer_prefix(prompt)
+
+        # Phi-2 format: Answer: appears after Output:
+        formatted = f"Instruct: {question_part}\nOutput: {answer_prefix}"
         return formatted
-    
+
     @staticmethod
     def format_for_generic_chat(
         prompt: str,
@@ -335,18 +380,22 @@ class ChatPromptFormatter:
     ) -> str:
         """
         Generic chat format.
-        
+
+        Places "Answer:" as the start of the assistant response.
+
         Args:
-            prompt: Base prompt
+            prompt: Base prompt (ending with "Answer:" or "Answer: ")
             system_message: System message
-            
+
         Returns:
             Chat-formatted prompt
         """
+        question_part, answer_prefix = ChatPromptFormatter._split_answer_prefix(prompt)
+
         formatted = (
             f"System: {system_message}\n\n"
-            f"User: {prompt}\n\n"
-            f"Assistant:"
+            f"User: {question_part}\n\n"
+            f"Assistant: {answer_prefix}"
         )
         return formatted
 

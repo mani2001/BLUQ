@@ -222,39 +222,53 @@ class InferenceEngine:
     def _get_option_token_ids(self) -> Dict[str, int]:
         """
         Get token IDs for option letters (A, B, C, D, E, F).
-        
+
+        Prioritizes space-prefixed tokens (e.g., " A") since prompts end with
+        "Answer: " (trailing space), so the model predicts " A" not "A".
+
         Returns:
             Dictionary mapping option letters to token IDs
         """
         option_token_ids = {}
-        
+
         for letter in self.config.option_letters:
             # Try different encodings to find the single token
+            # Prioritize space-prefixed versions since prompt ends with space
             encodings = [
-                letter,
-                f" {letter}",
-                f"{letter}.",
-                f" {letter}.",
+                f" {letter}",      # " A" - most likely for SentencePiece models
+                letter,            # "A" - fallback for some tokenizers
+                f" {letter}.",     # " A." - some models
+                f"{letter}.",      # "A." - rare
             ]
-            
+
             token_id = None
+            matched_encoding = None
             for encoding in encodings:
                 tokens = self.tokenizer.encode(encoding, add_special_tokens=False)
                 if len(tokens) == 1:
                     token_id = tokens[0]
+                    matched_encoding = encoding
                     break
-            
+
             if token_id is None:
-                # Fallback: just use the first token
-                tokens = self.tokenizer.encode(letter, add_special_tokens=False)
-                token_id = tokens[0]
+                # Fallback: use first token from space-prefixed version
+                tokens = self.tokenizer.encode(f" {letter}", add_special_tokens=False)
+                if len(tokens) > 0:
+                    token_id = tokens[0]
+                    matched_encoding = f" {letter} (first token)"
+                else:
+                    # Last resort fallback
+                    tokens = self.tokenizer.encode(letter, add_special_tokens=False)
+                    token_id = tokens[0]
+                    matched_encoding = f"{letter} (fallback)"
                 logger.warning(
                     f"Could not find single token for option '{letter}', "
-                    f"using token {token_id}"
+                    f"using token {token_id} from '{matched_encoding}'"
                 )
-            
+
             option_token_ids[letter] = token_id
-        
+            logger.debug(f"Option '{letter}' -> token {token_id} (from '{matched_encoding}')")
+
         return option_token_ids
     
     def infer_single(

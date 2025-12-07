@@ -150,12 +150,12 @@ class BasePromptBuilder(BasePromptStrategy):
         
         # Add options
         prompt_parts.append(self._format_options(instance.options))
-        
-        # Add answer prefix
+
+        # Add answer prefix (trailing space for proper tokenization of next token)
         prompt_parts.append("Answer:")
-        
-        return "\n".join(prompt_parts)
-    
+
+        return "\n".join(prompt_parts) + " "
+
     def _get_context(self, instance: DataInstance) -> Optional[str]:
         """Get context from instance based on task type."""
         if instance.context:
@@ -241,12 +241,12 @@ class SharedInstructionPromptBuilder(BasePromptStrategy):
         
         # Add options
         prompt_parts.append(self._format_options(instance.options))
-        
-        # Add answer prefix
+
+        # Add answer prefix (trailing space for proper tokenization of next token)
         prompt_parts.append("Answer:")
-        
-        return "\n".join(prompt_parts)
-    
+
+        return "\n".join(prompt_parts) + " "
+
     def _get_context(self, instance: DataInstance) -> Optional[str]:
         """Get context from instance."""
         if instance.context:
@@ -256,7 +256,7 @@ class SharedInstructionPromptBuilder(BasePromptStrategy):
         elif instance.document:
             return instance.document
         return None
-    
+
     def _get_context_label(self, instance: DataInstance) -> str:
         """Get label for context."""
         if instance.context:
@@ -349,12 +349,12 @@ class TaskSpecificInstructionPromptBuilder(BasePromptStrategy):
         
         # Add options
         prompt_parts.append(self._format_options(instance.options))
-        
-        # Add answer prefix
+
+        # Add answer prefix (trailing space for proper tokenization of next token)
         prompt_parts.append("Answer:")
-        
-        return "\n".join(prompt_parts)
-    
+
+        return "\n".join(prompt_parts) + " "
+
     def _get_context(self, instance: DataInstance) -> Optional[str]:
         """Get context from instance."""
         if instance.context:
@@ -364,7 +364,7 @@ class TaskSpecificInstructionPromptBuilder(BasePromptStrategy):
         elif instance.document:
             return instance.document
         return None
-    
+
     def _get_context_label(self, instance: DataInstance) -> str:
         """Get appropriate label for context type."""
         if instance.context:

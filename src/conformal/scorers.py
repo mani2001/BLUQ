@@ -299,30 +299,26 @@ class APSScorer(BaseConformalPredictor):
             scores[letter] = float(score)
 
         # Build prediction set by adding options in order of probability
+        # Standard APS: include option if cumulative prob (including it) <= threshold
+        # Always include at least the top prediction to prevent empty sets
         included_options = []
         cumulative_prob = 0.0
+        empty_set_fallback = False
 
-        for idx in sorted_indices:
+        for i, idx in enumerate(sorted_indices):
             letter = option_letters[idx]
             prob = probabilities[idx]
 
-            included_options.append(letter)
-            cumulative_prob += prob
+            # Calculate cumulative probability INCLUDING this option
+            current_cumulative = cumulative_prob + prob
 
-            if cumulative_prob > threshold and len(included_options) > 0:
+            # Include if: (1) first option, OR (2) cumulative with this option <= threshold
+            if i == 0 or current_cumulative <= threshold:
+                included_options.append(letter)
+                cumulative_prob = current_cumulative
+            else:
+                # Stop - adding this option would exceed threshold
                 break
-
-        # Ensure at least one option is included
-        empty_set_fallback = False
-        if len(included_options) == 0:
-            best_idx = sorted_indices[0]
-            included_options = [option_letters[best_idx]]
-            empty_set_fallback = True
-            self._empty_set_count += 1
-            logger.debug(
-                f"Empty prediction set for {instance_id}, "
-                f"adding highest probability option: {included_options[0]}"
-            )
 
         return PredictionSet(
             instance_id=instance_id,
