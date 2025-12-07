@@ -1,322 +1,167 @@
 {
-  "timestamp": "20251206_203127",
+  "timestamp": "20251207_173044",
   "completed_combinations": [
     [
-      "smollm-1.7b",
-      "drs",
-      "float16"
-    ],
-    [
-      "smollm-1.7b",
-      "ds",
-      "float32"
-    ],
-    [
-      "smollm-1.7b",
-      "ci",
-      "float16"
-    ],
-    [
-      "smollm-1.7b",
-      "qa",
-      "float16"
-    ],
-    [
-      "smollm-1.7b",
-      "rc",
-      "float32"
-    ],
-    [
-      "smollm-1.7b",
-      "drs",
-      "float32"
-    ],
-    [
-      "smollm-1.7b",
-      "ds",
-      "float16"
-    ],
-    [
-      "smollm-1.7b",
-      "ci",
-      "float32"
-    ],
-    [
-      "smollm-1.7b",
+      "phi-2",
       "rc",
       "float16"
     ],
     [
-      "smollm-1.7b",
+      "phi-2",
+      "ds",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "drs",
+      "float16"
+    ],
+    [
+      "phi-2",
       "qa",
-      "float32"
+      "float16"
+    ],
+    [
+      "phi-2",
+      "ci",
+      "float16"
     ]
   ],
   "results": [
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "qa",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.17647058823529413,
-      "coverage_rate": 0.9019607843137255,
-      "avg_set_size": 5.313725490196078,
-      "meets_guarantee": true,
-      "inference_time": 7.203482627868652,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "qa",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.17647058823529413,
-      "coverage_rate": 1.0,
-      "avg_set_size": 6.0,
-      "meets_guarantee": true,
-      "inference_time": 7.203482627868652,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "rc",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.11764705882352941,
-      "coverage_rate": 0.8235294117647058,
-      "avg_set_size": 4.901960784313726,
+      "accuracy": 0.23290683726509395,
+      "coverage_rate": 0.8994402239104359,
+      "avg_set_size": 5.21171531387445,
       "meets_guarantee": false,
-      "inference_time": 3.441338300704956,
-      "num_samples": 51
+      "inference_time": 1036.7024681568146,
+      "num_samples": 5002
     },
     {
-      "model": "smollm-1.7b",
-      "task": "rc",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.11764705882352941,
-      "coverage_rate": 0.9803921568627451,
-      "avg_set_size": 5.901960784313726,
-      "meets_guarantee": true,
-      "inference_time": 3.441338300704956,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "ci",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.13725490196078433,
-      "coverage_rate": 0.8235294117647058,
-      "avg_set_size": 5.117647058823529,
-      "meets_guarantee": false,
-      "inference_time": 9.4942467212677,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "ci",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.13725490196078433,
-      "coverage_rate": 1.0,
-      "avg_set_size": 6.0,
-      "meets_guarantee": true,
-      "inference_time": 9.4942467212677,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "drs",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.11764705882352941,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.627450980392157,
-      "meets_guarantee": true,
-      "inference_time": 3.1097075939178467,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "drs",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.11764705882352941,
-      "coverage_rate": 1.0,
-      "avg_set_size": 6.0,
-      "meets_guarantee": true,
-      "inference_time": 3.1097075939178467,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "ds",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.29411764705882354,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.450980392156863,
-      "meets_guarantee": true,
-      "inference_time": 7.333398342132568,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "ds",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.29411764705882354,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.882352941176471,
-      "meets_guarantee": true,
-      "inference_time": 7.333398342132568,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "qa",
-      "dtype": "float32",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.23529411764705882,
-      "coverage_rate": 0.9019607843137255,
-      "avg_set_size": 5.078431372549019,
-      "meets_guarantee": true,
-      "inference_time": 4.141312837600708,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "qa",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.23529411764705882,
-      "coverage_rate": 1.0,
-      "avg_set_size": 6.0,
+      "accuracy": 0.23290683726509395,
+      "coverage_rate": 0.998000799680128,
+      "avg_set_size": 5.982407037185126,
       "meets_guarantee": true,
-      "inference_time": 4.141312837600708,
-      "num_samples": 51
+      "inference_time": 1036.7024681568146,
+      "num_samples": 5002
     },
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "rc",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.1568627450980392,
-      "coverage_rate": 0.8627450980392157,
-      "avg_set_size": 4.882352941176471,
+      "accuracy": 0.2545490901819636,
+      "coverage_rate": 0.9040191961607679,
+      "avg_set_size": 5.170565886822636,
+      "meets_guarantee": true,
+      "inference_time": 1064.526479959488,
+      "num_samples": 5001
+    },
+    {
+      "model": "phi-2",
+      "task": "rc",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.2545490901819636,
+      "coverage_rate": 0.9982003599280144,
+      "avg_set_size": 5.9932013597280545,
+      "meets_guarantee": true,
+      "inference_time": 1064.526479959488,
+      "num_samples": 5001
+    },
+    {
+      "model": "phi-2",
+      "task": "ci",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.22295540891821636,
+      "coverage_rate": 0.8892221555688862,
+      "avg_set_size": 5.0943811237752445,
       "meets_guarantee": false,
-      "inference_time": 3.95879864692688,
-      "num_samples": 51
+      "inference_time": 1000.47025847435,
+      "num_samples": 5001
     },
     {
-      "model": "smollm-1.7b",
-      "task": "rc",
-      "dtype": "float32",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.1568627450980392,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.803921568627451,
-      "meets_guarantee": true,
-      "inference_time": 3.95879864692688,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "ci",
-      "dtype": "float32",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.19607843137254902,
-      "coverage_rate": 0.9803921568627451,
-      "avg_set_size": 5.294117647058823,
-      "meets_guarantee": true,
-      "inference_time": 5.136431694030762,
-      "num_samples": 51
-    },
-    {
-      "model": "smollm-1.7b",
-      "task": "ci",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.19607843137254902,
-      "coverage_rate": 1.0,
-      "avg_set_size": 5.901960784313726,
+      "accuracy": 0.22295540891821636,
+      "coverage_rate": 0.9906018796240752,
+      "avg_set_size": 5.9538092381523695,
       "meets_guarantee": true,
-      "inference_time": 5.136431694030762,
-      "num_samples": 51
+      "inference_time": 1000.47025847435,
+      "num_samples": 5001
     },
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "drs",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.1568627450980392,
-      "coverage_rate": 0.9411764705882353,
-      "avg_set_size": 5.647058823529412,
-      "meets_guarantee": true,
-      "inference_time": 2.768399953842163,
-      "num_samples": 51
+      "accuracy": 0.23275344931013797,
+      "coverage_rate": 0.8962207558488302,
+      "avg_set_size": 5.2365526894621075,
+      "meets_guarantee": false,
+      "inference_time": 392.67432379722595,
+      "num_samples": 5001
     },
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "drs",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.1568627450980392,
-      "coverage_rate": 1.0,
-      "avg_set_size": 6.0,
+      "accuracy": 0.23275344931013797,
+      "coverage_rate": 0.9916016796640672,
+      "avg_set_size": 5.949210157968406,
       "meets_guarantee": true,
-      "inference_time": 2.768399953842163,
-      "num_samples": 51
+      "inference_time": 392.67432379722595,
+      "num_samples": 5001
     },
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "ds",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.29411764705882354,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.450980392156863,
-      "meets_guarantee": true,
-      "inference_time": 7.771635055541992,
-      "num_samples": 51
+      "accuracy": 0.383123375324935,
+      "coverage_rate": 0.8922215556888622,
+      "avg_set_size": 4.88122375524895,
+      "meets_guarantee": false,
+      "inference_time": 1344.3651912212372,
+      "num_samples": 5001
     },
     {
-      "model": "smollm-1.7b",
+      "model": "phi-2",
       "task": "ds",
-      "dtype": "float32",
+      "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.29411764705882354,
-      "coverage_rate": 0.9607843137254902,
-      "avg_set_size": 5.882352941176471,
+      "accuracy": 0.383123375324935,
+      "coverage_rate": 0.9736052789442111,
+      "avg_set_size": 5.738252349530094,
       "meets_guarantee": true,
-      "inference_time": 7.771635055541992,
-      "num_samples": 51
+      "inference_time": 1344.3651912212372,
+      "num_samples": 5001
     }
   ],
   "config": {
     "models": [
-      "smollm-1.7b"
+      "phi-2"
     ],
     "tasks": [
       "qa",
@@ -326,10 +171,9 @@
       "ds"
     ],
     "dtypes": [
-      "float16",
-      "float32"
+      "float16"
     ],
-    "num_samples": 100,
+    "num_samples": 10000,
     "alpha": 0.1,
     "calibration_ratio": 0.5,
     "output_dir": "./outputs/results",

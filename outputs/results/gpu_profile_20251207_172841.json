@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-12-07T17:29:07.475280",
+  "summary": {
+    "error": "No timing records collected"
+  },
+  "timing_records": [],
+  "snapshots_summary": {
+    "count": 3,
+    "memory_allocated_mb": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "utilization_percent": []
+  }
+}
