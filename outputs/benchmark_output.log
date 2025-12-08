@@ -1,0 +1,824 @@
+
+================================================================================
+BLUQ: Benchmarking Language models via Uncertainty Quantification
+================================================================================
+Mode: long (10000 samples per task)
+Models: 1 | Tasks: 5 | Dtypes: 1
+Total configurations: 5
+Log file: outputs/results/logs/benchmark_20251207_224643.log
+================================================================================
+
+22:46:43 - INFO - Starting benchmark run
+22:46:43 - INFO - Log file: outputs/results/logs/benchmark_20251207_224643.log
+22:46:43 - INFO - Mode: long, Samples: 10000
+22:46:43 - INFO - Models: ['tinyllama-1.1b']
+22:46:43 - INFO - Tasks: ['qa', 'rc', 'ci', 'drs', 'ds']
+22:46:43 - INFO - Dtypes: ['float16']
+22:46:45 - INFO - Running on: Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+22:46:45 - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+22:46:45 - INFO - GPU Tier: a100 | Auto max_batch_size: 192 | Safety margin: 0.93
+22:46:45 - INFO - Auto-detected max_batch_size: 192
+22:46:45 - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+22:46:45 - INFO - Initialized GPUMemoryManager:
+Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+  GPU Tier: a100
+  Safety Margin: 0.93
+  Activation Multiplier: 0.6
+  Max Batch Size: 192
+22:46:45 - INFO - NVML initialized for GPU utilization monitoring
+22:46:45 - INFO - GPUProfiler initialized (CUDA: True, NVML: True)
+22:46:45 - INFO - Started GPU monitoring
+22:46:45 - INFO - GPU profiling enabled
+22:46:45 - INFO - 
+================================================================================
+22:46:45 - INFO - FULL BENCHMARK CONFIGURATION
+22:46:45 - INFO - ================================================================================
+22:46:45 - INFO - Models (1): ['tinyllama-1.1b']
+22:46:45 - INFO - Tasks (5): ['qa', 'rc', 'ci', 'drs', 'ds']
+22:46:45 - INFO - Data types: ['float16']
+22:46:45 - INFO - Samples per task: 10000
+22:46:45 - INFO - Alpha (error rate): 0.1
+22:46:45 - INFO - Strategies: ['base']
+22:46:45 - INFO - Conformal methods: ['lac', 'aps']
+22:46:45 - INFO - Dynamic batch sizing: True
+22:46:45 - INFO - Max batch size: 192 (GPU tier: a100)
+22:46:45 - INFO - Output directory: outputs/results
+22:46:45 - INFO - 
+================================================================================
+22:46:45 - INFO - Run 1/5: tinyllama-1.1b | qa | float16
+22:46:45 - INFO - ================================================================================
+22:46:48 - INFO - [start_tinyllama-1.1b_qa] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 0.0%
+22:46:48 - INFO - Loading qa dataset (10000 samples)...
+22:46:48 - INFO - Loading MMLU dataset with 10000 samples...
+Downloading readme: 0.00B [00:00, ?B/s]Downloading readme: 53.2kB [00:00, 89.8MB/s]
+Downloading metadata: 0.00B [00:00, ?B/s]Downloading metadata: 138kB [00:00, 35.7MB/s]
+Downloading data files:   0%|          | 0/4 [00:00<?, ?it/s]
+Downloading data:   0%|          | 0.00/3.50M [00:00<?, ?B/s][A
+Downloading data: 100%|██████████| 3.50M/3.50M [00:00<00:00, 18.9MB/s][ADownloading data: 100%|██████████| 3.50M/3.50M [00:00<00:00, 18.6MB/s]
+Downloading data files:  25%|██▌       | 1/4 [00:00<00:00,  5.26it/s]
+Downloading data:   0%|          | 0.00/408k [00:00<?, ?B/s][ADownloading data: 100%|██████████| 408k/408k [00:00<00:00, 9.77MB/s]
+
+Downloading data:   0%|          | 0.00/76.5k [00:00<?, ?B/s][ADownloading data: 100%|██████████| 76.5k/76.5k [00:00<00:00, 1.85MB/s]
+
+Downloading data:   0%|          | 0.00/47.5M [00:00<?, ?B/s][A
+Downloading data:  44%|████▍     | 21.0M/47.5M [00:00<00:00, 197MB/s][A
+Downloading data: 100%|██████████| 47.5M/47.5M [00:00<00:00, 229MB/s][ADownloading data: 100%|██████████| 47.5M/47.5M [00:00<00:00, 218MB/s]
+Downloading data files: 100%|██████████| 4/4 [00:00<00:00,  8.45it/s]Downloading data files: 100%|██████████| 4/4 [00:00<00:00,  8.08it/s]
+Extracting data files:   0%|          | 0/4 [00:00<?, ?it/s]Extracting data files: 100%|██████████| 4/4 [00:00<00:00, 1915.86it/s]
+Generating test split:   0%|          | 0/14042 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 14042/14042 [00:00<00:00, 425238.75 examples/s]
+Generating validation split:   0%|          | 0/1531 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 1531/1531 [00:00<00:00, 290013.52 examples/s]
+Generating dev split:   0%|          | 0/285 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 285/285 [00:00<00:00, 161909.34 examples/s]
+Generating auxiliary_train split:   0%|          | 0/99842 [00:00<?, ? examples/s]Generating auxiliary_train split:  20%|██        | 20000/99842 [00:00<00:00, 199515.47 examples/s]Generating auxiliary_train split:  40%|████      | 40000/99842 [00:00<00:00, 174951.06 examples/s]Generating auxiliary_train split:  80%|████████  | 80000/99842 [00:00<00:00, 221051.19 examples/s]Generating auxiliary_train split: 100%|██████████| 99842/99842 [00:00<00:00, 241163.95 examples/s]
+22:46:54 - INFO - Loaded 10000 MMLU instances
+22:46:54 - INFO - [dataset_loading] Duration: 5355.05ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+22:46:54 - INFO - Processing qa dataset to 6-option format...
+22:46:54 - INFO - Processed 10000 instances for qa
+22:46:54 - INFO - Splitting qa dataset (calibration: 50%, test: 50%)
+22:46:54 - INFO - Split complete:
+22:46:54 - INFO -   Calibration: 4998 instances
+22:46:54 - INFO -   Test: 5002 instances
+22:46:54 - WARNING - Calibration size 4998 differs from expected 5000
+22:46:54 - INFO - Answer distribution:
+22:46:54 - INFO -   Calibration: {'A': 1174, 'B': 1230, 'C': 1242, 'D': 1352}
+22:46:54 - INFO -   Test: {'A': 1175, 'B': 1231, 'C': 1243, 'D': 1353}
+22:46:54 - INFO - [dataset_processing] Duration: 216.98ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+22:46:54 - INFO - Initialized DemonstrationSelector
+22:46:54 - INFO -   Strategy: random
+22:46:54 - INFO -   Num demonstrations: 5
+22:46:54 - INFO - Initialized DemonstrationManager
+22:46:54 - INFO - Selecting 5 demonstrations using 'random' strategy
+22:46:54 - INFO - Selected and cached 5 demonstrations for qa
+22:46:54 - INFO - Loading model: tinyllama-1.1b (float16)
+22:46:54 - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+22:46:54 - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+22:46:55 - INFO - Tokenizer loaded successfully
+22:46:55 - INFO -   Vocab size: 32000
+22:46:55 - INFO -   Padding side: left
+22:46:55 - INFO -   PAD token: </s> (ID: 2)
+22:46:55 - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+`torch_dtype` is deprecated! Use `dtype` instead!
+22:46:59 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+22:46:59 - INFO - Model loaded successfully
+22:46:59 - INFO -   GPU Memory: 2.05GB allocated, 2.19GB reserved
+
+Model: tinyllama-1.1b_float16
+  ID: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  Type: causal
+  Parameters: 1,100,048,384
+  Vocab size: 32,000
+  Max length: 2048
+  Device: cuda:0
+  Dtype: torch.float16
+  Instruct-tuned: True
+22:46:59 - INFO - [model_loading] Duration: 5406.47ms | GPU Memory: 0.0MB -> 2098.2MB (delta +2098.2MB)
+22:46:59 - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2098.2MB | Reserved: 2238.0MB | Free: 79057.6MB | Utilization: 0.0%
+22:46:59 - INFO - Optimal batch size for 1.1B model (float16): 54
+  Available memory: 73.71GB
+  Model memory: 2.20GB
+  Memory per batch item: 1.320GB
+22:46:59 - INFO - Using batch size: 54
+22:46:59 - INFO -   Strategy: base
+22:46:59 - INFO - Initialized PromptBuilder for task: qa
+22:46:59 - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+22:46:59 - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+22:46:59 - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+22:46:59 - INFO -   Device: cuda:0
+22:46:59 - INFO -   Batch size: 54
+22:46:59 - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]/root/BLUQ/src/models/inference_engine.py:433: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+Running inference:   1%|          | 1/93 [00:01<02:47,  1.83s/it]Running inference:   2%|▏         | 2/93 [00:03<02:25,  1.60s/it]Running inference:   3%|▎         | 3/93 [00:04<02:25,  1.62s/it]Running inference:   4%|▍         | 4/93 [00:06<02:35,  1.75s/it]Running inference:   5%|▌         | 5/93 [00:08<02:32,  1.74s/it]Running inference:   6%|▋         | 6/93 [00:10<02:36,  1.80s/it]Running inference:   8%|▊         | 7/93 [00:12<02:26,  1.71s/it]Running inference:   9%|▊         | 8/93 [00:13<02:19,  1.64s/it]Running inference:  10%|▉         | 9/93 [00:15<02:24,  1.73s/it]Running inference:  11%|█         | 10/93 [00:17<02:23,  1.73s/it]Running inference:  12%|█▏        | 11/93 [00:18<02:23,  1.75s/it]Running inference:  13%|█▎        | 12/93 [00:20<02:25,  1.80s/it]Running inference:  14%|█▍        | 13/93 [00:22<02:16,  1.71s/it]Running inference:  15%|█▌        | 14/93 [00:23<02:11,  1.66s/it]Running inference:  16%|█▌        | 15/93 [00:25<02:08,  1.64s/it]Running inference:  17%|█▋        | 16/93 [00:27<02:08,  1.67s/it]Running inference:  18%|█▊        | 17/93 [00:28<02:08,  1.69s/it]Running inference:  19%|█▉        | 18/93 [00:30<02:06,  1.69s/it]Running inference:  20%|██        | 19/93 [00:32<01:57,  1.59s/it]Running inference:  22%|██▏       | 20/93 [00:33<01:56,  1.59s/it]Running inference:  23%|██▎       | 21/93 [00:35<01:57,  1.63s/it]Running inference:  24%|██▎       | 22/93 [00:37<01:57,  1.66s/it]Running inference:  25%|██▍       | 23/93 [00:38<01:54,  1.64s/it]Running inference:  26%|██▌       | 24/93 [00:40<01:53,  1.64s/it]Running inference:  27%|██▋       | 25/93 [00:42<01:57,  1.73s/it]Running inference:  28%|██▊       | 26/93 [00:43<01:47,  1.61s/it]Running inference:  29%|██▉       | 27/93 [00:45<01:49,  1.66s/it]Running inference:  30%|███       | 28/93 [00:46<01:44,  1.60s/it]Running inference:  31%|███       | 29/93 [00:48<01:42,  1.60s/it]Running inference:  32%|███▏      | 30/93 [00:49<01:38,  1.57s/it]Running inference:  33%|███▎      | 31/93 [00:51<01:43,  1.67s/it]Running inference:  34%|███▍      | 32/93 [00:53<01:39,  1.63s/it]Running inference:  35%|███▌      | 33/93 [00:55<01:39,  1.66s/it]Running inference:  37%|███▋      | 34/93 [00:56<01:40,  1.71s/it]Running inference:  38%|███▊      | 35/93 [00:58<01:42,  1.76s/it]Running inference:  39%|███▊      | 36/93 [01:00<01:38,  1.73s/it]Running inference:  40%|███▉      | 37/93 [01:02<01:36,  1.73s/it]Running inference:  41%|████      | 38/93 [01:03<01:36,  1.76s/it]Running inference:  42%|████▏     | 39/93 [01:05<01:31,  1.69s/it]Running inference:  43%|████▎     | 40/93 [01:07<01:30,  1.70s/it]Running inference:  44%|████▍     | 41/93 [01:08<01:23,  1.60s/it]Running inference:  45%|████▌     | 42/93 [01:10<01:24,  1.65s/it]Running inference:  46%|████▌     | 43/93 [01:11<01:21,  1.63s/it]Running inference:  47%|████▋     | 44/93 [01:13<01:18,  1.60s/it]Running inference:  48%|████▊     | 45/93 [01:14<01:12,  1.51s/it]Running inference:  49%|████▉     | 46/93 [01:17<01:20,  1.72s/it]Running inference:  51%|█████     | 47/93 [01:18<01:16,  1.67s/it]Running inference:  52%|█████▏    | 48/93 [01:20<01:18,  1.74s/it]Running inference:  53%|█████▎    | 49/93 [01:22<01:15,  1.71s/it]Running inference:  54%|█████▍    | 50/93 [01:24<01:16,  1.77s/it]Running inference:  55%|█████▍    | 51/93 [01:25<01:13,  1.75s/it]Running inference:  56%|█████▌    | 52/93 [01:27<01:10,  1.72s/it]Running inference:  57%|█████▋    | 53/93 [01:28<01:05,  1.65s/it]Running inference:  58%|█████▊    | 54/93 [01:30<01:05,  1.68s/it]Running inference:  59%|█████▉    | 55/93 [01:32<01:04,  1.71s/it]Running inference:  60%|██████    | 56/93 [01:33<01:01,  1.66s/it]Running inference:  61%|██████▏   | 57/93 [01:35<00:59,  1.66s/it]Running inference:  62%|██████▏   | 58/93 [01:37<00:59,  1.71s/it]Running inference:  63%|██████▎   | 59/93 [01:38<00:56,  1.66s/it]Running inference:  65%|██████▍   | 60/93 [01:40<00:52,  1.59s/it]Running inference:  66%|██████▌   | 61/93 [01:41<00:49,  1.55s/it]Running inference:  67%|██████▋   | 62/93 [01:43<00:50,  1.61s/it]Running inference:  68%|██████▊   | 63/93 [01:45<00:48,  1.61s/it]Running inference:  69%|██████▉   | 64/93 [01:46<00:47,  1.63s/it]Running inference:  70%|██████▉   | 65/93 [01:48<00:47,  1.69s/it]Running inference:  71%|███████   | 66/93 [01:50<00:44,  1.66s/it]Running inference:  72%|███████▏  | 67/93 [01:52<00:44,  1.71s/it]Running inference:  73%|███████▎  | 68/93 [01:53<00:43,  1.73s/it]Running inference:  74%|███████▍  | 69/93 [01:55<00:40,  1.69s/it]Running inference:  75%|███████▌  | 70/93 [01:57<00:37,  1.65s/it]Running inference:  76%|███████▋  | 71/93 [01:58<00:36,  1.66s/it]Running inference:  77%|███████▋  | 72/93 [02:00<00:33,  1.62s/it]Running inference:  78%|███████▊  | 73/93 [02:01<00:32,  1.63s/it]Running inference:  80%|███████▉  | 74/93 [02:03<00:30,  1.59s/it]Running inference:  81%|████████  | 75/93 [02:05<00:29,  1.62s/it]Running inference:  82%|████████▏ | 76/93 [02:07<00:30,  1.79s/it]Running inference:  83%|████████▎ | 77/93 [02:08<00:26,  1.65s/it]Running inference:  84%|████████▍ | 78/93 [02:10<00:24,  1.66s/it]Running inference:  85%|████████▍ | 79/93 [02:12<00:24,  1.72s/it]Running inference:  86%|████████▌ | 80/93 [02:14<00:22,  1.75s/it]Running inference:  87%|████████▋ | 81/93 [02:15<00:20,  1.73s/it]Running inference:  88%|████████▊ | 82/93 [02:17<00:18,  1.66s/it]Running inference:  89%|████████▉ | 83/93 [02:18<00:16,  1.67s/it]Running inference:  90%|█████████ | 84/93 [02:20<00:14,  1.64s/it]Running inference:  91%|█████████▏| 85/93 [02:22<00:13,  1.75s/it]Running inference:  92%|█████████▏| 86/93 [02:23<00:11,  1.66s/it]Running inference:  94%|█████████▎| 87/93 [02:25<00:09,  1.59s/it]Running inference:  95%|█████████▍| 88/93 [02:26<00:07,  1.56s/it]Running inference:  96%|█████████▌| 89/93 [02:28<00:06,  1.57s/it]Running inference:  97%|█████████▋| 90/93 [02:30<00:04,  1.62s/it]Running inference:  98%|█████████▊| 91/93 [02:31<00:03,  1.59s/it]Running inference:  99%|█████████▉| 92/93 [02:33<00:01,  1.67s/it]Running inference: 100%|██████████| 93/93 [02:34<00:00,  1.39s/it]Running inference: 100%|██████████| 93/93 [02:34<00:00,  1.66s/it]
+22:49:34 - INFO - [inference_calibration] Duration: 154236.52ms | GPU Memory: 2098.2MB -> 2106.3MB (delta +8.1MB)
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:01<02:22,  1.55s/it]Running inference:   2%|▏         | 2/93 [00:03<02:19,  1.53s/it]Running inference:   3%|▎         | 3/93 [00:04<02:17,  1.52s/it]Running inference:   4%|▍         | 4/93 [00:06<02:32,  1.72s/it]Running inference:   5%|▌         | 5/93 [00:08<02:26,  1.66s/it]Running inference:   6%|▋         | 6/93 [00:09<02:22,  1.64s/it]Running inference:   8%|▊         | 7/93 [00:11<02:17,  1.59s/it]Running inference:   9%|▊         | 8/93 [00:12<02:13,  1.57s/it]Running inference:  10%|▉         | 9/93 [00:14<02:12,  1.58s/it]Running inference:  11%|█         | 10/93 [00:15<02:06,  1.52s/it]Running inference:  12%|█▏        | 11/93 [00:17<02:10,  1.59s/it]Running inference:  13%|█▎        | 12/93 [00:18<02:05,  1.55s/it]Running inference:  14%|█▍        | 13/93 [00:20<02:06,  1.58s/it]Running inference:  15%|█▌        | 14/93 [00:22<02:10,  1.65s/it]Running inference:  16%|█▌        | 15/93 [00:24<02:13,  1.71s/it]Running inference:  17%|█▋        | 16/93 [00:26<02:14,  1.75s/it]Running inference:  18%|█▊        | 17/93 [00:27<02:09,  1.70s/it]Running inference:  19%|█▉        | 18/93 [00:29<02:04,  1.66s/it]Running inference:  20%|██        | 19/93 [00:30<02:01,  1.64s/it]Running inference:  22%|██▏       | 20/93 [00:32<01:54,  1.57s/it]Running inference:  23%|██▎       | 21/93 [00:33<01:52,  1.57s/it]Running inference:  24%|██▎       | 22/93 [00:35<01:48,  1.53s/it]Running inference:  25%|██▍       | 23/93 [00:37<01:51,  1.59s/it]Running inference:  26%|██▌       | 24/93 [00:38<01:47,  1.56s/it]Running inference:  27%|██▋       | 25/93 [00:39<01:44,  1.54s/it]Running inference:  28%|██▊       | 26/93 [00:41<01:42,  1.53s/it]Running inference:  29%|██▉       | 27/93 [00:43<01:44,  1.58s/it]Running inference:  30%|███       | 28/93 [00:44<01:46,  1.63s/it]Running inference:  31%|███       | 29/93 [00:46<01:41,  1.59s/it]Running inference:  32%|███▏      | 30/93 [00:47<01:38,  1.57s/it]Running inference:  33%|███▎      | 31/93 [00:49<01:37,  1.58s/it]Running inference:  34%|███▍      | 32/93 [00:51<01:35,  1.57s/it]Running inference:  35%|███▌      | 33/93 [00:53<01:39,  1.67s/it]Running inference:  37%|███▋      | 34/93 [00:54<01:39,  1.69s/it]Running inference:  38%|███▊      | 35/93 [00:56<01:42,  1.77s/it]Running inference:  39%|███▊      | 36/93 [00:58<01:36,  1.69s/it]Running inference:  40%|███▉      | 37/93 [01:00<01:48,  1.94s/it]Running inference:  41%|████      | 38/93 [01:02<01:43,  1.89s/it]Running inference:  42%|████▏     | 39/93 [01:03<01:33,  1.74s/it]Running inference:  43%|████▎     | 40/93 [01:05<01:32,  1.74s/it]Running inference:  44%|████▍     | 41/93 [01:07<01:31,  1.75s/it]Running inference:  45%|████▌     | 42/93 [01:08<01:25,  1.68s/it]Running inference:  46%|████▌     | 43/93 [01:10<01:20,  1.60s/it]Running inference:  47%|████▋     | 44/93 [01:12<01:31,  1.87s/it]Running inference:  48%|████▊     | 45/93 [01:14<01:25,  1.79s/it]Running inference:  49%|████▉     | 46/93 [01:16<01:22,  1.75s/it]Running inference:  51%|█████     | 47/93 [01:17<01:19,  1.73s/it]Running inference:  52%|█████▏    | 48/93 [01:19<01:17,  1.72s/it]Running inference:  53%|█████▎    | 49/93 [01:21<01:14,  1.70s/it]Running inference:  54%|█████▍    | 50/93 [01:22<01:14,  1.73s/it]Running inference:  55%|█████▍    | 51/93 [01:24<01:16,  1.81s/it]Running inference:  56%|█████▌    | 52/93 [01:26<01:12,  1.77s/it]Running inference:  57%|█████▋    | 53/93 [01:28<01:07,  1.69s/it]Running inference:  58%|█████▊    | 54/93 [01:29<01:05,  1.68s/it]Running inference:  59%|█████▉    | 55/93 [01:31<01:04,  1.70s/it]Running inference:  60%|██████    | 56/93 [01:33<01:00,  1.64s/it]Running inference:  61%|██████▏   | 57/93 [01:34<00:57,  1.60s/it]Running inference:  62%|██████▏   | 58/93 [01:36<00:57,  1.64s/it]Running inference:  63%|██████▎   | 59/93 [01:37<00:53,  1.59s/it]Running inference:  65%|██████▍   | 60/93 [01:39<00:49,  1.50s/it]Running inference:  66%|██████▌   | 61/93 [01:40<00:50,  1.58s/it]Running inference:  67%|██████▋   | 62/93 [01:42<00:48,  1.57s/it]Running inference:  68%|██████▊   | 63/93 [01:44<00:52,  1.74s/it]Running inference:  69%|██████▉   | 64/93 [01:45<00:48,  1.67s/it]Running inference:  70%|██████▉   | 65/93 [01:47<00:44,  1.59s/it]Running inference:  71%|███████   | 66/93 [01:49<00:43,  1.62s/it]Running inference:  72%|███████▏  | 67/93 [01:50<00:42,  1.63s/it]Running inference:  73%|███████▎  | 68/93 [01:52<00:39,  1.58s/it]Running inference:  74%|███████▍  | 69/93 [01:53<00:38,  1.61s/it]Running inference:  75%|███████▌  | 70/93 [01:55<00:36,  1.61s/it]Running inference:  76%|███████▋  | 71/93 [01:57<00:37,  1.68s/it]Running inference:  77%|███████▋  | 72/93 [01:58<00:34,  1.66s/it]Running inference:  78%|███████▊  | 73/93 [02:00<00:32,  1.61s/it]Running inference:  80%|███████▉  | 74/93 [02:02<00:31,  1.63s/it]Running inference:  81%|████████  | 75/93 [02:03<00:29,  1.62s/it]Running inference:  82%|████████▏ | 76/93 [02:05<00:30,  1.79s/it]Running inference:  83%|████████▎ | 77/93 [02:07<00:27,  1.74s/it]Running inference:  84%|████████▍ | 78/93 [02:09<00:25,  1.67s/it]Running inference:  85%|████████▍ | 79/93 [02:10<00:23,  1.67s/it]Running inference:  86%|████████▌ | 80/93 [02:12<00:21,  1.68s/it]Running inference:  87%|████████▋ | 81/93 [02:13<00:19,  1.64s/it]Running inference:  88%|████████▊ | 82/93 [02:15<00:18,  1.67s/it]Running inference:  89%|████████▉ | 83/93 [02:17<00:16,  1.68s/it]Running inference:  90%|█████████ | 84/93 [02:19<00:15,  1.76s/it]Running inference:  91%|█████████▏| 85/93 [02:21<00:15,  1.98s/it]Running inference:  92%|█████████▏| 86/93 [02:23<00:13,  1.89s/it]Running inference:  94%|█████████▎| 87/93 [02:25<00:10,  1.77s/it]Running inference:  95%|█████████▍| 88/93 [02:26<00:08,  1.68s/it]Running inference:  96%|█████████▌| 89/93 [02:28<00:06,  1.70s/it]Running inference:  97%|█████████▋| 90/93 [02:30<00:05,  1.75s/it]Running inference:  98%|█████████▊| 91/93 [02:31<00:03,  1.69s/it]Running inference:  99%|█████████▉| 92/93 [02:33<00:01,  1.61s/it]Running inference: 100%|██████████| 93/93 [02:34<00:00,  1.44s/it]Running inference: 100%|██████████| 93/93 [02:34<00:00,  1.66s/it]
+22:52:08 - INFO - [inference_test] Duration: 154124.98ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:52:08 - INFO -     Inference: 308.36s for 10000 samples (32.43 samples/sec)
+22:52:08 - INFO - Initialized ProbabilityExtractor
+22:52:08 - INFO -   Temperature: 1.0
+22:52:08 - INFO -   Calibration method: None
+22:52:08 - INFO - [probability_extraction] Duration: 270.59ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:52:08 - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_tinyllama-1.1b_qa_float16_base_20251207_224643.npz
+22:52:08 - INFO - Initialized LACScorer
+22:52:08 - INFO -   Alpha: 0.1
+22:52:08 - INFO -   Target coverage: 90.0%
+22:52:08 - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+22:52:08 - INFO - Initialized PredictionSetGenerator
+22:52:08 - INFO -   Methods: ['lac']
+22:52:08 - INFO -   Alpha: 0.1
+22:52:08 - INFO -   Aggregation: separate
+22:52:08 - INFO - Calibrating 1 conformal predictors...
+22:52:08 - INFO -   Calibrating LAC...
+22:52:08 - INFO - Calibrating with 4998 samples...
+22:52:08 - INFO - Calibration complete
+22:52:08 - INFO -   Threshold: 0.9725
+22:52:08 - INFO -   Score range: [0.0001, 1.0000]
+22:52:08 - INFO - Calibration complete
+22:52:08 - INFO - Generating prediction sets using LAC...
+22:52:08 - INFO - Generating prediction sets for 5002 test instances...
+22:52:08 - INFO - Prediction complete
+22:52:08 - INFO -   Average set size: 5.17
+22:52:08 - INFO -   Coverage rate: 89.28%
+22:52:08 - INFO -   Meets coverage guarantee: False
+22:52:08 - WARNING - ✗ Coverage guarantee NOT met: 89.28% < 90.00%
+22:52:08 - WARNING - LAC does not meet coverage guarantee: 89.28% < 90.00%
+22:52:08 - INFO -     LAC: Acc=21.85%, CR=89.28%, SS=5.17
+22:52:08 - INFO - Initialized APSScorer
+22:52:08 - INFO -   Alpha: 0.1
+22:52:08 - INFO -   Target coverage: 90.0%
+22:52:08 - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+22:52:08 - INFO - Initialized PredictionSetGenerator
+22:52:08 - INFO -   Methods: ['aps']
+22:52:08 - INFO -   Alpha: 0.1
+22:52:08 - INFO -   Aggregation: separate
+22:52:08 - INFO - Calibrating 1 conformal predictors...
+22:52:08 - INFO -   Calibrating APS...
+22:52:08 - INFO - Calibrating with 4998 samples...
+22:52:08 - INFO - Calibration complete
+22:52:08 - INFO -   Threshold: 1.0000
+22:52:08 - INFO -   Score range: [0.1999, 1.0000]
+22:52:08 - INFO - Calibration complete
+22:52:08 - INFO - Generating prediction sets using APS...
+22:52:08 - INFO - Generating prediction sets for 5002 test instances...
+22:52:08 - INFO - Prediction complete
+22:52:08 - INFO -   Average set size: 4.95
+22:52:08 - INFO -   Coverage rate: 90.24%
+22:52:08 - INFO -   Meets coverage guarantee: True
+22:52:08 - INFO - [PASS] Coverage guarantee met: 90.24% >= 90.00%
+22:52:08 - INFO -     APS: Acc=21.85%, CR=90.24%, SS=4.95
+22:52:10 - INFO - Unloaded model: tinyllama-1.1b_float16
+22:52:10 - INFO - Checkpoint saved after completing: tinyllama-1.1b | qa | float16
+22:52:10 - INFO - 
+================================================================================
+22:52:10 - INFO - Run 2/5: tinyllama-1.1b | rc | float16
+22:52:10 - INFO - ================================================================================
+22:52:10 - INFO - [start_tinyllama-1.1b_rc] GPU State: Allocated: 8.1MB | Reserved: 22.0MB | Free: 81147.6MB | Utilization: 81.0%
+22:52:10 - INFO - Loading rc dataset (10000 samples)...
+22:52:10 - INFO - Loading CosmosQA dataset with 10000 samples...
+Downloading builder script: 0.00B [00:00, ?B/s]Downloading builder script: 4.32kB [00:00, 16.7MB/s]
+Downloading readme: 0.00B [00:00, ?B/s]Downloading readme: 7.51kB [00:00, 50.1MB/s]
+Downloading data files:   0%|          | 0/3 [00:00<?, ?it/s]
+Downloading data:   0%|          | 0.00/5.15M [00:00<?, ?B/s][A
+Downloading data: 6.79MB [00:00, 67.9MB/s]                   [A
+Downloading data: 14.9MB [00:00, 75.7MB/s][ADownloading data: 16.7MB [00:00, 75.2MB/s]
+Downloading data files:  33%|███▎      | 1/3 [00:01<00:03,  1.96s/it]
+Downloading data:   0%|          | 0.00/1.86M [00:00<?, ?B/s][ADownloading data: 5.61MB [00:00, 64.1MB/s]                   
+Downloading data files:  67%|██████▋   | 2/3 [00:03<00:01,  1.84s/it]
+Downloading data:   0%|          | 0.00/776k [00:00<?, ?B/s][ADownloading data: 2.13MB [00:00, 45.3MB/s]                  
+Downloading data files: 100%|██████████| 3/3 [00:04<00:00,  1.46s/it]Downloading data files: 100%|██████████| 3/3 [00:04<00:00,  1.57s/it]
+Extracting data files:   0%|          | 0/3 [00:00<?, ?it/s]Extracting data files: 100%|██████████| 3/3 [00:00<00:00, 1815.45it/s]
+Generating train split:   0%|          | 0/25262 [00:00<?, ? examples/s]Generating train split:  10%|▉         | 2521/25262 [00:00<00:00, 25136.01 examples/s]Generating train split:  20%|██        | 5136/25262 [00:00<00:00, 25725.71 examples/s]Generating train split:  31%|███       | 7859/25262 [00:00<00:00, 26406.21 examples/s]Generating train split:  46%|████▌     | 11584/25262 [00:00<00:00, 25626.91 examples/s]Generating train split:  56%|█████▋    | 14251/25262 [00:00<00:00, 25958.08 examples/s]Generating train split:  67%|██████▋   | 17000/25262 [00:00<00:00, 26177.84 examples/s]Generating train split:  78%|███████▊  | 19651/25262 [00:00<00:00, 26275.73 examples/s]Generating train split:  89%|████████▊ | 22374/25262 [00:00<00:00, 26382.09 examples/s]Generating train split: 100%|██████████| 25262/25262 [00:00<00:00, 25995.08 examples/s]Generating train split: 100%|██████████| 25262/25262 [00:00<00:00, 25984.83 examples/s]
+Generating test split:   0%|          | 0/6963 [00:00<?, ? examples/s]Generating test split:  36%|███▌      | 2516/6963 [00:00<00:00, 25089.50 examples/s]Generating test split:  75%|███████▍  | 5212/6963 [00:00<00:00, 26184.32 examples/s]Generating test split: 100%|██████████| 6963/6963 [00:00<00:00, 26080.29 examples/s]
+Generating validation split:   0%|          | 0/2985 [00:00<?, ? examples/s]Generating validation split:  90%|█████████ | 2693/2985 [00:00<00:00, 26863.93 examples/s]Generating validation split: 100%|██████████| 2985/2985 [00:00<00:00, 26231.32 examples/s]
+22:52:17 - INFO - CosmosQA loaded successfully with standard method
+22:52:19 - INFO - Loaded 10000 CosmosQA instances
+22:52:19 - INFO - [dataset_loading] Duration: 8291.88ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+22:52:19 - INFO - Processing rc dataset to 6-option format...
+22:52:19 - INFO - Processed 10000 instances for rc
+22:52:19 - INFO - Splitting rc dataset (calibration: 50%, test: 50%)
+22:52:19 - INFO - Split complete:
+22:52:19 - INFO -   Calibration: 4999 instances
+22:52:19 - INFO -   Test: 5001 instances
+22:52:19 - INFO - Answer distribution:
+22:52:19 - INFO -   Calibration: {'A': 1240, 'B': 1245, 'C': 1263, 'D': 1251}
+22:52:19 - INFO -   Test: {'A': 1241, 'B': 1245, 'C': 1264, 'D': 1251}
+22:52:19 - INFO - [dataset_processing] Duration: 34.73ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+22:52:19 - INFO - Initialized DemonstrationSelector
+22:52:19 - INFO -   Strategy: random
+22:52:19 - INFO -   Num demonstrations: 5
+22:52:19 - INFO - Initialized DemonstrationManager
+22:52:19 - INFO - Selecting 5 demonstrations using 'random' strategy
+22:52:19 - INFO - Selected and cached 5 demonstrations for rc
+22:52:19 - INFO - Loading model: tinyllama-1.1b (float16)
+22:52:19 - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+22:52:19 - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+22:52:19 - INFO - Tokenizer loaded successfully
+22:52:19 - INFO -   Vocab size: 32000
+22:52:19 - INFO -   Padding side: left
+22:52:19 - INFO -   PAD token: </s> (ID: 2)
+22:52:19 - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+22:52:19 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+22:52:20 - INFO - Model loaded successfully
+22:52:20 - INFO -   GPU Memory: 2.06GB allocated, 2.19GB reserved
+
+Model: tinyllama-1.1b_float16
+  ID: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  Type: causal
+  Parameters: 1,100,048,384
+  Vocab size: 32,000
+  Max length: 2048
+  Device: cuda:0
+  Dtype: torch.float16
+  Instruct-tuned: True
+22:52:20 - INFO - [model_loading] Duration: 902.35ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+22:52:20 - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 2246.0MB | Free: 79049.4MB | Utilization: 32.0%
+22:52:20 - INFO - Optimal batch size for 1.1B model (float16): 54
+  Available memory: 73.71GB
+  Model memory: 2.20GB
+  Memory per batch item: 1.320GB
+22:52:20 - INFO - Using batch size: 54
+22:52:20 - INFO -   Strategy: base
+22:52:20 - INFO - Initialized PromptBuilder for task: rc
+22:52:20 - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+22:52:20 - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+22:52:20 - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+22:52:20 - INFO -   Device: cuda:0
+22:52:20 - INFO -   Batch size: 54
+22:52:20 - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:01<01:43,  1.13s/it]Running inference:   2%|▏         | 2/93 [00:02<01:43,  1.14s/it]Running inference:   3%|▎         | 3/93 [00:03<01:43,  1.15s/it]Running inference:   4%|▍         | 4/93 [00:04<01:44,  1.17s/it]Running inference:   5%|▌         | 5/93 [00:05<01:42,  1.17s/it]Running inference:   6%|▋         | 6/93 [00:06<01:41,  1.17s/it]Running inference:   8%|▊         | 7/93 [00:08<01:41,  1.18s/it]Running inference:   9%|▊         | 8/93 [00:09<01:39,  1.18s/it]Running inference:  10%|▉         | 9/93 [00:10<01:38,  1.18s/it]Running inference:  11%|█         | 10/93 [00:11<01:37,  1.18s/it]Running inference:  12%|█▏        | 11/93 [00:12<01:37,  1.19s/it]Running inference:  13%|█▎        | 12/93 [00:14<01:37,  1.20s/it]Running inference:  14%|█▍        | 13/93 [00:15<01:35,  1.19s/it]Running inference:  15%|█▌        | 14/93 [00:16<01:33,  1.18s/it]Running inference:  16%|█▌        | 15/93 [00:17<01:31,  1.17s/it]Running inference:  17%|█▋        | 16/93 [00:18<01:31,  1.19s/it]Running inference:  18%|█▊        | 17/93 [00:20<01:29,  1.18s/it]Running inference:  19%|█▉        | 18/93 [00:21<01:28,  1.18s/it]Running inference:  20%|██        | 19/93 [00:22<01:27,  1.18s/it]Running inference:  22%|██▏       | 20/93 [00:23<01:25,  1.18s/it]Running inference:  23%|██▎       | 21/93 [00:24<01:25,  1.19s/it]Running inference:  24%|██▎       | 22/93 [00:25<01:24,  1.19s/it]Running inference:  25%|██▍       | 23/93 [00:27<01:23,  1.19s/it]Running inference:  26%|██▌       | 24/93 [00:28<01:21,  1.18s/it]Running inference:  27%|██▋       | 25/93 [00:29<01:20,  1.18s/it]Running inference:  28%|██▊       | 26/93 [00:30<01:18,  1.18s/it]Running inference:  29%|██▉       | 27/93 [00:31<01:17,  1.17s/it]Running inference:  30%|███       | 28/93 [00:32<01:16,  1.17s/it]Running inference:  31%|███       | 29/93 [00:34<01:14,  1.17s/it]Running inference:  32%|███▏      | 30/93 [00:35<01:15,  1.19s/it]Running inference:  33%|███▎      | 31/93 [00:36<01:13,  1.19s/it]Running inference:  34%|███▍      | 32/93 [00:37<01:12,  1.18s/it]Running inference:  35%|███▌      | 33/93 [00:38<01:10,  1.18s/it]Running inference:  37%|███▋      | 34/93 [00:40<01:10,  1.19s/it]Running inference:  38%|███▊      | 35/93 [00:41<01:08,  1.17s/it]Running inference:  39%|███▊      | 36/93 [00:42<01:06,  1.17s/it]Running inference:  40%|███▉      | 37/93 [00:43<01:06,  1.18s/it]Running inference:  41%|████      | 38/93 [00:44<01:05,  1.19s/it]Running inference:  42%|████▏     | 39/93 [00:45<01:03,  1.18s/it]Running inference:  43%|████▎     | 40/93 [00:47<01:02,  1.18s/it]Running inference:  44%|████▍     | 41/93 [00:48<01:01,  1.17s/it]Running inference:  45%|████▌     | 42/93 [00:49<01:00,  1.19s/it]Running inference:  46%|████▌     | 43/93 [00:50<01:00,  1.20s/it]Running inference:  47%|████▋     | 44/93 [00:51<00:58,  1.19s/it]Running inference:  48%|████▊     | 45/93 [00:53<00:57,  1.20s/it]Running inference:  49%|████▉     | 46/93 [00:54<00:56,  1.20s/it]Running inference:  51%|█████     | 47/93 [00:55<00:54,  1.19s/it]Running inference:  52%|█████▏    | 48/93 [00:56<00:53,  1.18s/it]Running inference:  53%|█████▎    | 49/93 [00:57<00:52,  1.19s/it]Running inference:  54%|█████▍    | 50/93 [00:59<00:50,  1.19s/it]Running inference:  55%|█████▍    | 51/93 [01:00<00:49,  1.19s/it]Running inference:  56%|█████▌    | 52/93 [01:01<00:48,  1.18s/it]Running inference:  57%|█████▋    | 53/93 [01:02<00:47,  1.18s/it]Running inference:  58%|█████▊    | 54/93 [01:03<00:46,  1.18s/it]Running inference:  59%|█████▉    | 55/93 [01:05<00:45,  1.19s/it]Running inference:  60%|██████    | 56/93 [01:06<00:43,  1.18s/it]Running inference:  61%|██████▏   | 57/93 [01:07<00:42,  1.17s/it]Running inference:  62%|██████▏   | 58/93 [01:08<00:41,  1.18s/it]Running inference:  63%|██████▎   | 59/93 [01:09<00:40,  1.18s/it]Running inference:  65%|██████▍   | 60/93 [01:10<00:38,  1.17s/it]Running inference:  66%|██████▌   | 61/93 [01:12<00:37,  1.16s/it]Running inference:  67%|██████▋   | 62/93 [01:13<00:36,  1.17s/it]Running inference:  68%|██████▊   | 63/93 [01:14<00:35,  1.17s/it]Running inference:  69%|██████▉   | 64/93 [01:15<00:33,  1.17s/it]Running inference:  70%|██████▉   | 65/93 [01:16<00:32,  1.17s/it]Running inference:  71%|███████   | 66/93 [01:17<00:31,  1.17s/it]Running inference:  72%|███████▏  | 67/93 [01:19<00:30,  1.17s/it]Running inference:  73%|███████▎  | 68/93 [01:20<00:29,  1.17s/it]Running inference:  74%|███████▍  | 69/93 [01:21<00:28,  1.17s/it]Running inference:  75%|███████▌  | 70/93 [01:22<00:26,  1.16s/it]Running inference:  76%|███████▋  | 71/93 [01:23<00:25,  1.18s/it]Running inference:  77%|███████▋  | 72/93 [01:24<00:24,  1.17s/it]Running inference:  78%|███████▊  | 73/93 [01:26<00:23,  1.17s/it]Running inference:  80%|███████▉  | 74/93 [01:27<00:22,  1.17s/it]Running inference:  81%|████████  | 75/93 [01:28<00:21,  1.18s/it]Running inference:  82%|████████▏ | 76/93 [01:29<00:20,  1.19s/it]Running inference:  83%|████████▎ | 77/93 [01:30<00:19,  1.19s/it]Running inference:  84%|████████▍ | 78/93 [01:32<00:17,  1.19s/it]Running inference:  85%|████████▍ | 79/93 [01:33<00:16,  1.19s/it]Running inference:  86%|████████▌ | 80/93 [01:34<00:15,  1.18s/it]Running inference:  87%|████████▋ | 81/93 [01:35<00:14,  1.17s/it]Running inference:  88%|████████▊ | 82/93 [01:36<00:12,  1.17s/it]Running inference:  89%|████████▉ | 83/93 [01:37<00:11,  1.17s/it]Running inference:  90%|█████████ | 84/93 [01:39<00:10,  1.18s/it]Running inference:  91%|█████████▏| 85/93 [01:40<00:09,  1.18s/it]Running inference:  92%|█████████▏| 86/93 [01:41<00:08,  1.18s/it]Running inference:  94%|█████████▎| 87/93 [01:42<00:07,  1.19s/it]Running inference:  95%|█████████▍| 88/93 [01:43<00:05,  1.20s/it]Running inference:  96%|█████████▌| 89/93 [01:45<00:04,  1.19s/it]Running inference:  97%|█████████▋| 90/93 [01:46<00:03,  1.19s/it]Running inference:  98%|█████████▊| 91/93 [01:47<00:02,  1.20s/it]Running inference:  99%|█████████▉| 92/93 [01:48<00:01,  1.19s/it]Running inference: 100%|██████████| 93/93 [01:49<00:00,  1.03s/it]Running inference: 100%|██████████| 93/93 [01:49<00:00,  1.18s/it]
+22:54:09 - INFO - [inference_calibration] Duration: 109300.40ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:01<01:48,  1.18s/it]Running inference:   2%|▏         | 2/93 [00:02<01:47,  1.18s/it]Running inference:   3%|▎         | 3/93 [00:03<01:45,  1.18s/it]Running inference:   4%|▍         | 4/93 [00:04<01:45,  1.19s/it]Running inference:   5%|▌         | 5/93 [00:05<01:45,  1.20s/it]Running inference:   6%|▋         | 6/93 [00:07<01:43,  1.19s/it]Running inference:   8%|▊         | 7/93 [00:08<01:41,  1.18s/it]Running inference:   9%|▊         | 8/93 [00:09<01:39,  1.17s/it]Running inference:  10%|▉         | 9/93 [00:10<01:37,  1.16s/it]Running inference:  11%|█         | 10/93 [00:11<01:36,  1.16s/it]Running inference:  12%|█▏        | 11/93 [00:12<01:35,  1.16s/it]Running inference:  13%|█▎        | 12/93 [00:14<01:34,  1.17s/it]Running inference:  14%|█▍        | 13/93 [00:15<01:34,  1.18s/it]Running inference:  15%|█▌        | 14/93 [00:16<01:34,  1.19s/it]Running inference:  16%|█▌        | 15/93 [00:17<01:33,  1.20s/it]Running inference:  17%|█▋        | 16/93 [00:18<01:31,  1.19s/it]Running inference:  18%|█▊        | 17/93 [00:20<01:31,  1.20s/it]Running inference:  19%|█▉        | 18/93 [00:21<01:28,  1.18s/it]Running inference:  20%|██        | 19/93 [00:22<01:27,  1.18s/it]Running inference:  22%|██▏       | 20/93 [00:23<01:28,  1.22s/it]Running inference:  23%|██▎       | 21/93 [00:24<01:26,  1.20s/it]Running inference:  24%|██▎       | 22/93 [00:26<01:24,  1.19s/it]Running inference:  25%|██▍       | 23/93 [00:27<01:23,  1.19s/it]Running inference:  26%|██▌       | 24/93 [00:28<01:22,  1.20s/it]Running inference:  27%|██▋       | 25/93 [00:29<01:21,  1.20s/it]Running inference:  28%|██▊       | 26/93 [00:30<01:20,  1.20s/it]Running inference:  29%|██▉       | 27/93 [00:32<01:19,  1.21s/it]Running inference:  30%|███       | 28/93 [00:33<01:18,  1.21s/it]Running inference:  31%|███       | 29/93 [00:34<01:17,  1.21s/it]Running inference:  32%|███▏      | 30/93 [00:35<01:15,  1.20s/it]Running inference:  33%|███▎      | 31/93 [00:36<01:15,  1.21s/it]Running inference:  34%|███▍      | 32/93 [00:38<01:13,  1.20s/it]Running inference:  35%|███▌      | 33/93 [00:39<01:12,  1.20s/it]Running inference:  37%|███▋      | 34/93 [00:40<01:09,  1.18s/it]Running inference:  38%|███▊      | 35/93 [00:41<01:08,  1.18s/it]Running inference:  39%|███▊      | 36/93 [00:42<01:07,  1.18s/it]Running inference:  40%|███▉      | 37/93 [00:44<01:06,  1.18s/it]Running inference:  41%|████      | 38/93 [00:45<01:05,  1.19s/it]Running inference:  42%|████▏     | 39/93 [00:46<01:03,  1.18s/it]Running inference:  43%|████▎     | 40/93 [00:47<01:01,  1.17s/it]Running inference:  44%|████▍     | 41/93 [00:48<01:00,  1.16s/it]Running inference:  45%|████▌     | 42/93 [00:49<00:59,  1.17s/it]Running inference:  46%|████▌     | 43/93 [00:51<00:59,  1.18s/it]Running inference:  47%|████▋     | 44/93 [00:52<00:57,  1.18s/it]Running inference:  48%|████▊     | 45/93 [00:53<00:56,  1.17s/it]Running inference:  49%|████▉     | 46/93 [00:54<00:55,  1.17s/it]Running inference:  51%|█████     | 47/93 [00:55<00:54,  1.18s/it]Running inference:  52%|█████▏    | 48/93 [00:56<00:53,  1.19s/it]Running inference:  53%|█████▎    | 49/93 [00:58<00:52,  1.18s/it]Running inference:  54%|█████▍    | 50/93 [00:59<00:51,  1.20s/it]Running inference:  55%|█████▍    | 51/93 [01:00<00:50,  1.20s/it]Running inference:  56%|█████▌    | 52/93 [01:01<00:49,  1.20s/it]Running inference:  57%|█████▋    | 53/93 [01:03<00:48,  1.20s/it]Running inference:  58%|█████▊    | 54/93 [01:04<00:46,  1.19s/it]Running inference:  59%|█████▉    | 55/93 [01:05<00:44,  1.18s/it]Running inference:  60%|██████    | 56/93 [01:06<00:43,  1.18s/it]Running inference:  61%|██████▏   | 57/93 [01:07<00:42,  1.18s/it]Running inference:  62%|██████▏   | 58/93 [01:08<00:40,  1.16s/it]Running inference:  63%|██████▎   | 59/93 [01:09<00:39,  1.17s/it]Running inference:  65%|██████▍   | 60/93 [01:11<00:38,  1.17s/it]Running inference:  66%|██████▌   | 61/93 [01:12<00:37,  1.17s/it]Running inference:  67%|██████▋   | 62/93 [01:13<00:36,  1.16s/it]Running inference:  68%|██████▊   | 63/93 [01:14<00:35,  1.18s/it]Running inference:  69%|██████▉   | 64/93 [01:15<00:34,  1.20s/it]Running inference:  70%|██████▉   | 65/93 [01:17<00:33,  1.20s/it]Running inference:  71%|███████   | 66/93 [01:18<00:32,  1.20s/it]Running inference:  72%|███████▏  | 67/93 [01:19<00:31,  1.21s/it]Running inference:  73%|███████▎  | 68/93 [01:20<00:29,  1.20s/it]Running inference:  74%|███████▍  | 69/93 [01:21<00:28,  1.19s/it]Running inference:  75%|███████▌  | 70/93 [01:23<00:27,  1.20s/it]Running inference:  76%|███████▋  | 71/93 [01:24<00:26,  1.21s/it]Running inference:  77%|███████▋  | 72/93 [01:25<00:25,  1.20s/it]Running inference:  78%|███████▊  | 73/93 [01:26<00:24,  1.21s/it]Running inference:  80%|███████▉  | 74/93 [01:27<00:22,  1.20s/it]Running inference:  81%|████████  | 75/93 [01:29<00:21,  1.19s/it]Running inference:  82%|████████▏ | 76/93 [01:30<00:20,  1.18s/it]Running inference:  83%|████████▎ | 77/93 [01:31<00:18,  1.18s/it]Running inference:  84%|████████▍ | 78/93 [01:32<00:17,  1.18s/it]Running inference:  85%|████████▍ | 79/93 [01:33<00:16,  1.18s/it]Running inference:  86%|████████▌ | 80/93 [01:34<00:15,  1.18s/it]Running inference:  87%|████████▋ | 81/93 [01:36<00:14,  1.18s/it]Running inference:  88%|████████▊ | 82/93 [01:37<00:13,  1.18s/it]Running inference:  89%|████████▉ | 83/93 [01:38<00:11,  1.19s/it]Running inference:  90%|█████████ | 84/93 [01:39<00:10,  1.19s/it]Running inference:  91%|█████████▏| 85/93 [01:40<00:09,  1.18s/it]Running inference:  92%|█████████▏| 86/93 [01:42<00:08,  1.19s/it]Running inference:  94%|█████████▎| 87/93 [01:43<00:07,  1.20s/it]Running inference:  95%|█████████▍| 88/93 [01:44<00:05,  1.19s/it]Running inference:  96%|█████████▌| 89/93 [01:45<00:04,  1.19s/it]Running inference:  97%|█████████▋| 90/93 [01:46<00:03,  1.18s/it]Running inference:  98%|█████████▊| 91/93 [01:48<00:02,  1.18s/it]Running inference:  99%|█████████▉| 92/93 [01:49<00:01,  1.18s/it]Running inference: 100%|██████████| 93/93 [01:49<00:00,  1.04s/it]Running inference: 100%|██████████| 93/93 [01:49<00:00,  1.18s/it]
+22:55:59 - INFO - [inference_test] Duration: 109947.72ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:55:59 - INFO -     Inference: 219.25s for 10000 samples (45.61 samples/sec)
+22:55:59 - INFO - Initialized ProbabilityExtractor
+22:55:59 - INFO -   Temperature: 1.0
+22:55:59 - INFO -   Calibration method: None
+22:55:59 - INFO - [probability_extraction] Duration: 260.43ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:55:59 - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_tinyllama-1.1b_rc_float16_base_20251207_224643.npz
+22:55:59 - INFO - Initialized LACScorer
+22:55:59 - INFO -   Alpha: 0.1
+22:55:59 - INFO -   Target coverage: 90.0%
+22:55:59 - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+22:55:59 - INFO - Initialized PredictionSetGenerator
+22:55:59 - INFO -   Methods: ['lac']
+22:55:59 - INFO -   Alpha: 0.1
+22:55:59 - INFO -   Aggregation: separate
+22:55:59 - INFO - Calibrating 1 conformal predictors...
+22:55:59 - INFO -   Calibrating LAC...
+22:55:59 - INFO - Calibrating with 4999 samples...
+22:55:59 - INFO - Calibration complete
+22:55:59 - INFO -   Threshold: 0.9695
+22:55:59 - INFO -   Score range: [0.0001, 1.0000]
+22:55:59 - INFO - Calibration complete
+22:55:59 - INFO - Generating prediction sets using LAC...
+22:55:59 - INFO - Generating prediction sets for 5001 test instances...
+22:55:59 - INFO - Prediction complete
+22:55:59 - INFO -   Average set size: 5.18
+22:55:59 - INFO -   Coverage rate: 90.68%
+22:55:59 - INFO -   Meets coverage guarantee: True
+22:55:59 - INFO - [PASS] Coverage guarantee met: 90.68% >= 90.00%
+22:55:59 - INFO -     LAC: Acc=20.90%, CR=90.68%, SS=5.18
+22:55:59 - INFO - Initialized APSScorer
+22:55:59 - INFO -   Alpha: 0.1
+22:55:59 - INFO -   Target coverage: 90.0%
+22:55:59 - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+22:55:59 - INFO - Initialized PredictionSetGenerator
+22:55:59 - INFO -   Methods: ['aps']
+22:55:59 - INFO -   Alpha: 0.1
+22:55:59 - INFO -   Aggregation: separate
+22:55:59 - INFO - Calibrating 1 conformal predictors...
+22:55:59 - INFO -   Calibrating APS...
+22:55:59 - INFO - Calibrating with 4999 samples...
+22:55:59 - INFO - Calibration complete
+22:55:59 - INFO -   Threshold: 1.0000
+22:55:59 - INFO -   Score range: [0.1968, 1.0000]
+22:55:59 - INFO - Calibration complete
+22:55:59 - INFO - Generating prediction sets using APS...
+22:55:59 - INFO - Generating prediction sets for 5001 test instances...
+22:56:00 - INFO - Prediction complete
+22:56:00 - INFO -   Average set size: 5.00
+22:56:00 - INFO -   Coverage rate: 90.90%
+22:56:00 - INFO -   Meets coverage guarantee: True
+22:56:00 - INFO - [PASS] Coverage guarantee met: 90.90% >= 90.00%
+22:56:00 - INFO -     APS: Acc=20.90%, CR=90.90%, SS=5.00
+22:56:02 - INFO - Unloaded model: tinyllama-1.1b_float16
+22:56:02 - INFO - Checkpoint saved after completing: tinyllama-1.1b | rc | float16
+22:56:02 - INFO - 
+================================================================================
+22:56:02 - INFO - Run 3/5: tinyllama-1.1b | ci | float16
+22:56:02 - INFO - ================================================================================
+22:56:02 - INFO - [start_tinyllama-1.1b_ci] GPU State: Allocated: 8.1MB | Reserved: 22.0MB | Free: 81147.6MB | Utilization: 52.0%
+22:56:02 - INFO - Loading ci dataset (10000 samples)...
+22:56:02 - INFO - Loading HellaSwag dataset with 10000 samples...
+Downloading readme: 0.00B [00:00, ?B/s]Downloading readme: 7.02kB [00:00, 22.1MB/s]
+Downloading data files:   0%|          | 0/3 [00:00<?, ?it/s]
+Downloading data:   0%|          | 0.00/24.4M [00:00<?, ?B/s][A
+Downloading data:  43%|████▎     | 10.5M/24.4M [00:00<00:00, 43.4MB/s][ADownloading data: 100%|██████████| 24.4M/24.4M [00:00<00:00, 76.4MB/s]
+Downloading data files:  33%|███▎      | 1/3 [00:00<00:00,  3.12it/s]
+Downloading data:   0%|          | 0.00/6.11M [00:00<?, ?B/s][ADownloading data: 100%|██████████| 6.11M/6.11M [00:00<00:00, 83.7MB/s]
+
+Downloading data:   0%|          | 0.00/6.32M [00:00<?, ?B/s][A
+Downloading data: 100%|██████████| 6.32M/6.32M [00:00<00:00, 26.0MB/s][ADownloading data: 100%|██████████| 6.32M/6.32M [00:00<00:00, 25.6MB/s]
+Downloading data files: 100%|██████████| 3/3 [00:00<00:00,  4.93it/s]Downloading data files: 100%|██████████| 3/3 [00:00<00:00,  4.66it/s]
+Extracting data files:   0%|          | 0/3 [00:00<?, ?it/s]Extracting data files: 100%|██████████| 3/3 [00:00<00:00, 1922.82it/s]
+Generating train split:   0%|          | 0/39905 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 39905/39905 [00:00<00:00, 328665.13 examples/s]Generating train split: 100%|██████████| 39905/39905 [00:00<00:00, 327737.75 examples/s]
+Generating test split:   0%|          | 0/10003 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 10003/10003 [00:00<00:00, 306417.64 examples/s]
+Generating validation split:   0%|          | 0/10042 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 10042/10042 [00:00<00:00, 316298.08 examples/s]
+22:56:07 - INFO - Loaded 10000 HellaSwag instances
+22:56:07 - INFO - [dataset_loading] Duration: 4689.86ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+22:56:07 - INFO - Processing ci dataset to 6-option format...
+22:56:07 - INFO - Processed 10000 instances for ci
+22:56:07 - INFO - Splitting ci dataset (calibration: 50%, test: 50%)
+22:56:07 - INFO - Split complete:
+22:56:07 - INFO -   Calibration: 4999 instances
+22:56:07 - INFO -   Test: 5001 instances
+22:56:07 - INFO - Answer distribution:
+22:56:07 - INFO -   Calibration: {'A': 1240, 'B': 1242, 'C': 1256, 'D': 1261}
+22:56:07 - INFO -   Test: {'A': 1240, 'B': 1242, 'C': 1257, 'D': 1262}
+22:56:07 - INFO - [dataset_processing] Duration: 181.06ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+22:56:07 - INFO - Initialized DemonstrationSelector
+22:56:07 - INFO -   Strategy: random
+22:56:07 - INFO -   Num demonstrations: 5
+22:56:07 - INFO - Initialized DemonstrationManager
+22:56:07 - INFO - Selecting 5 demonstrations using 'random' strategy
+22:56:07 - INFO - Selected and cached 5 demonstrations for ci
+22:56:07 - INFO - Loading model: tinyllama-1.1b (float16)
+22:56:07 - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+22:56:07 - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+22:56:07 - INFO - Tokenizer loaded successfully
+22:56:07 - INFO -   Vocab size: 32000
+22:56:07 - INFO -   Padding side: left
+22:56:07 - INFO -   PAD token: </s> (ID: 2)
+22:56:07 - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+22:56:07 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+22:56:08 - INFO - Model loaded successfully
+22:56:08 - INFO -   GPU Memory: 2.06GB allocated, 2.19GB reserved
+
+Model: tinyllama-1.1b_float16
+  ID: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  Type: causal
+  Parameters: 1,100,048,384
+  Vocab size: 32,000
+  Max length: 2048
+  Device: cuda:0
+  Dtype: torch.float16
+  Instruct-tuned: True
+22:56:08 - INFO - [model_loading] Duration: 957.72ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+22:56:08 - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 2246.0MB | Free: 79049.4MB | Utilization: 26.0%
+22:56:08 - INFO - Optimal batch size for 1.1B model (float16): 54
+  Available memory: 73.71GB
+  Model memory: 2.20GB
+  Memory per batch item: 1.320GB
+22:56:08 - INFO - Using batch size: 54
+22:56:08 - INFO -   Strategy: base
+22:56:08 - INFO - Initialized PromptBuilder for task: ci
+22:56:08 - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+22:56:08 - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+22:56:08 - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+22:56:08 - INFO -   Device: cuda:0
+22:56:08 - INFO -   Batch size: 54
+22:56:08 - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:01<01:51,  1.21s/it]Running inference:   2%|▏         | 2/93 [00:02<01:52,  1.24s/it]Running inference:   3%|▎         | 3/93 [00:03<01:50,  1.22s/it]Running inference:   4%|▍         | 4/93 [00:04<01:48,  1.22s/it]Running inference:   5%|▌         | 5/93 [00:06<01:47,  1.22s/it]Running inference:   6%|▋         | 6/93 [00:07<01:45,  1.21s/it]Running inference:   8%|▊         | 7/93 [00:08<01:44,  1.21s/it]Running inference:   9%|▊         | 8/93 [00:09<01:43,  1.22s/it]Running inference:  10%|▉         | 9/93 [00:10<01:42,  1.22s/it]Running inference:  11%|█         | 10/93 [00:12<01:40,  1.21s/it]Running inference:  12%|█▏        | 11/93 [00:13<01:38,  1.20s/it]Running inference:  13%|█▎        | 12/93 [00:14<01:37,  1.21s/it]Running inference:  14%|█▍        | 13/93 [00:15<01:36,  1.21s/it]Running inference:  15%|█▌        | 14/93 [00:16<01:34,  1.20s/it]Running inference:  16%|█▌        | 15/93 [00:18<01:33,  1.19s/it]Running inference:  17%|█▋        | 16/93 [00:19<01:32,  1.20s/it]Running inference:  18%|█▊        | 17/93 [00:20<01:31,  1.20s/it]Running inference:  19%|█▉        | 18/93 [00:21<01:29,  1.20s/it]Running inference:  20%|██        | 19/93 [00:22<01:28,  1.20s/it]Running inference:  22%|██▏       | 20/93 [00:24<01:27,  1.20s/it]Running inference:  23%|██▎       | 21/93 [00:25<01:27,  1.21s/it]Running inference:  24%|██▎       | 22/93 [00:26<01:26,  1.21s/it]Running inference:  25%|██▍       | 23/93 [00:27<01:25,  1.21s/it]Running inference:  26%|██▌       | 24/93 [00:28<01:22,  1.20s/it]Running inference:  27%|██▋       | 25/93 [00:30<01:22,  1.21s/it]Running inference:  28%|██▊       | 26/93 [00:31<01:21,  1.21s/it]Running inference:  29%|██▉       | 27/93 [00:32<01:19,  1.21s/it]Running inference:  30%|███       | 28/93 [00:33<01:18,  1.21s/it]Running inference:  31%|███       | 29/93 [00:35<01:17,  1.21s/it]Running inference:  32%|███▏      | 30/93 [00:36<01:16,  1.21s/it]Running inference:  33%|███▎      | 31/93 [00:37<01:16,  1.24s/it]Running inference:  34%|███▍      | 32/93 [00:38<01:15,  1.23s/it]Running inference:  35%|███▌      | 33/93 [00:39<01:13,  1.22s/it]Running inference:  37%|███▋      | 34/93 [00:41<01:11,  1.22s/it]Running inference:  38%|███▊      | 35/93 [00:42<01:09,  1.21s/it]Running inference:  39%|███▊      | 36/93 [00:43<01:08,  1.21s/it]Running inference:  40%|███▉      | 37/93 [00:44<01:07,  1.21s/it]Running inference:  41%|████      | 38/93 [00:45<01:06,  1.21s/it]Running inference:  42%|████▏     | 39/93 [00:47<01:04,  1.20s/it]Running inference:  43%|████▎     | 40/93 [00:48<01:04,  1.22s/it]Running inference:  44%|████▍     | 41/93 [00:49<01:03,  1.22s/it]Running inference:  45%|████▌     | 42/93 [00:50<01:02,  1.22s/it]Running inference:  46%|████▌     | 43/93 [00:52<01:00,  1.21s/it]Running inference:  47%|████▋     | 44/93 [00:53<00:58,  1.20s/it]Running inference:  48%|████▊     | 45/93 [00:54<00:57,  1.20s/it]Running inference:  49%|████▉     | 46/93 [00:55<00:56,  1.20s/it]Running inference:  51%|█████     | 47/93 [00:56<00:55,  1.20s/it]Running inference:  52%|█████▏    | 48/93 [00:58<00:54,  1.20s/it]Running inference:  53%|█████▎    | 49/93 [00:59<00:52,  1.20s/it]Running inference:  54%|█████▍    | 50/93 [01:00<00:51,  1.20s/it]Running inference:  55%|█████▍    | 51/93 [01:01<00:50,  1.21s/it]Running inference:  56%|█████▌    | 52/93 [01:02<00:49,  1.20s/it]Running inference:  57%|█████▋    | 53/93 [01:03<00:47,  1.19s/it]Running inference:  58%|█████▊    | 54/93 [01:05<00:46,  1.19s/it]Running inference:  59%|█████▉    | 55/93 [01:06<00:45,  1.20s/it]Running inference:  60%|██████    | 56/93 [01:07<00:44,  1.20s/it]Running inference:  61%|██████▏   | 57/93 [01:08<00:43,  1.20s/it]Running inference:  62%|██████▏   | 58/93 [01:10<00:42,  1.21s/it]Running inference:  63%|██████▎   | 59/93 [01:11<00:41,  1.21s/it]Running inference:  65%|██████▍   | 60/93 [01:12<00:39,  1.20s/it]Running inference:  66%|██████▌   | 61/93 [01:13<00:38,  1.20s/it]Running inference:  67%|██████▋   | 62/93 [01:14<00:37,  1.21s/it]Running inference:  68%|██████▊   | 63/93 [01:16<00:36,  1.21s/it]Running inference:  69%|██████▉   | 64/93 [01:17<00:35,  1.21s/it]Running inference:  70%|██████▉   | 65/93 [01:18<00:33,  1.20s/it]Running inference:  71%|███████   | 66/93 [01:19<00:32,  1.21s/it]Running inference:  72%|███████▏  | 67/93 [01:20<00:31,  1.20s/it]Running inference:  73%|███████▎  | 68/93 [01:22<00:29,  1.20s/it]Running inference:  74%|███████▍  | 69/93 [01:23<00:28,  1.19s/it]Running inference:  75%|███████▌  | 70/93 [01:24<00:27,  1.20s/it]Running inference:  76%|███████▋  | 71/93 [01:25<00:26,  1.21s/it]Running inference:  77%|███████▋  | 72/93 [01:26<00:25,  1.20s/it]Running inference:  78%|███████▊  | 73/93 [01:28<00:24,  1.20s/it]Running inference:  80%|███████▉  | 74/93 [01:29<00:22,  1.21s/it]Running inference:  81%|████████  | 75/93 [01:30<00:21,  1.21s/it]Running inference:  82%|████████▏ | 76/93 [01:31<00:20,  1.22s/it]Running inference:  83%|████████▎ | 77/93 [01:32<00:19,  1.22s/it]Running inference:  84%|████████▍ | 78/93 [01:34<00:18,  1.22s/it]Running inference:  85%|████████▍ | 79/93 [01:35<00:17,  1.22s/it]Running inference:  86%|████████▌ | 80/93 [01:36<00:15,  1.21s/it]Running inference:  87%|████████▋ | 81/93 [01:37<00:14,  1.21s/it]Running inference:  88%|████████▊ | 82/93 [01:38<00:13,  1.20s/it]Running inference:  89%|████████▉ | 83/93 [01:40<00:12,  1.20s/it]Running inference:  90%|█████████ | 84/93 [01:41<00:10,  1.20s/it]Running inference:  91%|█████████▏| 85/93 [01:42<00:09,  1.21s/it]Running inference:  92%|█████████▏| 86/93 [01:43<00:08,  1.22s/it]Running inference:  94%|█████████▎| 87/93 [01:45<00:07,  1.22s/it]Running inference:  95%|█████████▍| 88/93 [01:46<00:06,  1.20s/it]Running inference:  96%|█████████▌| 89/93 [01:47<00:04,  1.21s/it]Running inference:  97%|█████████▋| 90/93 [01:48<00:03,  1.21s/it]Running inference:  98%|█████████▊| 91/93 [01:49<00:02,  1.20s/it]Running inference:  99%|█████████▉| 92/93 [01:51<00:01,  1.21s/it]Running inference: 100%|██████████| 93/93 [01:51<00:00,  1.05s/it]Running inference: 100%|██████████| 93/93 [01:51<00:00,  1.20s/it]
+22:58:00 - INFO - [inference_calibration] Duration: 111728.46ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:01<01:51,  1.22s/it]Running inference:   2%|▏         | 2/93 [00:02<01:50,  1.22s/it]Running inference:   3%|▎         | 3/93 [00:03<01:49,  1.22s/it]Running inference:   4%|▍         | 4/93 [00:04<01:48,  1.22s/it]Running inference:   5%|▌         | 5/93 [00:06<01:47,  1.22s/it]Running inference:   6%|▋         | 6/93 [00:07<01:45,  1.22s/it]Running inference:   8%|▊         | 7/93 [00:08<01:43,  1.21s/it]Running inference:   9%|▊         | 8/93 [00:09<01:41,  1.20s/it]Running inference:  10%|▉         | 9/93 [00:10<01:39,  1.19s/it]Running inference:  11%|█         | 10/93 [00:12<01:38,  1.19s/it]Running inference:  12%|█▏        | 11/93 [00:13<01:38,  1.20s/it]Running inference:  13%|█▎        | 12/93 [00:14<01:37,  1.20s/it]Running inference:  14%|█▍        | 13/93 [00:15<01:36,  1.21s/it]Running inference:  15%|█▌        | 14/93 [00:16<01:34,  1.20s/it]Running inference:  16%|█▌        | 15/93 [00:18<01:34,  1.21s/it]Running inference:  17%|█▋        | 16/93 [00:19<01:33,  1.21s/it]Running inference:  18%|█▊        | 17/93 [00:20<01:31,  1.21s/it]Running inference:  19%|█▉        | 18/93 [00:21<01:30,  1.21s/it]Running inference:  20%|██        | 19/93 [00:22<01:29,  1.20s/it]Running inference:  22%|██▏       | 20/93 [00:24<01:28,  1.21s/it]Running inference:  23%|██▎       | 21/93 [00:25<01:26,  1.20s/it]Running inference:  24%|██▎       | 22/93 [00:26<01:24,  1.19s/it]Running inference:  25%|██▍       | 23/93 [00:27<01:23,  1.19s/it]Running inference:  26%|██▌       | 24/93 [00:28<01:21,  1.19s/it]Running inference:  27%|██▋       | 25/93 [00:30<01:20,  1.18s/it]Running inference:  28%|██▊       | 26/93 [00:31<01:18,  1.18s/it]Running inference:  29%|██▉       | 27/93 [00:32<01:17,  1.18s/it]Running inference:  30%|███       | 28/93 [00:33<01:17,  1.19s/it]Running inference:  31%|███       | 29/93 [00:34<01:16,  1.20s/it]Running inference:  32%|███▏      | 30/93 [00:36<01:15,  1.20s/it]Running inference:  33%|███▎      | 31/93 [00:37<01:13,  1.19s/it]Running inference:  34%|███▍      | 32/93 [00:38<01:12,  1.19s/it]Running inference:  35%|███▌      | 33/93 [00:39<01:11,  1.19s/it]Running inference:  37%|███▋      | 34/93 [00:40<01:10,  1.20s/it]Running inference:  38%|███▊      | 35/93 [00:41<01:09,  1.19s/it]Running inference:  39%|███▊      | 36/93 [00:43<01:07,  1.19s/it]Running inference:  40%|███▉      | 37/93 [00:44<01:06,  1.20s/it]Running inference:  41%|████      | 38/93 [00:45<01:06,  1.21s/it]Running inference:  42%|████▏     | 39/93 [00:46<01:05,  1.21s/it]Running inference:  43%|████▎     | 40/93 [00:48<01:04,  1.21s/it]Running inference:  44%|████▍     | 41/93 [00:49<01:02,  1.21s/it]Running inference:  45%|████▌     | 42/93 [00:50<01:01,  1.20s/it]Running inference:  46%|████▌     | 43/93 [00:51<01:00,  1.21s/it]Running inference:  47%|████▋     | 44/93 [00:52<00:58,  1.20s/it]Running inference:  48%|████▊     | 45/93 [00:54<00:57,  1.20s/it]Running inference:  49%|████▉     | 46/93 [00:55<00:56,  1.20s/it]Running inference:  51%|█████     | 47/93 [00:56<00:55,  1.21s/it]Running inference:  52%|█████▏    | 48/93 [00:57<00:53,  1.20s/it]Running inference:  53%|█████▎    | 49/93 [00:58<00:52,  1.19s/it]Running inference:  54%|█████▍    | 50/93 [00:59<00:51,  1.20s/it]Running inference:  55%|█████▍    | 51/93 [01:01<00:50,  1.20s/it]Running inference:  56%|█████▌    | 52/93 [01:02<00:48,  1.19s/it]Running inference:  57%|█████▋    | 53/93 [01:03<00:47,  1.20s/it]Running inference:  58%|█████▊    | 54/93 [01:04<00:46,  1.19s/it]Running inference:  59%|█████▉    | 55/93 [01:05<00:45,  1.20s/it]Running inference:  60%|██████    | 56/93 [01:07<00:44,  1.19s/it]Running inference:  61%|██████▏   | 57/93 [01:08<00:43,  1.20s/it]Running inference:  62%|██████▏   | 58/93 [01:09<00:42,  1.20s/it]Running inference:  63%|██████▎   | 59/93 [01:10<00:40,  1.20s/it]Running inference:  65%|██████▍   | 60/93 [01:11<00:39,  1.19s/it]Running inference:  66%|██████▌   | 61/93 [01:13<00:38,  1.19s/it]Running inference:  67%|██████▋   | 62/93 [01:14<00:37,  1.20s/it]Running inference:  68%|██████▊   | 63/93 [01:15<00:35,  1.19s/it]Running inference:  69%|██████▉   | 64/93 [01:16<00:34,  1.18s/it]Running inference:  70%|██████▉   | 65/93 [01:17<00:33,  1.19s/it]Running inference:  71%|███████   | 66/93 [01:19<00:31,  1.18s/it]Running inference:  72%|███████▏  | 67/93 [01:20<00:31,  1.20s/it]Running inference:  73%|███████▎  | 68/93 [01:21<00:29,  1.19s/it]Running inference:  74%|███████▍  | 69/93 [01:22<00:28,  1.18s/it]Running inference:  75%|███████▌  | 70/93 [01:23<00:27,  1.19s/it]Running inference:  76%|███████▋  | 71/93 [01:24<00:26,  1.19s/it]Running inference:  77%|███████▋  | 72/93 [01:26<00:25,  1.20s/it]Running inference:  78%|███████▊  | 73/93 [01:27<00:23,  1.19s/it]Running inference:  80%|███████▉  | 74/93 [01:28<00:22,  1.19s/it]Running inference:  81%|████████  | 75/93 [01:29<00:21,  1.20s/it]Running inference:  82%|████████▏ | 76/93 [01:31<00:20,  1.21s/it]Running inference:  83%|████████▎ | 77/93 [01:32<00:19,  1.21s/it]Running inference:  84%|████████▍ | 78/93 [01:33<00:18,  1.20s/it]Running inference:  85%|████████▍ | 79/93 [01:34<00:16,  1.20s/it]Running inference:  86%|████████▌ | 80/93 [01:35<00:15,  1.21s/it]Running inference:  87%|████████▋ | 81/93 [01:37<00:14,  1.21s/it]Running inference:  88%|████████▊ | 82/93 [01:38<00:13,  1.20s/it]Running inference:  89%|████████▉ | 83/93 [01:39<00:11,  1.19s/it]Running inference:  90%|█████████ | 84/93 [01:40<00:10,  1.20s/it]Running inference:  91%|█████████▏| 85/93 [01:41<00:09,  1.21s/it]Running inference:  92%|█████████▏| 86/93 [01:43<00:08,  1.20s/it]Running inference:  94%|█████████▎| 87/93 [01:44<00:07,  1.20s/it]Running inference:  95%|█████████▍| 88/93 [01:45<00:05,  1.20s/it]Running inference:  96%|█████████▌| 89/93 [01:46<00:04,  1.21s/it]Running inference:  97%|█████████▋| 90/93 [01:47<00:03,  1.21s/it]Running inference:  98%|█████████▊| 91/93 [01:49<00:02,  1.21s/it]Running inference:  99%|█████████▉| 92/93 [01:50<00:01,  1.21s/it]Running inference: 100%|██████████| 93/93 [01:51<00:00,  1.07s/it]Running inference: 100%|██████████| 93/93 [01:51<00:00,  1.19s/it]
+22:59:51 - INFO - [inference_test] Duration: 111048.81ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:59:51 - INFO -     Inference: 222.78s for 10000 samples (44.89 samples/sec)
+22:59:51 - INFO - Initialized ProbabilityExtractor
+22:59:51 - INFO -   Temperature: 1.0
+22:59:51 - INFO -   Calibration method: None
+22:59:51 - INFO - [probability_extraction] Duration: 283.23ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+22:59:51 - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_tinyllama-1.1b_ci_float16_base_20251207_224643.npz
+22:59:51 - INFO - Initialized LACScorer
+22:59:51 - INFO -   Alpha: 0.1
+22:59:51 - INFO -   Target coverage: 90.0%
+22:59:51 - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+22:59:51 - INFO - Initialized PredictionSetGenerator
+22:59:51 - INFO -   Methods: ['lac']
+22:59:51 - INFO -   Alpha: 0.1
+22:59:51 - INFO -   Aggregation: separate
+22:59:51 - INFO - Calibrating 1 conformal predictors...
+22:59:51 - INFO -   Calibrating LAC...
+22:59:51 - INFO - Calibrating with 4999 samples...
+22:59:51 - INFO - Calibration complete
+22:59:51 - INFO -   Threshold: 0.9757
+22:59:51 - INFO -   Score range: [0.0004, 1.0000]
+22:59:51 - INFO - Calibration complete
+22:59:51 - INFO - Generating prediction sets using LAC...
+22:59:51 - INFO - Generating prediction sets for 5001 test instances...
+22:59:51 - INFO - Prediction complete
+22:59:51 - INFO -   Average set size: 5.26
+22:59:51 - INFO -   Coverage rate: 90.24%
+22:59:51 - INFO -   Meets coverage guarantee: True
+22:59:51 - INFO - [PASS] Coverage guarantee met: 90.24% >= 90.00%
+22:59:51 - INFO -     LAC: Acc=20.34%, CR=90.24%, SS=5.26
+22:59:51 - INFO - Initialized APSScorer
+22:59:51 - INFO -   Alpha: 0.1
+22:59:51 - INFO -   Target coverage: 90.0%
+22:59:51 - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+22:59:51 - INFO - Initialized PredictionSetGenerator
+22:59:51 - INFO -   Methods: ['aps']
+22:59:51 - INFO -   Alpha: 0.1
+22:59:51 - INFO -   Aggregation: separate
+22:59:51 - INFO - Calibrating 1 conformal predictors...
+22:59:51 - INFO -   Calibrating APS...
+22:59:51 - INFO - Calibrating with 4999 samples...
+22:59:51 - INFO - Calibration complete
+22:59:51 - INFO -   Threshold: 1.0000
+22:59:51 - INFO -   Score range: [0.2005, 1.0000]
+22:59:51 - INFO - Calibration complete
+22:59:51 - INFO - Generating prediction sets using APS...
+22:59:51 - INFO - Generating prediction sets for 5001 test instances...
+22:59:51 - INFO - Prediction complete
+22:59:51 - INFO -   Average set size: 5.17
+22:59:51 - INFO -   Coverage rate: 91.96%
+22:59:51 - INFO -   Meets coverage guarantee: True
+22:59:51 - INFO - [PASS] Coverage guarantee met: 91.96% >= 90.00%
+22:59:51 - INFO -     APS: Acc=20.34%, CR=91.96%, SS=5.17
+22:59:53 - INFO - Unloaded model: tinyllama-1.1b_float16
+22:59:54 - INFO - Checkpoint saved after completing: tinyllama-1.1b | ci | float16
+22:59:54 - INFO - 
+================================================================================
+22:59:54 - INFO - Run 4/5: tinyllama-1.1b | drs | float16
+22:59:54 - INFO - ================================================================================
+22:59:54 - INFO - [start_tinyllama-1.1b_drs] GPU State: Allocated: 8.1MB | Reserved: 22.0MB | Free: 81147.6MB | Utilization: 84.0%
+22:59:54 - INFO - Loading drs dataset (10000 samples)...
+22:59:54 - INFO - Loading HaluDial dataset with 10000 samples...
+Downloading readme: 0.00B [00:00, ?B/s]Downloading readme: 2.88kB [00:00, 13.9MB/s]
+Downloading data files:   0%|          | 0/1 [00:00<?, ?it/s]
+Downloading data:   0%|          | 0.00/3.45M [00:00<?, ?B/s][ADownloading data: 100%|██████████| 3.45M/3.45M [00:00<00:00, 45.5MB/s]
+Downloading data files: 100%|██████████| 1/1 [00:00<00:00, 12.86it/s]
+Extracting data files:   0%|          | 0/1 [00:00<?, ?it/s]Extracting data files: 100%|██████████| 1/1 [00:00<00:00, 1292.15it/s]
+Generating data split:   0%|          | 0/10000 [00:00<?, ? examples/s]Generating data split: 100%|██████████| 10000/10000 [00:00<00:00, 691946.68 examples/s]
+22:59:56 - INFO - Loaded 10000 HaluDial instances
+22:59:56 - INFO - [dataset_loading] Duration: 2450.44ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+22:59:56 - INFO - Processing drs dataset to 6-option format...
+23:00:27 - INFO - Processed 10000 instances for drs
+23:00:27 - INFO - Option expansion statistics for drs:
+23:00:27 - INFO -   Instances expanded (2→4 options): 10000
+23:00:27 - INFO -   Total options sampled: 20000
+23:00:27 - INFO -   Duplicate options avoided: 2
+23:00:27 - INFO -   Fallback options used: 0
+23:00:27 - INFO - Splitting drs dataset (calibration: 50%, test: 50%)
+23:00:27 - INFO - Split complete:
+23:00:27 - INFO -   Calibration: 4999 instances
+23:00:27 - INFO -   Test: 5001 instances
+23:00:27 - INFO - Answer distribution:
+23:00:27 - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+23:00:27 - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+23:00:27 - INFO - [dataset_processing] Duration: 30834.41ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+23:00:27 - INFO - Initialized DemonstrationSelector
+23:00:27 - INFO -   Strategy: random
+23:00:27 - INFO -   Num demonstrations: 5
+23:00:27 - INFO - Initialized DemonstrationManager
+23:00:27 - INFO - Selecting 3 demonstrations using 'random' strategy
+23:00:27 - INFO - Selected and cached 3 demonstrations for drs
+23:00:27 - INFO - Loading model: tinyllama-1.1b (float16)
+23:00:27 - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+23:00:27 - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+23:00:27 - INFO - Tokenizer loaded successfully
+23:00:27 - INFO -   Vocab size: 32000
+23:00:27 - INFO -   Padding side: left
+23:00:27 - INFO -   PAD token: </s> (ID: 2)
+23:00:27 - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+23:00:27 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+23:00:28 - INFO - Model loaded successfully
+23:00:28 - INFO -   GPU Memory: 2.06GB allocated, 2.19GB reserved
+
+Model: tinyllama-1.1b_float16
+  ID: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  Type: causal
+  Parameters: 1,100,048,384
+  Vocab size: 32,000
+  Max length: 2048
+  Device: cuda:0
+  Dtype: torch.float16
+  Instruct-tuned: True
+23:00:28 - INFO - [model_loading] Duration: 903.05ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+23:00:28 - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 2246.0MB | Free: 79049.4MB | Utilization: 17.0%
+23:00:28 - INFO - Optimal batch size for 1.1B model (float16): 54
+  Available memory: 73.71GB
+  Model memory: 2.20GB
+  Memory per batch item: 1.320GB
+23:00:28 - INFO - Using batch size: 54
+23:00:28 - INFO -   Strategy: base
+23:00:28 - INFO - Initialized PromptBuilder for task: drs
+23:00:28 - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+23:00:28 - INFO - Building 10000 prompts using 'base' strategy with 3 demonstrations
+23:00:28 - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+23:00:28 - INFO -   Device: cuda:0
+23:00:28 - INFO -   Batch size: 54
+23:00:28 - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:00<01:08,  1.35it/s]Running inference:   2%|▏         | 2/93 [00:01<01:07,  1.35it/s]Running inference:   3%|▎         | 3/93 [00:02<01:06,  1.36it/s]Running inference:   4%|▍         | 4/93 [00:02<01:06,  1.34it/s]Running inference:   5%|▌         | 5/93 [00:03<01:05,  1.34it/s]Running inference:   6%|▋         | 6/93 [00:04<01:04,  1.35it/s]Running inference:   8%|▊         | 7/93 [00:05<01:03,  1.36it/s]Running inference:   9%|▊         | 8/93 [00:05<01:03,  1.34it/s]Running inference:  10%|▉         | 9/93 [00:06<01:02,  1.35it/s]Running inference:  11%|█         | 10/93 [00:07<01:01,  1.35it/s]Running inference:  12%|█▏        | 11/93 [00:08<01:00,  1.36it/s]Running inference:  13%|█▎        | 12/93 [00:08<01:00,  1.35it/s]Running inference:  14%|█▍        | 13/93 [00:09<00:59,  1.35it/s]Running inference:  15%|█▌        | 14/93 [00:10<00:59,  1.32it/s]Running inference:  16%|█▌        | 15/93 [00:11<00:58,  1.33it/s]Running inference:  17%|█▋        | 16/93 [00:11<00:57,  1.33it/s]Running inference:  18%|█▊        | 17/93 [00:12<00:56,  1.34it/s]Running inference:  19%|█▉        | 18/93 [00:13<00:55,  1.35it/s]Running inference:  20%|██        | 19/93 [00:14<00:54,  1.37it/s]Running inference:  22%|██▏       | 20/93 [00:14<00:56,  1.29it/s]Running inference:  23%|██▎       | 21/93 [00:15<00:55,  1.31it/s]Running inference:  24%|██▎       | 22/93 [00:16<00:53,  1.33it/s]Running inference:  25%|██▍       | 23/93 [00:17<00:52,  1.34it/s]Running inference:  26%|██▌       | 24/93 [00:17<00:51,  1.35it/s]Running inference:  27%|██▋       | 25/93 [00:18<00:51,  1.33it/s]Running inference:  28%|██▊       | 26/93 [00:19<00:50,  1.33it/s]Running inference:  29%|██▉       | 27/93 [00:20<00:49,  1.33it/s]Running inference:  30%|███       | 28/93 [00:20<00:49,  1.32it/s]Running inference:  31%|███       | 29/93 [00:21<00:48,  1.32it/s]Running inference:  32%|███▏      | 30/93 [00:22<00:47,  1.32it/s]Running inference:  33%|███▎      | 31/93 [00:23<00:49,  1.26it/s]Running inference:  34%|███▍      | 32/93 [00:24<00:47,  1.29it/s]Running inference:  35%|███▌      | 33/93 [00:24<00:46,  1.29it/s]Running inference:  37%|███▋      | 34/93 [00:25<00:44,  1.32it/s]Running inference:  38%|███▊      | 35/93 [00:26<00:43,  1.32it/s]Running inference:  39%|███▊      | 36/93 [00:27<00:43,  1.32it/s]Running inference:  40%|███▉      | 37/93 [00:27<00:42,  1.32it/s]Running inference:  41%|████      | 38/93 [00:28<00:41,  1.32it/s]Running inference:  42%|████▏     | 39/93 [00:29<00:40,  1.32it/s]Running inference:  43%|████▎     | 40/93 [00:30<00:39,  1.33it/s]Running inference:  44%|████▍     | 41/93 [00:30<00:38,  1.35it/s]Running inference:  45%|████▌     | 42/93 [00:31<00:37,  1.35it/s]Running inference:  46%|████▌     | 43/93 [00:32<00:37,  1.34it/s]Running inference:  47%|████▋     | 44/93 [00:33<00:36,  1.34it/s]Running inference:  48%|████▊     | 45/93 [00:33<00:35,  1.36it/s]Running inference:  49%|████▉     | 46/93 [00:34<00:35,  1.34it/s]Running inference:  51%|█████     | 47/93 [00:35<00:34,  1.33it/s]Running inference:  52%|█████▏    | 48/93 [00:36<00:33,  1.33it/s]Running inference:  53%|█████▎    | 49/93 [00:36<00:32,  1.34it/s]Running inference:  54%|█████▍    | 50/93 [00:37<00:33,  1.30it/s]Running inference:  55%|█████▍    | 51/93 [00:38<00:34,  1.21it/s]Running inference:  56%|█████▌    | 52/93 [00:39<00:32,  1.25it/s]Running inference:  57%|█████▋    | 53/93 [00:40<00:31,  1.26it/s]Running inference:  58%|█████▊    | 54/93 [00:40<00:30,  1.27it/s]Running inference:  59%|█████▉    | 55/93 [00:41<00:29,  1.30it/s]Running inference:  60%|██████    | 56/93 [00:42<00:28,  1.32it/s]Running inference:  61%|██████▏   | 57/93 [00:43<00:27,  1.31it/s]Running inference:  62%|██████▏   | 58/93 [00:43<00:27,  1.28it/s]Running inference:  63%|██████▎   | 59/93 [00:44<00:27,  1.23it/s]Running inference:  65%|██████▍   | 60/93 [00:45<00:26,  1.27it/s]Running inference:  66%|██████▌   | 61/93 [00:46<00:24,  1.29it/s]Running inference:  67%|██████▋   | 62/93 [00:47<00:24,  1.28it/s]Running inference:  68%|██████▊   | 63/93 [00:47<00:23,  1.30it/s]Running inference:  69%|██████▉   | 64/93 [00:48<00:22,  1.30it/s]Running inference:  70%|██████▉   | 65/93 [00:49<00:21,  1.31it/s]Running inference:  71%|███████   | 66/93 [00:50<00:20,  1.32it/s]Running inference:  72%|███████▏  | 67/93 [00:50<00:19,  1.33it/s]Running inference:  73%|███████▎  | 68/93 [00:51<00:18,  1.35it/s]Running inference:  74%|███████▍  | 69/93 [00:52<00:17,  1.35it/s]Running inference:  75%|███████▌  | 70/93 [00:53<00:17,  1.35it/s]Running inference:  76%|███████▋  | 71/93 [00:53<00:16,  1.34it/s]Running inference:  77%|███████▋  | 72/93 [00:54<00:15,  1.33it/s]Running inference:  78%|███████▊  | 73/93 [00:55<00:15,  1.33it/s]Running inference:  80%|███████▉  | 74/93 [00:56<00:14,  1.32it/s]Running inference:  81%|████████  | 75/93 [00:56<00:13,  1.32it/s]Running inference:  82%|████████▏ | 76/93 [00:57<00:12,  1.33it/s]Running inference:  83%|████████▎ | 77/93 [00:58<00:11,  1.34it/s]Running inference:  84%|████████▍ | 78/93 [00:59<00:11,  1.35it/s]Running inference:  85%|████████▍ | 79/93 [00:59<00:10,  1.37it/s]Running inference:  86%|████████▌ | 80/93 [01:00<00:09,  1.36it/s]Running inference:  87%|████████▋ | 81/93 [01:01<00:08,  1.36it/s]Running inference:  88%|████████▊ | 82/93 [01:01<00:08,  1.36it/s]Running inference:  89%|████████▉ | 83/93 [01:02<00:07,  1.36it/s]Running inference:  90%|█████████ | 84/93 [01:03<00:06,  1.34it/s]Running inference:  91%|█████████▏| 85/93 [01:04<00:05,  1.35it/s]Running inference:  92%|█████████▏| 86/93 [01:04<00:05,  1.35it/s]Running inference:  94%|█████████▎| 87/93 [01:05<00:04,  1.35it/s]Running inference:  95%|█████████▍| 88/93 [01:06<00:03,  1.33it/s]Running inference:  96%|█████████▌| 89/93 [01:07<00:02,  1.36it/s]Running inference:  97%|█████████▋| 90/93 [01:07<00:02,  1.36it/s]Running inference:  98%|█████████▊| 91/93 [01:08<00:01,  1.35it/s]Running inference:  99%|█████████▉| 92/93 [01:09<00:00,  1.35it/s]Running inference: 100%|██████████| 93/93 [01:09<00:00,  1.55it/s]Running inference: 100%|██████████| 93/93 [01:09<00:00,  1.33it/s]
+23:01:38 - INFO - [inference_calibration] Duration: 69786.72ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:00<01:08,  1.35it/s]Running inference:   2%|▏         | 2/93 [00:01<01:09,  1.31it/s]Running inference:   3%|▎         | 3/93 [00:02<01:08,  1.32it/s]Running inference:   4%|▍         | 4/93 [00:03<01:07,  1.32it/s]Running inference:   5%|▌         | 5/93 [00:03<01:06,  1.33it/s]Running inference:   6%|▋         | 6/93 [00:04<01:04,  1.35it/s]Running inference:   8%|▊         | 7/93 [00:05<01:03,  1.36it/s]Running inference:   9%|▊         | 8/93 [00:06<01:04,  1.31it/s]Running inference:  10%|▉         | 9/93 [00:06<01:03,  1.32it/s]Running inference:  11%|█         | 10/93 [00:07<01:03,  1.31it/s]Running inference:  12%|█▏        | 11/93 [00:08<01:01,  1.34it/s]Running inference:  13%|█▎        | 12/93 [00:09<01:01,  1.32it/s]Running inference:  14%|█▍        | 13/93 [00:09<01:00,  1.33it/s]Running inference:  15%|█▌        | 14/93 [00:10<00:59,  1.32it/s]Running inference:  16%|█▌        | 15/93 [00:11<00:58,  1.33it/s]Running inference:  17%|█▋        | 16/93 [00:12<00:57,  1.33it/s]Running inference:  18%|█▊        | 17/93 [00:12<00:56,  1.35it/s]Running inference:  19%|█▉        | 18/93 [00:13<00:56,  1.34it/s]Running inference:  20%|██        | 19/93 [00:14<00:55,  1.34it/s]Running inference:  22%|██▏       | 20/93 [00:15<00:54,  1.34it/s]Running inference:  23%|██▎       | 21/93 [00:15<00:53,  1.34it/s]Running inference:  24%|██▎       | 22/93 [00:16<00:53,  1.33it/s]Running inference:  25%|██▍       | 23/93 [00:17<00:53,  1.32it/s]Running inference:  26%|██▌       | 24/93 [00:18<00:52,  1.32it/s]Running inference:  27%|██▋       | 25/93 [00:18<00:52,  1.29it/s]Running inference:  28%|██▊       | 26/93 [00:19<00:51,  1.30it/s]Running inference:  29%|██▉       | 27/93 [00:20<00:50,  1.31it/s]Running inference:  30%|███       | 28/93 [00:21<00:49,  1.31it/s]Running inference:  31%|███       | 29/93 [00:21<00:48,  1.32it/s]Running inference:  32%|███▏      | 30/93 [00:22<00:48,  1.31it/s]Running inference:  33%|███▎      | 31/93 [00:23<00:47,  1.31it/s]Running inference:  34%|███▍      | 32/93 [00:24<00:46,  1.32it/s]Running inference:  35%|███▌      | 33/93 [00:24<00:45,  1.33it/s]Running inference:  37%|███▋      | 34/93 [00:25<00:45,  1.30it/s]Running inference:  38%|███▊      | 35/93 [00:26<00:44,  1.31it/s]Running inference:  39%|███▊      | 36/93 [00:27<00:43,  1.30it/s]Running inference:  40%|███▉      | 37/93 [00:27<00:42,  1.33it/s]Running inference:  41%|████      | 38/93 [00:28<00:41,  1.32it/s]Running inference:  42%|████▏     | 39/93 [00:29<00:40,  1.32it/s]Running inference:  43%|████▎     | 40/93 [00:30<00:40,  1.32it/s]Running inference:  44%|████▍     | 41/93 [00:31<00:39,  1.32it/s]Running inference:  45%|████▌     | 42/93 [00:31<00:39,  1.29it/s]Running inference:  46%|████▌     | 43/93 [00:32<00:38,  1.30it/s]Running inference:  47%|████▋     | 44/93 [00:33<00:37,  1.31it/s]Running inference:  48%|████▊     | 45/93 [00:34<00:37,  1.28it/s]Running inference:  49%|████▉     | 46/93 [00:34<00:35,  1.31it/s]Running inference:  51%|█████     | 47/93 [00:35<00:35,  1.31it/s]Running inference:  52%|█████▏    | 48/93 [00:36<00:33,  1.34it/s]Running inference:  53%|█████▎    | 49/93 [00:37<00:32,  1.36it/s]Running inference:  54%|█████▍    | 50/93 [00:37<00:32,  1.33it/s]Running inference:  55%|█████▍    | 51/93 [00:38<00:32,  1.30it/s]Running inference:  56%|█████▌    | 52/93 [00:39<00:31,  1.31it/s]Running inference:  57%|█████▋    | 53/93 [00:40<00:30,  1.31it/s]Running inference:  58%|█████▊    | 54/93 [00:40<00:29,  1.32it/s]Running inference:  59%|█████▉    | 55/93 [00:41<00:28,  1.32it/s]Running inference:  60%|██████    | 56/93 [00:42<00:28,  1.31it/s]Running inference:  61%|██████▏   | 57/93 [00:43<00:27,  1.32it/s]Running inference:  62%|██████▏   | 58/93 [00:43<00:26,  1.33it/s]Running inference:  63%|██████▎   | 59/93 [00:44<00:25,  1.32it/s]Running inference:  65%|██████▍   | 60/93 [00:45<00:24,  1.32it/s]Running inference:  66%|██████▌   | 61/93 [00:46<00:24,  1.32it/s]Running inference:  67%|██████▋   | 62/93 [00:46<00:23,  1.32it/s]Running inference:  68%|██████▊   | 63/93 [00:47<00:22,  1.33it/s]Running inference:  69%|██████▉   | 64/93 [00:48<00:21,  1.33it/s]Running inference:  70%|██████▉   | 65/93 [00:49<00:20,  1.33it/s]Running inference:  71%|███████   | 66/93 [00:50<00:20,  1.30it/s]Running inference:  72%|███████▏  | 67/93 [00:50<00:20,  1.26it/s]Running inference:  73%|███████▎  | 68/93 [00:51<00:19,  1.27it/s]Running inference:  74%|███████▍  | 69/93 [00:52<00:18,  1.28it/s]Running inference:  75%|███████▌  | 70/93 [00:53<00:17,  1.30it/s]Running inference:  76%|███████▋  | 71/93 [00:53<00:16,  1.31it/s]Running inference:  77%|███████▋  | 72/93 [00:54<00:16,  1.31it/s]Running inference:  78%|███████▊  | 73/93 [00:55<00:15,  1.30it/s]Running inference:  80%|███████▉  | 74/93 [00:56<00:14,  1.31it/s]Running inference:  81%|████████  | 75/93 [00:56<00:13,  1.33it/s]Running inference:  82%|████████▏ | 76/93 [00:57<00:12,  1.34it/s]Running inference:  83%|████████▎ | 77/93 [00:58<00:12,  1.33it/s]Running inference:  84%|████████▍ | 78/93 [00:59<00:11,  1.31it/s]Running inference:  85%|████████▍ | 79/93 [00:59<00:10,  1.32it/s]Running inference:  86%|████████▌ | 80/93 [01:00<00:09,  1.33it/s]Running inference:  87%|████████▋ | 81/93 [01:01<00:08,  1.35it/s]Running inference:  88%|████████▊ | 82/93 [01:02<00:08,  1.35it/s]Running inference:  89%|████████▉ | 83/93 [01:02<00:07,  1.35it/s]Running inference:  90%|█████████ | 84/93 [01:03<00:06,  1.33it/s]Running inference:  91%|█████████▏| 85/93 [01:04<00:05,  1.35it/s]Running inference:  92%|█████████▏| 86/93 [01:05<00:05,  1.35it/s]Running inference:  94%|█████████▎| 87/93 [01:05<00:04,  1.34it/s]Running inference:  95%|█████████▍| 88/93 [01:06<00:03,  1.33it/s]Running inference:  96%|█████████▌| 89/93 [01:07<00:02,  1.35it/s]Running inference:  97%|█████████▋| 90/93 [01:08<00:02,  1.35it/s]Running inference:  98%|█████████▊| 91/93 [01:08<00:01,  1.34it/s]Running inference:  99%|█████████▉| 92/93 [01:09<00:00,  1.35it/s]Running inference: 100%|██████████| 93/93 [01:10<00:00,  1.52it/s]Running inference: 100%|██████████| 93/93 [01:10<00:00,  1.33it/s]
+23:02:48 - INFO - [inference_test] Duration: 70054.50ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+23:02:48 - INFO -     Inference: 139.84s for 10000 samples (71.51 samples/sec)
+23:02:48 - INFO - Initialized ProbabilityExtractor
+23:02:48 - INFO -   Temperature: 1.0
+23:02:48 - INFO -   Calibration method: None
+23:02:48 - INFO - [probability_extraction] Duration: 261.39ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+23:02:48 - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_tinyllama-1.1b_drs_float16_base_20251207_224643.npz
+23:02:48 - INFO - Initialized LACScorer
+23:02:48 - INFO -   Alpha: 0.1
+23:02:48 - INFO -   Target coverage: 90.0%
+23:02:48 - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+23:02:48 - INFO - Initialized PredictionSetGenerator
+23:02:48 - INFO -   Methods: ['lac']
+23:02:48 - INFO -   Alpha: 0.1
+23:02:48 - INFO -   Aggregation: separate
+23:02:48 - INFO - Calibrating 1 conformal predictors...
+23:02:48 - INFO -   Calibrating LAC...
+23:02:48 - INFO - Calibrating with 4999 samples...
+23:02:48 - INFO - Calibration complete
+23:02:48 - INFO -   Threshold: 0.9783
+23:02:48 - INFO -   Score range: [0.0000, 1.0000]
+23:02:48 - INFO - Calibration complete
+23:02:48 - INFO - Generating prediction sets using LAC...
+23:02:48 - INFO - Generating prediction sets for 5001 test instances...
+23:02:48 - INFO - Prediction complete
+23:02:48 - INFO -   Average set size: 5.16
+23:02:48 - INFO -   Coverage rate: 89.46%
+23:02:48 - INFO -   Meets coverage guarantee: False
+23:02:48 - WARNING - ✗ Coverage guarantee NOT met: 89.46% < 90.00%
+23:02:48 - WARNING - LAC does not meet coverage guarantee: 89.46% < 90.00%
+23:02:48 - INFO -     LAC: Acc=20.02%, CR=89.46%, SS=5.16
+23:02:48 - INFO - Initialized APSScorer
+23:02:48 - INFO -   Alpha: 0.1
+23:02:48 - INFO -   Target coverage: 90.0%
+23:02:48 - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+23:02:48 - INFO - Initialized PredictionSetGenerator
+23:02:48 - INFO -   Methods: ['aps']
+23:02:48 - INFO -   Alpha: 0.1
+23:02:48 - INFO -   Aggregation: separate
+23:02:48 - INFO - Calibrating 1 conformal predictors...
+23:02:48 - INFO -   Calibrating APS...
+23:02:48 - INFO - Calibrating with 4999 samples...
+23:02:48 - INFO - Calibration complete
+23:02:48 - INFO -   Threshold: 1.0000
+23:02:48 - INFO -   Score range: [0.2111, 1.0000]
+23:02:48 - INFO - Calibration complete
+23:02:48 - INFO - Generating prediction sets using APS...
+23:02:48 - INFO - Generating prediction sets for 5001 test instances...
+23:02:48 - INFO - Prediction complete
+23:02:48 - INFO -   Average set size: 4.92
+23:02:48 - INFO -   Coverage rate: 89.84%
+23:02:48 - INFO -   Meets coverage guarantee: False
+23:02:48 - WARNING - ✗ Coverage guarantee NOT met: 89.84% < 90.00%
+23:02:48 - WARNING - APS does not meet coverage guarantee: 89.84% < 90.00%
+23:02:48 - INFO -     APS: Acc=20.02%, CR=89.84%, SS=4.92
+23:02:50 - INFO - Unloaded model: tinyllama-1.1b_float16
+23:02:50 - INFO - Checkpoint saved after completing: tinyllama-1.1b | drs | float16
+23:02:50 - INFO - 
+================================================================================
+23:02:50 - INFO - Run 5/5: tinyllama-1.1b | ds | float16
+23:02:50 - INFO - ================================================================================
+23:02:50 - INFO - [start_tinyllama-1.1b_ds] GPU State: Allocated: 8.1MB | Reserved: 22.0MB | Free: 81147.6MB | Utilization: 100.0%
+23:02:50 - INFO - Loading ds dataset (10000 samples)...
+23:02:50 - INFO - Loading HaluSum dataset with 10000 samples...
+Downloading data files:   0%|          | 0/1 [00:00<?, ?it/s]
+Downloading data:   0%|          | 0.00/28.0M [00:00<?, ?B/s][A
+Downloading data:  37%|███▋      | 10.5M/28.0M [00:00<00:00, 45.9MB/s][ADownloading data: 100%|██████████| 28.0M/28.0M [00:00<00:00, 88.7MB/s]
+Downloading data files: 100%|██████████| 1/1 [00:00<00:00,  3.15it/s]Downloading data files: 100%|██████████| 1/1 [00:00<00:00,  3.15it/s]
+Extracting data files:   0%|          | 0/1 [00:00<?, ?it/s]Extracting data files: 100%|██████████| 1/1 [00:00<00:00, 1279.92it/s]
+Generating data split:   0%|          | 0/10000 [00:00<?, ? examples/s]Generating data split: 100%|██████████| 10000/10000 [00:00<00:00, 64853.82 examples/s]Generating data split: 100%|██████████| 10000/10000 [00:00<00:00, 62500.80 examples/s]
+23:02:52 - INFO - Loaded 10000 HaluSum instances
+23:02:52 - INFO - [dataset_loading] Duration: 1332.10ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+23:02:52 - INFO - Processing ds dataset to 6-option format...
+23:03:27 - INFO - Processed 10000 instances for ds
+23:03:27 - INFO - Option expansion statistics for ds:
+23:03:27 - INFO -   Instances expanded (2→4 options): 10000
+23:03:27 - INFO -   Total options sampled: 20000
+23:03:27 - INFO -   Duplicate options avoided: 0
+23:03:27 - INFO -   Fallback options used: 0
+23:03:27 - INFO - Splitting ds dataset (calibration: 50%, test: 50%)
+23:03:27 - INFO - Split complete:
+23:03:27 - INFO -   Calibration: 4999 instances
+23:03:27 - INFO -   Test: 5001 instances
+23:03:27 - INFO - Answer distribution:
+23:03:27 - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+23:03:27 - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+23:03:27 - INFO - [dataset_processing] Duration: 35429.67ms | GPU Memory: 8.1MB -> 8.1MB (delta +0.0MB)
+23:03:27 - INFO - Initialized DemonstrationSelector
+23:03:27 - INFO -   Strategy: random
+23:03:27 - INFO -   Num demonstrations: 5
+23:03:27 - INFO - Initialized DemonstrationManager
+23:03:27 - INFO - Selecting 1 demonstrations using 'random' strategy
+23:03:27 - INFO - Selected and cached 1 demonstrations for ds
+23:03:27 - INFO - Loading model: tinyllama-1.1b (float16)
+23:03:27 - INFO - Loading model: tinyllama-1.1b_float16 (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+23:03:27 - INFO - Loading tokenizer from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+23:03:27 - INFO - Tokenizer loaded successfully
+23:03:27 - INFO -   Vocab size: 32000
+23:03:27 - INFO -   Padding side: left
+23:03:27 - INFO -   PAD token: </s> (ID: 2)
+23:03:27 - INFO - Loading model from TinyLlama/TinyLlama-1.1B-Chat-v1.0
+23:03:28 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+23:03:28 - INFO - Model loaded successfully
+23:03:28 - INFO -   GPU Memory: 2.06GB allocated, 2.19GB reserved
+
+Model: tinyllama-1.1b_float16
+  ID: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  Type: causal
+  Parameters: 1,100,048,384
+  Vocab size: 32,000
+  Max length: 2048
+  Device: cuda:0
+  Dtype: torch.float16
+  Instruct-tuned: True
+23:03:28 - INFO - [model_loading] Duration: 996.30ms | GPU Memory: 8.1MB -> 2106.3MB (delta +2098.2MB)
+23:03:28 - INFO - [after_model_load_tinyllama-1.1b] GPU State: Allocated: 2106.3MB | Reserved: 2246.0MB | Free: 79049.4MB | Utilization: 27.0%
+23:03:28 - INFO - Optimal batch size for 1.1B model (float16): 54
+  Available memory: 73.71GB
+  Model memory: 2.20GB
+  Memory per batch item: 1.320GB
+23:03:28 - INFO - Using batch size: 54
+23:03:28 - INFO -   Strategy: base
+23:03:28 - INFO - Initialized PromptBuilder for task: ds
+23:03:28 - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+23:03:28 - INFO - Building 10000 prompts using 'base' strategy with 1 demonstrations
+23:03:28 - INFO - Initialized InferenceEngine for tinyllama-1.1b_float16
+23:03:28 - INFO -   Device: cuda:0
+23:03:28 - INFO -   Batch size: 54
+23:03:28 - INFO -   Option tokens: {'A': 319, 'B': 350, 'C': 315, 'D': 360, 'E': 382, 'F': 383}
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:02<03:55,  2.56s/it]Running inference:   2%|▏         | 2/93 [00:05<03:53,  2.56s/it]Running inference:   3%|▎         | 3/93 [00:07<03:50,  2.56s/it]Running inference:   4%|▍         | 4/93 [00:10<03:48,  2.56s/it]Running inference:   5%|▌         | 5/93 [00:12<03:45,  2.57s/it]Running inference:   6%|▋         | 6/93 [00:15<03:43,  2.57s/it]Running inference:   8%|▊         | 7/93 [00:17<03:40,  2.56s/it]Running inference:   9%|▊         | 8/93 [00:20<03:38,  2.57s/it]Running inference:  10%|▉         | 9/93 [00:23<03:35,  2.57s/it]Running inference:  11%|█         | 10/93 [00:25<03:33,  2.57s/it]Running inference:  12%|█▏        | 11/93 [00:28<03:30,  2.57s/it]Running inference:  13%|█▎        | 12/93 [00:30<03:28,  2.57s/it]Running inference:  14%|█▍        | 13/93 [00:33<03:25,  2.57s/it]Running inference:  15%|█▌        | 14/93 [00:35<03:23,  2.57s/it]Running inference:  16%|█▌        | 15/93 [00:38<03:20,  2.58s/it]Running inference:  17%|█▋        | 16/93 [00:41<03:18,  2.57s/it]Running inference:  18%|█▊        | 17/93 [00:43<03:15,  2.58s/it]Running inference:  19%|█▉        | 18/93 [00:46<03:13,  2.58s/it]Running inference:  20%|██        | 19/93 [00:48<03:10,  2.58s/it]Running inference:  22%|██▏       | 20/93 [00:51<03:08,  2.58s/it]Running inference:  23%|██▎       | 21/93 [00:54<03:05,  2.58s/it]Running inference:  24%|██▎       | 22/93 [00:56<03:03,  2.58s/it]Running inference:  25%|██▍       | 23/93 [00:59<03:00,  2.58s/it]Running inference:  26%|██▌       | 24/93 [01:01<02:58,  2.58s/it]Running inference:  27%|██▋       | 25/93 [01:04<02:55,  2.58s/it]Running inference:  28%|██▊       | 26/93 [01:06<02:53,  2.58s/it]Running inference:  29%|██▉       | 27/93 [01:09<02:50,  2.58s/it]Running inference:  30%|███       | 28/93 [01:12<02:47,  2.58s/it]Running inference:  31%|███       | 29/93 [01:14<02:45,  2.58s/it]Running inference:  32%|███▏      | 30/93 [01:17<02:42,  2.59s/it]Running inference:  33%|███▎      | 31/93 [01:19<02:40,  2.58s/it]Running inference:  34%|███▍      | 32/93 [01:22<02:37,  2.58s/it]Running inference:  35%|███▌      | 33/93 [01:25<02:34,  2.58s/it]Running inference:  37%|███▋      | 34/93 [01:27<02:32,  2.58s/it]Running inference:  38%|███▊      | 35/93 [01:30<02:29,  2.58s/it]Running inference:  39%|███▊      | 36/93 [01:32<02:27,  2.59s/it]Running inference:  40%|███▉      | 37/93 [01:35<02:24,  2.58s/it]Running inference:  41%|████      | 38/93 [01:37<02:22,  2.59s/it]Running inference:  42%|████▏     | 39/93 [01:40<02:19,  2.59s/it]Running inference:  43%|████▎     | 40/93 [01:43<02:16,  2.58s/it]Running inference:  44%|████▍     | 41/93 [01:45<02:14,  2.59s/it]Running inference:  45%|████▌     | 42/93 [01:48<02:11,  2.59s/it]Running inference:  46%|████▌     | 43/93 [01:50<02:09,  2.59s/it]Running inference:  47%|████▋     | 44/93 [01:53<02:06,  2.59s/it]Running inference:  48%|████▊     | 45/93 [01:56<02:04,  2.59s/it]Running inference:  49%|████▉     | 46/93 [01:58<02:01,  2.59s/it]Running inference:  51%|█████     | 47/93 [02:01<01:59,  2.59s/it]Running inference:  52%|█████▏    | 48/93 [02:03<01:56,  2.59s/it]Running inference:  53%|█████▎    | 49/93 [02:06<01:53,  2.59s/it]Running inference:  54%|█████▍    | 50/93 [02:09<01:51,  2.59s/it]Running inference:  55%|█████▍    | 51/93 [02:11<01:49,  2.60s/it]Running inference:  56%|█████▌    | 52/93 [02:14<01:46,  2.60s/it]Running inference:  57%|█████▋    | 53/93 [02:16<01:43,  2.60s/it]Running inference:  58%|█████▊    | 54/93 [02:19<01:41,  2.59s/it]Running inference:  59%|█████▉    | 55/93 [02:21<01:38,  2.59s/it]Running inference:  60%|██████    | 56/93 [02:24<01:35,  2.59s/it]Running inference:  61%|██████▏   | 57/93 [02:27<01:33,  2.59s/it]Running inference:  62%|██████▏   | 58/93 [02:29<01:30,  2.59s/it]Running inference:  63%|██████▎   | 59/93 [02:32<01:28,  2.59s/it]Running inference:  65%|██████▍   | 60/93 [02:34<01:25,  2.59s/it]Running inference:  66%|██████▌   | 61/93 [02:37<01:22,  2.59s/it]Running inference:  67%|██████▋   | 62/93 [02:40<01:20,  2.59s/it]Running inference:  68%|██████▊   | 63/93 [02:42<01:17,  2.59s/it]Running inference:  69%|██████▉   | 64/93 [02:45<01:15,  2.59s/it]Running inference:  70%|██████▉   | 65/93 [02:47<01:12,  2.59s/it]Running inference:  71%|███████   | 66/93 [02:50<01:09,  2.59s/it]Running inference:  72%|███████▏  | 67/93 [02:53<01:07,  2.59s/it]Running inference:  73%|███████▎  | 68/93 [02:55<01:04,  2.59s/it]Running inference:  74%|███████▍  | 69/93 [02:58<01:02,  2.59s/it]Running inference:  75%|███████▌  | 70/93 [03:00<00:59,  2.59s/it]Running inference:  76%|███████▋  | 71/93 [03:03<00:56,  2.59s/it]Running inference:  77%|███████▋  | 72/93 [03:06<00:54,  2.59s/it]Running inference:  78%|███████▊  | 73/93 [03:08<00:51,  2.59s/it]Running inference:  80%|███████▉  | 74/93 [03:11<00:49,  2.59s/it]Running inference:  81%|████████  | 75/93 [03:13<00:46,  2.59s/it]Running inference:  82%|████████▏ | 76/93 [03:16<00:44,  2.59s/it]Running inference:  83%|████████▎ | 77/93 [03:19<00:41,  2.59s/it]Running inference:  84%|████████▍ | 78/93 [03:21<00:38,  2.59s/it]Running inference:  85%|████████▍ | 79/93 [03:24<00:36,  2.59s/it]Running inference:  86%|████████▌ | 80/93 [03:26<00:33,  2.59s/it]Running inference:  87%|████████▋ | 81/93 [03:29<00:31,  2.59s/it]Running inference:  88%|████████▊ | 82/93 [03:31<00:28,  2.59s/it]Running inference:  89%|████████▉ | 83/93 [03:34<00:25,  2.59s/it]Running inference:  90%|█████████ | 84/93 [03:37<00:23,  2.59s/it]Running inference:  91%|█████████▏| 85/93 [03:39<00:20,  2.59s/it]Running inference:  92%|█████████▏| 86/93 [03:42<00:18,  2.59s/it]Running inference:  94%|█████████▎| 87/93 [03:44<00:15,  2.59s/it]Running inference:  95%|█████████▍| 88/93 [03:47<00:12,  2.59s/it]Running inference:  96%|█████████▌| 89/93 [03:50<00:10,  2.59s/it]Running inference:  97%|█████████▋| 90/93 [03:52<00:07,  2.59s/it]Running inference:  98%|█████████▊| 91/93 [03:55<00:05,  2.59s/it]Running inference:  99%|█████████▉| 92/93 [03:57<00:02,  2.59s/it]Running inference: 100%|██████████| 93/93 [03:59<00:00,  2.26s/it]Running inference: 100%|██████████| 93/93 [03:59<00:00,  2.57s/it]
+23:07:28 - INFO - [inference_calibration] Duration: 239331.16ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+Running inference:   0%|          | 0/93 [00:00<?, ?it/s]Running inference:   1%|          | 1/93 [00:02<03:58,  2.59s/it]Running inference:   2%|▏         | 2/93 [00:05<03:56,  2.60s/it]Running inference:   3%|▎         | 3/93 [00:07<03:53,  2.59s/it]Running inference:   4%|▍         | 4/93 [00:10<03:50,  2.59s/it]Running inference:   5%|▌         | 5/93 [00:12<03:47,  2.59s/it]Running inference:   6%|▋         | 6/93 [00:15<03:45,  2.59s/it]Running inference:   8%|▊         | 7/93 [00:18<03:42,  2.59s/it]Running inference:   9%|▊         | 8/93 [00:20<03:39,  2.59s/it]Running inference:  10%|▉         | 9/93 [00:23<03:37,  2.59s/it]Running inference:  11%|█         | 10/93 [00:25<03:34,  2.59s/it]Running inference:  12%|█▏        | 11/93 [00:28<03:32,  2.59s/it]Running inference:  13%|█▎        | 12/93 [00:31<03:29,  2.59s/it]Running inference:  14%|█▍        | 13/93 [00:33<03:27,  2.59s/it]Running inference:  15%|█▌        | 14/93 [00:36<03:24,  2.59s/it]Running inference:  16%|█▌        | 15/93 [00:38<03:22,  2.59s/it]Running inference:  17%|█▋        | 16/93 [00:41<03:19,  2.59s/it]Running inference:  18%|█▊        | 17/93 [00:44<03:16,  2.59s/it]Running inference:  19%|█▉        | 18/93 [00:46<03:14,  2.59s/it]Running inference:  20%|██        | 19/93 [00:49<03:11,  2.59s/it]Running inference:  22%|██▏       | 20/93 [00:51<03:09,  2.59s/it]Running inference:  23%|██▎       | 21/93 [00:54<03:06,  2.59s/it]Running inference:  24%|██▎       | 22/93 [00:56<03:03,  2.59s/it]Running inference:  25%|██▍       | 23/93 [00:59<03:01,  2.59s/it]Running inference:  26%|██▌       | 24/93 [01:02<02:58,  2.59s/it]Running inference:  27%|██▋       | 25/93 [01:04<02:56,  2.59s/it]Running inference:  28%|██▊       | 26/93 [01:07<02:53,  2.59s/it]Running inference:  29%|██▉       | 27/93 [01:09<02:50,  2.59s/it]Running inference:  30%|███       | 28/93 [01:12<02:48,  2.59s/it]Running inference:  31%|███       | 29/93 [01:15<02:45,  2.59s/it]Running inference:  32%|███▏      | 30/93 [01:17<02:43,  2.59s/it]Running inference:  33%|███▎      | 31/93 [01:20<02:40,  2.59s/it]Running inference:  34%|███▍      | 32/93 [01:22<02:37,  2.59s/it]Running inference:  35%|███▌      | 33/93 [01:25<02:35,  2.59s/it]Running inference:  37%|███▋      | 34/93 [01:28<02:32,  2.59s/it]Running inference:  38%|███▊      | 35/93 [01:30<02:30,  2.59s/it]Running inference:  39%|███▊      | 36/93 [01:33<02:27,  2.59s/it]Running inference:  40%|███▉      | 37/93 [01:35<02:25,  2.59s/it]Running inference:  41%|████      | 38/93 [01:38<02:22,  2.59s/it]Running inference:  42%|████▏     | 39/93 [01:41<02:19,  2.59s/it]Running inference:  43%|████▎     | 40/93 [01:43<02:17,  2.59s/it]Running inference:  44%|████▍     | 41/93 [01:46<02:14,  2.59s/it]Running inference:  45%|████▌     | 42/93 [01:48<02:12,  2.59s/it]Running inference:  46%|████▌     | 43/93 [01:51<02:09,  2.59s/it]Running inference:  47%|████▋     | 44/93 [01:53<02:06,  2.59s/it]Running inference:  48%|████▊     | 45/93 [01:56<02:04,  2.59s/it]Running inference:  49%|████▉     | 46/93 [01:59<02:01,  2.59s/it]Running inference:  51%|█████     | 47/93 [02:01<01:59,  2.59s/it]Running inference:  52%|█████▏    | 48/93 [02:04<01:56,  2.59s/it]Running inference:  53%|█████▎    | 49/93 [02:06<01:53,  2.59s/it]Running inference:  54%|█████▍    | 50/93 [02:09<01:51,  2.59s/it]Running inference:  55%|█████▍    | 51/93 [02:12<01:48,  2.60s/it]Running inference:  56%|█████▌    | 52/93 [02:14<01:46,  2.59s/it]Running inference:  57%|█████▋    | 53/93 [02:17<01:43,  2.59s/it]Running inference:  58%|█████▊    | 54/93 [02:19<01:41,  2.59s/it]Running inference:  59%|█████▉    | 55/93 [02:22<01:38,  2.59s/it]Running inference:  60%|██████    | 56/93 [02:25<01:35,  2.59s/it]Running inference:  61%|██████▏   | 57/93 [02:27<01:33,  2.59s/it]Running inference:  62%|██████▏   | 58/93 [02:30<01:30,  2.59s/it]Running inference:  63%|██████▎   | 59/93 [02:32<01:28,  2.59s/it]Running inference:  65%|██████▍   | 60/93 [02:35<01:25,  2.59s/it]Running inference:  66%|██████▌   | 61/93 [02:38<01:22,  2.59s/it]Running inference:  67%|██████▋   | 62/93 [02:40<01:20,  2.59s/it]Running inference:  68%|██████▊   | 63/93 [02:43<01:17,  2.59s/it]Running inference:  69%|██████▉   | 64/93 [02:45<01:15,  2.59s/it]Running inference:  70%|██████▉   | 65/93 [02:48<01:12,  2.59s/it]Running inference:  71%|███████   | 66/93 [02:50<01:09,  2.59s/it]Running inference:  72%|███████▏  | 67/93 [02:53<01:07,  2.59s/it]Running inference:  73%|███████▎  | 68/93 [02:56<01:04,  2.59s/it]Running inference:  74%|███████▍  | 69/93 [02:58<01:02,  2.59s/it]Running inference:  75%|███████▌  | 70/93 [03:01<00:59,  2.59s/it]Running inference:  76%|███████▋  | 71/93 [03:03<00:56,  2.59s/it]Running inference:  77%|███████▋  | 72/93 [03:06<00:54,  2.59s/it]Running inference:  78%|███████▊  | 73/93 [03:09<00:51,  2.59s/it]Running inference:  80%|███████▉  | 74/93 [03:11<00:49,  2.59s/it]Running inference:  81%|████████  | 75/93 [03:14<00:46,  2.59s/it]Running inference:  82%|████████▏ | 76/93 [03:16<00:44,  2.59s/it]Running inference:  83%|████████▎ | 77/93 [03:19<00:41,  2.59s/it]Running inference:  84%|████████▍ | 78/93 [03:22<00:38,  2.59s/it]Running inference:  85%|████████▍ | 79/93 [03:24<00:36,  2.59s/it]Running inference:  86%|████████▌ | 80/93 [03:27<00:33,  2.59s/it]Running inference:  87%|████████▋ | 81/93 [03:29<00:31,  2.59s/it]Running inference:  88%|████████▊ | 82/93 [03:32<00:28,  2.59s/it]Running inference:  89%|████████▉ | 83/93 [03:34<00:25,  2.59s/it]Running inference:  90%|█████████ | 84/93 [03:37<00:23,  2.58s/it]Running inference:  91%|█████████▏| 85/93 [03:40<00:20,  2.59s/it]Running inference:  92%|█████████▏| 86/93 [03:42<00:18,  2.59s/it]Running inference:  94%|█████████▎| 87/93 [03:45<00:15,  2.59s/it]Running inference:  95%|█████████▍| 88/93 [03:47<00:12,  2.59s/it]Running inference:  96%|█████████▌| 89/93 [03:50<00:10,  2.59s/it]Running inference:  97%|█████████▋| 90/93 [03:53<00:07,  2.59s/it]Running inference:  98%|█████████▊| 91/93 [03:55<00:05,  2.59s/it]Running inference:  99%|█████████▉| 92/93 [03:58<00:02,  2.59s/it]Running inference: 100%|██████████| 93/93 [03:59<00:00,  2.28s/it]Running inference: 100%|██████████| 93/93 [03:59<00:00,  2.58s/it]
+23:11:28 - INFO - [inference_test] Duration: 239835.32ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+23:11:28 - INFO -     Inference: 479.17s for 10000 samples (20.87 samples/sec)
+23:11:28 - INFO - Initialized ProbabilityExtractor
+23:11:28 - INFO -   Temperature: 1.0
+23:11:28 - INFO -   Calibration method: None
+23:11:28 - INFO - [probability_extraction] Duration: 249.51ms | GPU Memory: 2106.3MB -> 2106.3MB (delta +0.0MB)
+23:11:28 - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_tinyllama-1.1b_ds_float16_base_20251207_224643.npz
+23:11:28 - INFO - Initialized LACScorer
+23:11:28 - INFO -   Alpha: 0.1
+23:11:28 - INFO -   Target coverage: 90.0%
+23:11:28 - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+23:11:28 - INFO - Initialized PredictionSetGenerator
+23:11:28 - INFO -   Methods: ['lac']
+23:11:28 - INFO -   Alpha: 0.1
+23:11:28 - INFO -   Aggregation: separate
+23:11:28 - INFO - Calibrating 1 conformal predictors...
+23:11:28 - INFO -   Calibrating LAC...
+23:11:28 - INFO - Calibrating with 4999 samples...
+23:11:28 - INFO - Calibration complete
+23:11:28 - INFO -   Threshold: 0.9395
+23:11:28 - INFO -   Score range: [0.0006, 1.0000]
+23:11:28 - INFO - Calibration complete
+23:11:28 - INFO - Generating prediction sets using LAC...
+23:11:28 - INFO - Generating prediction sets for 5001 test instances...
+23:11:28 - INFO - Prediction complete
+23:11:28 - INFO -   Average set size: 4.66
+23:11:28 - INFO -   Coverage rate: 90.18%
+23:11:28 - INFO -   Meets coverage guarantee: True
+23:11:28 - INFO - [PASS] Coverage guarantee met: 90.18% >= 90.00%
+23:11:28 - INFO -     LAC: Acc=22.68%, CR=90.18%, SS=4.66
+23:11:28 - INFO - Initialized APSScorer
+23:11:28 - INFO -   Alpha: 0.1
+23:11:28 - INFO -   Target coverage: 90.0%
+23:11:28 - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+23:11:28 - INFO - Initialized PredictionSetGenerator
+23:11:28 - INFO -   Methods: ['aps']
+23:11:28 - INFO -   Alpha: 0.1
+23:11:28 - INFO -   Aggregation: separate
+23:11:28 - INFO - Calibrating 1 conformal predictors...
+23:11:28 - INFO -   Calibrating APS...
+23:11:28 - INFO - Calibrating with 4999 samples...
+23:11:28 - INFO - Calibration complete
+23:11:28 - INFO -   Threshold: 0.9779
+23:11:28 - INFO -   Score range: [0.1961, 1.0000]
+23:11:28 - INFO - Calibration complete
+23:11:28 - INFO - Generating prediction sets using APS...
+23:11:28 - INFO - Generating prediction sets for 5001 test instances...
+23:11:28 - INFO - Prediction complete
+23:11:28 - INFO -   Average set size: 4.36
+23:11:28 - INFO -   Coverage rate: 90.88%
+23:11:28 - INFO -   Meets coverage guarantee: True
+23:11:28 - INFO - [PASS] Coverage guarantee met: 90.88% >= 90.00%
+23:11:28 - INFO -     APS: Acc=22.68%, CR=90.88%, SS=4.36
+23:11:30 - INFO - Unloaded model: tinyllama-1.1b_float16
+23:11:31 - INFO - Checkpoint saved after completing: tinyllama-1.1b | ds | float16
+23:11:31 - INFO - generated new fontManager
+23:11:31 - INFO - Generating all visualizations...
+23:11:32 - INFO - Saved heatmap to outputs/results/figures/heatmap_accuracy.png
+23:11:32 - INFO - Saved heatmap to outputs/results/figures/heatmap_coverage_rate.png
+23:11:33 - INFO - Saved heatmap to outputs/results/figures/heatmap_avg_set_size.png
+23:11:34 - INFO - Saved dashboard to outputs/results/figures/dashboard.png
+23:11:35 - INFO - Saved bar chart to outputs/results/figures/bar_comparison_accuracy.png
+23:11:35 - INFO - Saved bar chart to outputs/results/figures/bar_comparison_avg_set_size.png
+23:11:36 - INFO - Saved radar chart to outputs/results/figures/radar_chart.png
+23:11:37 - INFO - Saved uncertainty analysis to outputs/results/figures/uncertainty_analysis.png
+23:11:37 - INFO - Saved summary table to outputs/results/figures/results_summary.md
+23:11:37 - INFO - Saved summary table to outputs/results/figures/results_summary_lac.md
+23:11:37 - INFO - Saved summary table to outputs/results/figures/results_summary_aps.md
+23:11:37 - INFO - All visualizations saved to outputs/results/figures
+23:11:37 - INFO - Visualizations saved to: outputs/results/figures
+23:11:38 - INFO - Stopped GPU monitoring. Collected 591 snapshots.
+
+================================================================================
+GPU PROFILING SUMMARY
+================================================================================
+
+Total Operations: 30
+Total Time: 1468701.80ms (1468.70s)
+
+--- Operations Breakdown ---
+
+  [inference_test]
+    Count: 5
+    Total: 685011.32ms (46.6%)
+    Avg: 137002.26ms | Min: 70054.50ms | Max: 239835.32ms
+    Avg Memory Delta: +0.0MB
+
+  [inference_calibration]
+    Count: 5
+    Total: 684383.25ms (46.6%)
+    Avg: 136876.65ms | Min: 69786.72ms | Max: 239331.16ms
+    Avg Memory Delta: +1.6MB
+
+  [dataset_processing]
+    Count: 5
+    Total: 66696.85ms (4.5%)
+    Avg: 13339.37ms | Min: 34.73ms | Max: 35429.67ms
+    Avg Memory Delta: +0.0MB
+
+  [dataset_loading]
+    Count: 5
+    Total: 22119.33ms (1.5%)
+    Avg: 4423.87ms | Min: 1332.10ms | Max: 8291.88ms
+    Avg Memory Delta: +0.0MB
+
+  [model_loading]
+    Count: 5
+    Total: 9165.89ms (0.6%)
+    Avg: 1833.18ms | Min: 902.35ms | Max: 5406.47ms
+    Avg Memory Delta: +2098.2MB
+
+  [probability_extraction]
+    Count: 5
+    Total: 1325.15ms (0.1%)
+    Avg: 265.03ms | Min: 249.51ms | Max: 283.23ms
+    Avg Memory Delta: +0.0MB
+
+--- Memory Statistics ---
+  Peak Allocated: 8858.0MB
+  Avg Allocated: 6143.1MB
+  Avg GPU Utilization: 90.1%
+
+--- Bottlenecks & Recommendations ---
+
+  [WARN] inference_calibration (46.6% of total time)
+     -> Inference is slow. Consider: larger batch size, Flash Attention, or quantization.
+
+  [WARN] inference_test (46.6% of total time)
+     -> Inference is slow. Consider: larger batch size, Flash Attention, or quantization.
+
+================================================================================
+23:11:38 - INFO - Saved GPU profiling report to outputs/results/gpu_profile_20251207_224643.json
+23:11:38 - INFO - GPU profiling report saved to: outputs/results/gpu_profile_20251207_224643.json
+23:11:38 - INFO - 
+================================================================================
+23:11:38 - INFO - BENCHMARK COMPLETE
+23:11:38 - INFO - ================================================================================
+23:11:38 - INFO - Total time: 24.76 minutes
+23:11:38 - INFO - Results saved to: outputs/results
+
+================================================================================
+FINAL SUMMARY
+================================================================================
+Total runs: 10
+Overall accuracy: 21.15%
+Overall coverage: 90.37%
+Overall set size: 4.98
+Guarantee met: 70.00%
+Total time: 24.76 minutes
+Log file: outputs/results/logs/benchmark_20251207_224643.log
+================================================================================
+
+23:11:38 - INFO - Benchmark completed successfully
+23:11:38 - INFO - Total runs: 10
+23:11:38 - INFO - Overall accuracy: 21.15%
+23:11:38 - INFO - Overall coverage: 90.37%
+23:11:38 - INFO - Log file saved to: outputs/results/logs/benchmark_20251207_224643.log

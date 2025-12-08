@@ -1,0 +1,398 @@
+
+================================================================================
+BLUQ: Benchmarking Language models via Uncertainty Quantification
+================================================================================
+Mode: long (10000 samples per task)
+Models: 1 | Tasks: 5 | Dtypes: 1
+Total configurations: 5
+Log file: outputs/results/logs/benchmark_20251207_234318.log
+================================================================================
+
+23:43:18 - INFO - Starting benchmark run
+23:43:18 - INFO - Log file: outputs/results/logs/benchmark_20251207_234318.log
+23:43:18 - INFO - Mode: long, Samples: 10000
+23:43:18 - INFO - Models: ['qwen-1.8b']
+23:43:18 - INFO - Tasks: ['qa', 'rc', 'ci', 'drs', 'ds']
+23:43:18 - INFO - Dtypes: ['float16']
+23:43:19 - INFO - Running on: Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+23:43:19 - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+23:43:19 - INFO - GPU Tier: a100 | Auto max_batch_size: 192 | Safety margin: 0.93
+23:43:19 - INFO - Using user-specified max_batch_size: 32
+23:43:19 - INFO - NVML initialized for GPU utilization monitoring
+23:43:19 - INFO - GPUProfiler initialized (CUDA: True, NVML: True)
+23:43:19 - INFO - Started GPU monitoring
+23:43:19 - INFO - GPU profiling enabled
+23:43:19 - INFO - 
+================================================================================
+23:43:19 - INFO - FULL BENCHMARK CONFIGURATION
+23:43:19 - INFO - ================================================================================
+23:43:19 - INFO - Models (1): ['qwen-1.8b']
+23:43:19 - INFO - Tasks (5): ['qa', 'rc', 'ci', 'drs', 'ds']
+23:43:19 - INFO - Data types: ['float16']
+23:43:19 - INFO - Samples per task: 10000
+23:43:19 - INFO - Alpha (error rate): 0.1
+23:43:19 - INFO - Strategies: ['base']
+23:43:19 - INFO - Conformal methods: ['lac', 'aps']
+23:43:19 - INFO - Dynamic batch sizing: False
+23:43:19 - INFO - Max batch size: 32 (GPU tier: a100)
+23:43:19 - INFO - Output directory: outputs/results
+23:43:19 - INFO - 
+================================================================================
+23:43:19 - INFO - Run 1/5: qwen-1.8b | qa | float16
+23:43:19 - INFO - ================================================================================
+23:43:23 - INFO - [start_qwen-1.8b_qa] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 93.0%
+23:43:23 - INFO - Loading qa dataset (10000 samples)...
+23:43:23 - INFO - Loading MMLU dataset with 10000 samples...
+23:43:28 - INFO - Loaded 10000 MMLU instances
+23:43:28 - INFO - [dataset_loading] Duration: 5111.80ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:28 - INFO - Processing qa dataset to 6-option format...
+23:43:28 - INFO - Processed 10000 instances for qa
+23:43:28 - INFO - Splitting qa dataset (calibration: 50%, test: 50%)
+23:43:28 - INFO - Split complete:
+23:43:28 - INFO -   Calibration: 4998 instances
+23:43:28 - INFO -   Test: 5002 instances
+23:43:28 - WARNING - Calibration size 4998 differs from expected 5000
+23:43:28 - INFO - Answer distribution:
+23:43:28 - INFO -   Calibration: {'A': 1174, 'B': 1230, 'C': 1242, 'D': 1352}
+23:43:28 - INFO -   Test: {'A': 1175, 'B': 1231, 'C': 1243, 'D': 1353}
+23:43:28 - INFO - [dataset_processing] Duration: 253.42ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:28 - INFO - Initialized DemonstrationSelector
+23:43:28 - INFO -   Strategy: random
+23:43:28 - INFO -   Num demonstrations: 5
+23:43:28 - INFO - Initialized DemonstrationManager
+23:43:28 - INFO - Selecting 5 demonstrations using 'random' strategy
+23:43:28 - INFO - Selected and cached 5 demonstrations for qa
+23:43:28 - INFO - Loading model: qwen-1.8b (float16)
+23:43:28 - INFO - Loading model: qwen-1.8b_float16 (Qwen/Qwen-1_8B)
+23:43:28 - INFO - Loading tokenizer from Qwen/Qwen-1_8B
+23:43:30 - ERROR - Failed to load tokenizer: Adding unknown special tokens is not supported
+23:43:30 - INFO - [model_loading] Duration: 2217.79ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:30 - ERROR - Failed: qwen-1.8b | qa | float16
+23:43:30 - ERROR - Error: Adding unknown special tokens is not supported
+Traceback (most recent call last):
+  File "/root/BLUQ/run_benchmark.py", line 337, in run
+    results = self._run_single_configuration(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/run_benchmark.py", line 484, in _run_single_configuration
+    model, tokenizer, model_info = model_loader.load_model(load_config)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 215, in load_model
+    tokenizer = self._load_tokenizer(config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 250, in _load_tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1020, in add_special_tokens
+    added_tokens = self.add_tokens(added_tokens, special_tokens=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1070, in add_tokens
+    return self._add_tokens(new_tokens, special_tokens=special_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.cache/huggingface/modules/transformers_modules/Qwen/Qwen_hyphen_1_8B/fa6e214ccbbc6a55235c26ef406355b6bfdf5eed/tokenization_qwen.py", line 165, in _add_tokens
+    raise ValueError("Adding unknown special tokens is not supported")
+ValueError: Adding unknown special tokens is not supported
+23:43:31 - INFO - 
+================================================================================
+23:43:31 - INFO - Run 2/5: qwen-1.8b | rc | float16
+23:43:31 - INFO - ================================================================================
+23:43:31 - INFO - [start_qwen-1.8b_rc] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 100.0%
+23:43:31 - INFO - Loading rc dataset (10000 samples)...
+23:43:31 - INFO - Loading CosmosQA dataset with 10000 samples...
+23:43:31 - INFO - CosmosQA loaded successfully with standard method
+23:43:32 - INFO - Loaded 10000 CosmosQA instances
+23:43:32 - INFO - [dataset_loading] Duration: 1676.32ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:32 - INFO - Processing rc dataset to 6-option format...
+23:43:32 - INFO - Processed 10000 instances for rc
+23:43:32 - INFO - Splitting rc dataset (calibration: 50%, test: 50%)
+23:43:32 - INFO - Split complete:
+23:43:32 - INFO -   Calibration: 4999 instances
+23:43:32 - INFO -   Test: 5001 instances
+23:43:32 - INFO - Answer distribution:
+23:43:32 - INFO -   Calibration: {'A': 1240, 'B': 1245, 'C': 1263, 'D': 1251}
+23:43:32 - INFO -   Test: {'A': 1241, 'B': 1245, 'C': 1264, 'D': 1251}
+23:43:32 - INFO - [dataset_processing] Duration: 30.38ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:32 - INFO - Initialized DemonstrationSelector
+23:43:32 - INFO -   Strategy: random
+23:43:32 - INFO -   Num demonstrations: 5
+23:43:32 - INFO - Initialized DemonstrationManager
+23:43:32 - INFO - Selecting 5 demonstrations using 'random' strategy
+23:43:32 - INFO - Selected and cached 5 demonstrations for rc
+23:43:32 - INFO - Loading model: qwen-1.8b (float16)
+23:43:32 - INFO - Loading model: qwen-1.8b_float16 (Qwen/Qwen-1_8B)
+23:43:32 - INFO - Loading tokenizer from Qwen/Qwen-1_8B
+23:43:33 - ERROR - Failed to load tokenizer: Adding unknown special tokens is not supported
+23:43:33 - INFO - [model_loading] Duration: 379.73ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:33 - ERROR - Failed: qwen-1.8b | rc | float16
+23:43:33 - ERROR - Error: Adding unknown special tokens is not supported
+Traceback (most recent call last):
+  File "/root/BLUQ/run_benchmark.py", line 337, in run
+    results = self._run_single_configuration(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/run_benchmark.py", line 484, in _run_single_configuration
+    model, tokenizer, model_info = model_loader.load_model(load_config)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 215, in load_model
+    tokenizer = self._load_tokenizer(config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 250, in _load_tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1020, in add_special_tokens
+    added_tokens = self.add_tokens(added_tokens, special_tokens=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1070, in add_tokens
+    return self._add_tokens(new_tokens, special_tokens=special_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.cache/huggingface/modules/transformers_modules/Qwen/Qwen_hyphen_1_8B/fa6e214ccbbc6a55235c26ef406355b6bfdf5eed/tokenization_qwen.py", line 165, in _add_tokens
+    raise ValueError("Adding unknown special tokens is not supported")
+ValueError: Adding unknown special tokens is not supported
+23:43:33 - INFO - 
+================================================================================
+23:43:33 - INFO - Run 3/5: qwen-1.8b | ci | float16
+23:43:33 - INFO - ================================================================================
+23:43:33 - INFO - [start_qwen-1.8b_ci] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 100.0%
+23:43:33 - INFO - Loading ci dataset (10000 samples)...
+23:43:33 - INFO - Loading HellaSwag dataset with 10000 samples...
+23:43:36 - INFO - Loaded 10000 HellaSwag instances
+23:43:36 - INFO - [dataset_loading] Duration: 3708.47ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:36 - INFO - Processing ci dataset to 6-option format...
+23:43:36 - INFO - Processed 10000 instances for ci
+23:43:36 - INFO - Splitting ci dataset (calibration: 50%, test: 50%)
+23:43:36 - INFO - Split complete:
+23:43:36 - INFO -   Calibration: 4999 instances
+23:43:36 - INFO -   Test: 5001 instances
+23:43:36 - INFO - Answer distribution:
+23:43:36 - INFO -   Calibration: {'A': 1240, 'B': 1242, 'C': 1256, 'D': 1261}
+23:43:36 - INFO -   Test: {'A': 1240, 'B': 1242, 'C': 1257, 'D': 1262}
+23:43:36 - INFO - [dataset_processing] Duration: 39.01ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:36 - INFO - Initialized DemonstrationSelector
+23:43:36 - INFO -   Strategy: random
+23:43:36 - INFO -   Num demonstrations: 5
+23:43:36 - INFO - Initialized DemonstrationManager
+23:43:36 - INFO - Selecting 5 demonstrations using 'random' strategy
+23:43:36 - INFO - Selected and cached 5 demonstrations for ci
+23:43:36 - INFO - Loading model: qwen-1.8b (float16)
+23:43:36 - INFO - Loading model: qwen-1.8b_float16 (Qwen/Qwen-1_8B)
+23:43:36 - INFO - Loading tokenizer from Qwen/Qwen-1_8B
+23:43:37 - ERROR - Failed to load tokenizer: Adding unknown special tokens is not supported
+23:43:37 - INFO - [model_loading] Duration: 391.50ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:37 - ERROR - Failed: qwen-1.8b | ci | float16
+23:43:37 - ERROR - Error: Adding unknown special tokens is not supported
+Traceback (most recent call last):
+  File "/root/BLUQ/run_benchmark.py", line 337, in run
+    results = self._run_single_configuration(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/run_benchmark.py", line 484, in _run_single_configuration
+    model, tokenizer, model_info = model_loader.load_model(load_config)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 215, in load_model
+    tokenizer = self._load_tokenizer(config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 250, in _load_tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1020, in add_special_tokens
+    added_tokens = self.add_tokens(added_tokens, special_tokens=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1070, in add_tokens
+    return self._add_tokens(new_tokens, special_tokens=special_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.cache/huggingface/modules/transformers_modules/Qwen/Qwen_hyphen_1_8B/fa6e214ccbbc6a55235c26ef406355b6bfdf5eed/tokenization_qwen.py", line 165, in _add_tokens
+    raise ValueError("Adding unknown special tokens is not supported")
+ValueError: Adding unknown special tokens is not supported
+23:43:37 - INFO - 
+================================================================================
+23:43:37 - INFO - Run 4/5: qwen-1.8b | drs | float16
+23:43:37 - INFO - ================================================================================
+23:43:37 - INFO - [start_qwen-1.8b_drs] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 100.0%
+23:43:37 - INFO - Loading drs dataset (10000 samples)...
+23:43:37 - INFO - Loading HaluDial dataset with 10000 samples...
+23:43:38 - INFO - Loaded 10000 HaluDial instances
+23:43:38 - INFO - [dataset_loading] Duration: 863.38ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:43:38 - INFO - Processing drs dataset to 6-option format...
+23:44:07 - INFO - Processed 10000 instances for drs
+23:44:07 - INFO - Option expansion statistics for drs:
+23:44:07 - INFO -   Instances expanded (2→4 options): 10000
+23:44:07 - INFO -   Total options sampled: 20000
+23:44:07 - INFO -   Duplicate options avoided: 2
+23:44:07 - INFO -   Fallback options used: 0
+23:44:07 - INFO - Splitting drs dataset (calibration: 50%, test: 50%)
+23:44:07 - INFO - Split complete:
+23:44:07 - INFO -   Calibration: 4999 instances
+23:44:07 - INFO -   Test: 5001 instances
+23:44:07 - INFO - Answer distribution:
+23:44:07 - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+23:44:07 - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+23:44:07 - INFO - [dataset_processing] Duration: 28848.78ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:44:07 - INFO - Initialized DemonstrationSelector
+23:44:07 - INFO -   Strategy: random
+23:44:07 - INFO -   Num demonstrations: 5
+23:44:07 - INFO - Initialized DemonstrationManager
+23:44:07 - INFO - Selecting 3 demonstrations using 'random' strategy
+23:44:07 - INFO - Selected and cached 3 demonstrations for drs
+23:44:07 - INFO - Loading model: qwen-1.8b (float16)
+23:44:07 - INFO - Loading model: qwen-1.8b_float16 (Qwen/Qwen-1_8B)
+23:44:07 - INFO - Loading tokenizer from Qwen/Qwen-1_8B
+23:44:07 - ERROR - Failed to load tokenizer: Adding unknown special tokens is not supported
+23:44:07 - INFO - [model_loading] Duration: 382.14ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:44:07 - ERROR - Failed: qwen-1.8b | drs | float16
+23:44:07 - ERROR - Error: Adding unknown special tokens is not supported
+Traceback (most recent call last):
+  File "/root/BLUQ/run_benchmark.py", line 337, in run
+    results = self._run_single_configuration(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/run_benchmark.py", line 484, in _run_single_configuration
+    model, tokenizer, model_info = model_loader.load_model(load_config)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 215, in load_model
+    tokenizer = self._load_tokenizer(config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 250, in _load_tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1020, in add_special_tokens
+    added_tokens = self.add_tokens(added_tokens, special_tokens=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1070, in add_tokens
+    return self._add_tokens(new_tokens, special_tokens=special_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.cache/huggingface/modules/transformers_modules/Qwen/Qwen_hyphen_1_8B/fa6e214ccbbc6a55235c26ef406355b6bfdf5eed/tokenization_qwen.py", line 165, in _add_tokens
+    raise ValueError("Adding unknown special tokens is not supported")
+ValueError: Adding unknown special tokens is not supported
+23:44:07 - INFO - 
+================================================================================
+23:44:07 - INFO - Run 5/5: qwen-1.8b | ds | float16
+23:44:07 - INFO - ================================================================================
+23:44:07 - INFO - [start_qwen-1.8b_ds] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 100.0%
+23:44:07 - INFO - Loading ds dataset (10000 samples)...
+23:44:07 - INFO - Loading HaluSum dataset with 10000 samples...
+23:44:08 - INFO - Loaded 10000 HaluSum instances
+23:44:08 - INFO - [dataset_loading] Duration: 843.46ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:44:08 - INFO - Processing ds dataset to 6-option format...
+23:44:41 - INFO - Processed 10000 instances for ds
+23:44:41 - INFO - Option expansion statistics for ds:
+23:44:41 - INFO -   Instances expanded (2→4 options): 10000
+23:44:41 - INFO -   Total options sampled: 20000
+23:44:41 - INFO -   Duplicate options avoided: 0
+23:44:41 - INFO -   Fallback options used: 0
+23:44:41 - INFO - Splitting ds dataset (calibration: 50%, test: 50%)
+23:44:41 - INFO - Split complete:
+23:44:41 - INFO -   Calibration: 4999 instances
+23:44:41 - INFO -   Test: 5001 instances
+23:44:41 - INFO - Answer distribution:
+23:44:41 - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+23:44:41 - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+23:44:41 - INFO - [dataset_processing] Duration: 33247.26ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:44:41 - INFO - Initialized DemonstrationSelector
+23:44:41 - INFO -   Strategy: random
+23:44:41 - INFO -   Num demonstrations: 5
+23:44:41 - INFO - Initialized DemonstrationManager
+23:44:41 - INFO - Selecting 1 demonstrations using 'random' strategy
+23:44:41 - INFO - Selected and cached 1 demonstrations for ds
+23:44:41 - INFO - Loading model: qwen-1.8b (float16)
+23:44:41 - INFO - Loading model: qwen-1.8b_float16 (Qwen/Qwen-1_8B)
+23:44:41 - INFO - Loading tokenizer from Qwen/Qwen-1_8B
+23:44:42 - ERROR - Failed to load tokenizer: Adding unknown special tokens is not supported
+23:44:42 - INFO - [model_loading] Duration: 470.50ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+23:44:42 - ERROR - Failed: qwen-1.8b | ds | float16
+23:44:42 - ERROR - Error: Adding unknown special tokens is not supported
+Traceback (most recent call last):
+  File "/root/BLUQ/run_benchmark.py", line 337, in run
+    results = self._run_single_configuration(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/run_benchmark.py", line 484, in _run_single_configuration
+    model, tokenizer, model_info = model_loader.load_model(load_config)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 215, in load_model
+    tokenizer = self._load_tokenizer(config)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/src/models/model_loader.py", line 250, in _load_tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1020, in add_special_tokens
+    added_tokens = self.add_tokens(added_tokens, special_tokens=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/BLUQ/.venv/lib/python3.12/site-packages/transformers/tokenization_utils_base.py", line 1070, in add_tokens
+    return self._add_tokens(new_tokens, special_tokens=special_tokens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.cache/huggingface/modules/transformers_modules/Qwen/Qwen_hyphen_1_8B/fa6e214ccbbc6a55235c26ef406355b6bfdf5eed/tokenization_qwen.py", line 165, in _add_tokens
+    raise ValueError("Adding unknown special tokens is not supported")
+ValueError: Adding unknown special tokens is not supported
+/root/BLUQ/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3860: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/root/BLUQ/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py:144: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+23:44:42 - INFO - Generating all visualizations...
+23:44:42 - WARNING - No data available for heatmap
+23:44:42 - WARNING - No data available for heatmap
+23:44:42 - WARNING - No data available for heatmap
+23:44:43 - INFO - Saved dashboard to outputs/results/figures/dashboard.png
+23:44:43 - WARNING - No data available for bar chart
+23:44:43 - WARNING - No data available for bar chart
+23:44:43 - WARNING - No data available for radar chart
+23:44:43 - WARNING - No data available for uncertainty analysis
+23:44:43 - INFO - All visualizations saved to outputs/results/figures
+23:44:43 - INFO - Visualizations saved to: outputs/results/figures
+23:44:44 - INFO - Stopped GPU monitoring. Collected 42 snapshots.
+
+================================================================================
+GPU PROFILING SUMMARY
+================================================================================
+
+Total Operations: 15
+Total Time: 78463.94ms (78.46s)
+
+--- Operations Breakdown ---
+
+  [dataset_processing]
+    Count: 5
+    Total: 62418.85ms (79.6%)
+    Avg: 12483.77ms | Min: 30.38ms | Max: 33247.26ms
+    Avg Memory Delta: +0.0MB
+
+  [dataset_loading]
+    Count: 5
+    Total: 12203.44ms (15.6%)
+    Avg: 2440.69ms | Min: 843.46ms | Max: 5111.80ms
+    Avg Memory Delta: +0.0MB
+
+  [model_loading]
+    Count: 5
+    Total: 3841.66ms (4.9%)
+    Avg: 768.33ms | Min: 379.73ms | Max: 2217.79ms
+    Avg Memory Delta: +0.0MB
+
+--- Memory Statistics ---
+  Peak Allocated: 0.0MB
+  Avg Allocated: 0.0MB
+  Avg GPU Utilization: 98.2%
+
+--- Bottlenecks & Recommendations ---
+
+  [WARN] dataset_processing (79.6% of total time)
+     -> Data transfer overhead detected. Consider pinned memory or larger batch sizes.
+
+================================================================================
+23:44:44 - INFO - Saved GPU profiling report to outputs/results/gpu_profile_20251207_234318.json
+23:44:44 - INFO - GPU profiling report saved to: outputs/results/gpu_profile_20251207_234318.json
+23:44:44 - INFO - 
+================================================================================
+23:44:44 - INFO - BENCHMARK COMPLETE
+23:44:44 - INFO - ================================================================================
+23:44:44 - INFO - Total time: 1.38 minutes
+23:44:44 - INFO - Results saved to: outputs/results
+
+================================================================================
+FINAL SUMMARY
+================================================================================
+Total runs: 0
+Overall accuracy: nan%
+Overall coverage: nan%
+Overall set size: nan
+Guarantee met: nan%
+Total time: 1.38 minutes
+Log file: outputs/results/logs/benchmark_20251207_234318.log
+================================================================================
+
+23:44:44 - INFO - Benchmark completed successfully
+23:44:44 - INFO - Total runs: 0
+23:44:44 - INFO - Overall accuracy: nan%
+23:44:44 - INFO - Overall coverage: nan%
+23:44:44 - INFO - Log file saved to: outputs/results/logs/benchmark_20251207_234318.log

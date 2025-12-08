@@ -1,0 +1,624 @@
+{
+  "timestamp": "2025-12-08T00:57:03.219668",
+  "summary": {
+    "total_operations": 30,
+    "total_time_ms": 5798066.393472254,
+    "operations": {
+      "dataset_loading": {
+        "count": 5,
+        "total_time_ms": 13319.215539842844,
+        "avg_time_ms": 2663.843107968569,
+        "min_time_ms": 868.60616132617,
+        "max_time_ms": 4226.692881435156,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 5,
+        "total_time_ms": 67054.92560565472,
+        "avg_time_ms": 13410.985121130943,
+        "min_time_ms": 224.73498061299324,
+        "max_time_ms": 33746.09233438969,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 5,
+        "total_time_ms": 11063.97257745266,
+        "avg_time_ms": 2212.794515490532,
+        "min_time_ms": 1878.877930343151,
+        "max_time_ms": 2406.9839790463448,
+        "avg_memory_delta_mb": 5301.82666015625
+      },
+      "inference_calibration": {
+        "count": 5,
+        "total_time_ms": 2963254.272494465,
+        "avg_time_ms": 592650.854498893,
+        "min_time_ms": 281212.7813063562,
+        "max_time_ms": 1558456.4233645797,
+        "avg_memory_delta_mb": 1.825
+      },
+      "inference_test": {
+        "count": 5,
+        "total_time_ms": 2741973.8994538784,
+        "avg_time_ms": 548394.7798907757,
+        "min_time_ms": 282117.87958815694,
+        "max_time_ms": 828939.5490922034,
+        "avg_memory_delta_mb": 0.0
+      },
+      "probability_extraction": {
+        "count": 5,
+        "total_time_ms": 1400.1078009605408,
+        "avg_time_ms": 280.02156019210815,
+        "min_time_ms": 254.16548550128937,
+        "max_time_ms": 322.40376248955727,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 14720.21728515625,
+      "avg_allocated_mb": 8683.548507995285,
+      "avg_utilization_percent": 97.39116719242902,
+      "snapshots_count": 1902
+    },
+    "bottlenecks": [
+      {
+        "operation": "inference_calibration",
+        "time_percent": 51.10762918876958,
+        "recommendation": "Inference is slow. Consider: larger batch size, Flash Attention, or quantization."
+      },
+      {
+        "operation": "inference_test",
+        "time_percent": 47.29117801308599,
+        "recommendation": "Inference is slow. Consider: larger batch size, Flash Attention, or quantization."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 3573.6082643270493,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 353.71291637420654,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 1878.877930343151,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 5301.82666015625,
+      "gpu_memory_delta_mb": 5301.82666015625,
+      "metadata": {
+        "model": "phi-2",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 349138.5730430484,
+      "gpu_memory_before_mb": 5301.82666015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 9.125,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 4998,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 349401.9619822502,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 5002,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 257.1672461926937,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 1863.0197457969189,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 288.0908101797104,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2194.2001320421696,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 5301.82666015625,
+      "metadata": {
+        "model": "phi-2",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 281212.7813063562,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 282117.87958815694,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 322.40376248955727,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4226.692881435156,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 224.73498061299324,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2202.4403288960457,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 5301.82666015625,
+      "metadata": {
+        "model": "phi-2",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 286812.1308013797,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 785753.9490945637,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 254.16548550128937,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 2787.28848695755,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 32442.29456409812,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2406.9839790463448,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 5301.82666015625,
+      "metadata": {
+        "model": "phi-2",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 487634.3639791012,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 495760.55969670415,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 289.63255509734154,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 868.60616132617,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 33746.09233438969,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 9.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 2381.4702071249485,
+      "gpu_memory_before_mb": 9.125,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 5301.82666015625,
+      "metadata": {
+        "model": "phi-2",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1558456.4233645797,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 828939.5490922034,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 32
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 276.7387516796589,
+      "gpu_memory_before_mb": 5310.95166015625,
+      "gpu_memory_after_mb": 5310.95166015625,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "phi-2"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 1902,
+    "memory_allocated_mb": [
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      11711.9521484375,
+      4960.91259765625,
+      2860.16064453125,
+      521.82568359375,
+      9.125,
+      9.125,
+      9.125
+    ],
+    "utilization_percent": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      0,
+      15,
+      14,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "timestamp": "20251207_234559",
+  "total_time_seconds": 3721.078460216522,
+  "total_runs": 10,
+  "models": [
+    "stablelm-2-1.6b"
+  ],
+  "tasks": [
+    "drs",
+    "ds",
+    "rc",
+    "qa",
+    "ci"
+  ],
+  "dtypes": [
+    "float16"
+  ],
+  "overall_accuracy": 0.21870807765675973,
+  "overall_coverage": 0.9109802429757952,
+  "overall_set_size": 5.186900520735517,
+  "guarantee_met_ratio": 0.7
+}

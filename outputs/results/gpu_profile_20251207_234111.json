@@ -1,0 +1,297 @@
+{
+  "timestamp": "2025-12-07T23:42:35.842523",
+  "summary": {
+    "total_operations": 15,
+    "total_time_ms": 76515.40817320347,
+    "operations": {
+      "dataset_loading": {
+        "count": 5,
+        "total_time_ms": 13175.342790782452,
+        "avg_time_ms": 2635.0685581564903,
+        "min_time_ms": 740.3825223445892,
+        "max_time_ms": 4622.092142701149,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 5,
+        "total_time_ms": 62817.16186180711,
+        "avg_time_ms": 12563.432372361422,
+        "min_time_ms": 35.2562814950943,
+        "max_time_ms": 31838.398583233356,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 5,
+        "total_time_ms": 522.9035206139088,
+        "avg_time_ms": 104.58070412278175,
+        "min_time_ms": 78.51166278123856,
+        "max_time_ms": 175.40399357676506,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 0.0,
+      "avg_allocated_mb": 0.0,
+      "avg_utilization_percent": 90.58536585365853,
+      "snapshots_count": 41
+    },
+    "bottlenecks": [
+      {
+        "operation": "dataset_processing",
+        "time_percent": 82.09740150586606,
+        "recommendation": "Data transfer overhead detected. Consider pinned memory or larger batch sizes."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4622.092142701149,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 263.6845149099827,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 175.40399357676506,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "qwen-1.8b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 2036.529939621687,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 35.2562814950943,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 93.01897138357162,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "qwen-1.8b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4199.049167335033,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 39.76289555430412,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 84.77841690182686,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "qwen-1.8b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 1577.289018779993,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 30640.05958661437,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 78.51166278123856,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "qwen-1.8b",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 740.3825223445892,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 31838.398583233356,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 91.19047597050667,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "qwen-1.8b",
+        "dtype": "float16"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 41,
+    "memory_allocated_mb": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "utilization_percent": [
+      0,
+      0,
+      25,
+      100,
+      100,
+      100,
+      100,
+      100,
+      78,
+      75,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      78,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      79,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      79,
+      100
+    ]
+  }
+}

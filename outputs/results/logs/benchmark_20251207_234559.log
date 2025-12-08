@@ -1,0 +1,588 @@
+2025-12-07 23:45:59 - __main__ - INFO - Starting benchmark run
+2025-12-07 23:45:59 - __main__ - INFO - Log file: outputs/results/logs/benchmark_20251207_234559.log
+2025-12-07 23:45:59 - __main__ - INFO - Mode: long, Samples: 10000
+2025-12-07 23:45:59 - __main__ - INFO - Models: ['stablelm-2-1.6b']
+2025-12-07 23:45:59 - __main__ - INFO - Tasks: ['qa', 'rc', 'ci', 'drs', 'ds']
+2025-12-07 23:45:59 - __main__ - INFO - Dtypes: ['float16']
+2025-12-07 23:46:01 - __main__ - INFO - Running on: Device: NVIDIA A100 80GB PCIe (cuda)
+  Total Memory: 79.25 GB
+  Available Memory: 79.25 GB
+2025-12-07 23:46:01 - src.utils.gpu - INFO - Detected A100 GPU: NVIDIA A100 80GB PCIe - using optimized A100 settings
+2025-12-07 23:46:01 - __main__ - INFO - GPU Tier: a100 | Auto max_batch_size: 192 | Safety margin: 0.93
+2025-12-07 23:46:01 - __main__ - INFO - Using user-specified max_batch_size: 32
+2025-12-07 23:46:01 - src.utils.gpu - INFO - NVML initialized for GPU utilization monitoring
+2025-12-07 23:46:01 - src.utils.gpu - INFO - GPUProfiler initialized (CUDA: True, NVML: True)
+2025-12-07 23:46:01 - src.utils.gpu - INFO - Started GPU monitoring
+2025-12-07 23:46:01 - __main__ - INFO - GPU profiling enabled
+2025-12-07 23:46:01 - __main__ - INFO - 
+================================================================================
+2025-12-07 23:46:01 - __main__ - INFO - FULL BENCHMARK CONFIGURATION
+2025-12-07 23:46:01 - __main__ - INFO - ================================================================================
+2025-12-07 23:46:01 - __main__ - INFO - Models (1): ['stablelm-2-1.6b']
+2025-12-07 23:46:01 - __main__ - INFO - Tasks (5): ['qa', 'rc', 'ci', 'drs', 'ds']
+2025-12-07 23:46:01 - __main__ - INFO - Data types: ['float16']
+2025-12-07 23:46:01 - __main__ - INFO - Samples per task: 10000
+2025-12-07 23:46:01 - __main__ - INFO - Alpha (error rate): 0.1
+2025-12-07 23:46:01 - __main__ - INFO - Strategies: ['base']
+2025-12-07 23:46:01 - __main__ - INFO - Conformal methods: ['lac', 'aps']
+2025-12-07 23:46:01 - __main__ - INFO - Dynamic batch sizing: False
+2025-12-07 23:46:01 - __main__ - INFO - Max batch size: 32 (GPU tier: a100)
+2025-12-07 23:46:01 - __main__ - INFO - Output directory: outputs/results
+2025-12-07 23:46:01 - __main__ - INFO - 
+================================================================================
+2025-12-07 23:46:01 - __main__ - INFO - Run 1/5: stablelm-2-1.6b | qa | float16
+2025-12-07 23:46:01 - __main__ - INFO - ================================================================================
+2025-12-07 23:46:05 - src.utils.gpu - INFO - [start_stablelm-2-1.6b_qa] GPU State: Allocated: 0.0MB | Reserved: 0.0MB | Free: 81155.8MB | Utilization: 100.0%
+2025-12-07 23:46:05 - __main__ - INFO - Loading qa dataset (10000 samples)...
+2025-12-07 23:46:05 - src.data.dataset_loader - INFO - Loading MMLU dataset with 10000 samples...
+2025-12-07 23:46:09 - src.data.dataset_loader - INFO - Loaded 10000 MMLU instances
+2025-12-07 23:46:09 - src.utils.gpu - INFO - [dataset_loading] Duration: 4576.21ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+2025-12-07 23:46:09 - src.data.dataset_processor - INFO - Processing qa dataset to 6-option format...
+2025-12-07 23:46:10 - src.data.dataset_processor - INFO - Processed 10000 instances for qa
+2025-12-07 23:46:10 - src.data.data_splitter - INFO - Splitting qa dataset (calibration: 50%, test: 50%)
+2025-12-07 23:46:10 - src.data.data_splitter - INFO - Split complete:
+2025-12-07 23:46:10 - src.data.data_splitter - INFO -   Calibration: 4998 instances
+2025-12-07 23:46:10 - src.data.data_splitter - INFO -   Test: 5002 instances
+2025-12-07 23:46:10 - src.data.data_splitter - WARNING - Calibration size 4998 differs from expected 5000
+2025-12-07 23:46:10 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-07 23:46:10 - src.data.data_splitter - INFO -   Calibration: {'A': 1174, 'B': 1230, 'C': 1242, 'D': 1352}
+2025-12-07 23:46:10 - src.data.data_splitter - INFO -   Test: {'A': 1175, 'B': 1231, 'C': 1243, 'D': 1353}
+2025-12-07 23:46:10 - src.utils.gpu - INFO - [dataset_processing] Duration: 271.22ms | GPU Memory: 0.0MB -> 0.0MB (delta +0.0MB)
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-07 23:46:10 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for qa
+2025-12-07 23:46:10 - __main__ - INFO - Loading model: stablelm-2-1.6b (float16)
+2025-12-07 23:46:10 - src.models.model_loader - INFO - Loading model: stablelm-2-1.6b_float16 (stabilityai/stablelm-2-1_6b)
+2025-12-07 23:46:10 - src.models.model_loader - INFO - Loading tokenizer from stabilityai/stablelm-2-1_6b
+2025-12-07 23:46:11 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-07 23:46:11 - src.models.model_loader - INFO -   Vocab size: 100289
+2025-12-07 23:46:11 - src.models.model_loader - INFO -   Padding side: left
+2025-12-07 23:46:11 - src.models.model_loader - INFO -   PAD token: <|endoftext|> (ID: 100257)
+2025-12-07 23:46:11 - src.models.model_loader - INFO - Loading model from stabilityai/stablelm-2-1_6b
+2025-12-07 23:46:16 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-07 23:46:18 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-07 23:46:18 - src.models.model_loader - INFO -   GPU Memory: 3.06GB allocated, 3.25GB reserved
+2025-12-07 23:46:18 - src.utils.gpu - INFO - [model_loading] Duration: 8112.90ms | GPU Memory: 0.0MB -> 3136.7MB (delta +3136.7MB)
+2025-12-07 23:46:18 - src.utils.gpu - INFO - [after_model_load_stablelm-2-1.6b] GPU State: Allocated: 3136.7MB | Reserved: 3328.0MB | Free: 78019.1MB | Utilization: 100.0%
+2025-12-07 23:46:18 - __main__ - INFO - Using batch size: 32
+2025-12-07 23:46:18 - __main__ - INFO -   Strategy: base
+2025-12-07 23:46:18 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: qa
+2025-12-07 23:46:18 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-07 23:46:18 - src.prompting.prompt_builder - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+2025-12-07 23:46:18 - src.models.inference_engine - INFO - Initialized InferenceEngine for stablelm-2-1.6b_float16
+2025-12-07 23:46:18 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-07 23:46:18 - src.models.inference_engine - INFO -   Batch size: 32
+2025-12-07 23:46:18 - src.models.inference_engine - INFO -   Option tokens: {'A': 362, 'B': 426, 'C': 356, 'D': 423, 'E': 469, 'F': 435}
+2025-12-07 23:52:37 - src.utils.gpu - INFO - [inference_calibration] Duration: 378518.81ms | GPU Memory: 3136.7MB -> 3145.8MB (delta +9.1MB)
+2025-12-07 23:58:58 - src.utils.gpu - INFO - [inference_test] Duration: 381108.53ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-07 23:58:58 - __main__ - INFO -     Inference: 759.63s for 10000 samples (13.16 samples/sec)
+2025-12-07 23:58:58 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-07 23:58:58 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-07 23:58:58 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-07 23:58:58 - src.utils.gpu - INFO - [probability_extraction] Duration: 304.20ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-07 23:58:58 - __main__ - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_stablelm-2-1.6b_qa_float16_base_20251207_234559.npz
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-07 23:58:58 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Calibrating with 4998 samples...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Threshold: 0.9900
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Score range: [0.0000, 1.0000]
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Generating prediction sets for 5002 test instances...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Average set size: 5.26
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Coverage rate: 89.60%
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-07 23:58:58 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 89.60% < 90.00%
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - WARNING - LAC does not meet coverage guarantee: 89.60% < 90.00%
+2025-12-07 23:58:58 - __main__ - INFO -     LAC: Acc=20.45%, CR=89.60%, SS=5.26
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-07 23:58:58 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Calibrating with 4998 samples...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Score range: [0.2047, 1.0000]
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-07 23:58:58 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Generating prediction sets for 5002 test instances...
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Average set size: 5.85
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Coverage rate: 98.20%
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-07 23:58:58 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 98.20% >= 90.00%
+2025-12-07 23:58:58 - __main__ - INFO -     APS: Acc=20.45%, CR=98.20%, SS=5.85
+2025-12-07 23:59:01 - src.models.model_loader - INFO - Unloaded model: stablelm-2-1.6b_float16
+2025-12-07 23:59:02 - __main__ - INFO - Checkpoint saved after completing: stablelm-2-1.6b | qa | float16
+2025-12-07 23:59:02 - __main__ - INFO - 
+================================================================================
+2025-12-07 23:59:02 - __main__ - INFO - Run 2/5: stablelm-2-1.6b | rc | float16
+2025-12-07 23:59:02 - __main__ - INFO - ================================================================================
+2025-12-07 23:59:02 - src.utils.gpu - INFO - [start_stablelm-2-1.6b_rc] GPU State: Allocated: 9.1MB | Reserved: 22.0MB | Free: 81146.6MB | Utilization: 100.0%
+2025-12-07 23:59:02 - __main__ - INFO - Loading rc dataset (10000 samples)...
+2025-12-07 23:59:02 - src.data.dataset_loader - INFO - Loading CosmosQA dataset with 10000 samples...
+2025-12-07 23:59:03 - src.data.dataset_loader - INFO - CosmosQA loaded successfully with standard method
+2025-12-07 23:59:04 - src.data.dataset_loader - INFO - Loaded 10000 CosmosQA instances
+2025-12-07 23:59:04 - src.utils.gpu - INFO - [dataset_loading] Duration: 1927.16ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-07 23:59:04 - src.data.dataset_processor - INFO - Processing rc dataset to 6-option format...
+2025-12-07 23:59:04 - src.data.dataset_processor - INFO - Processed 10000 instances for rc
+2025-12-07 23:59:04 - src.data.data_splitter - INFO - Splitting rc dataset (calibration: 50%, test: 50%)
+2025-12-07 23:59:04 - src.data.data_splitter - INFO - Split complete:
+2025-12-07 23:59:04 - src.data.data_splitter - INFO -   Calibration: 4999 instances
+2025-12-07 23:59:04 - src.data.data_splitter - INFO -   Test: 5001 instances
+2025-12-07 23:59:04 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-07 23:59:04 - src.data.data_splitter - INFO -   Calibration: {'A': 1240, 'B': 1245, 'C': 1263, 'D': 1251}
+2025-12-07 23:59:04 - src.data.data_splitter - INFO -   Test: {'A': 1241, 'B': 1245, 'C': 1264, 'D': 1251}
+2025-12-07 23:59:04 - src.utils.gpu - INFO - [dataset_processing] Duration: 272.13ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-07 23:59:04 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for rc
+2025-12-07 23:59:04 - __main__ - INFO - Loading model: stablelm-2-1.6b (float16)
+2025-12-07 23:59:04 - src.models.model_loader - INFO - Loading model: stablelm-2-1.6b_float16 (stabilityai/stablelm-2-1_6b)
+2025-12-07 23:59:04 - src.models.model_loader - INFO - Loading tokenizer from stabilityai/stablelm-2-1_6b
+2025-12-07 23:59:04 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-07 23:59:05 - src.models.model_loader - INFO -   Vocab size: 100289
+2025-12-07 23:59:05 - src.models.model_loader - INFO -   Padding side: left
+2025-12-07 23:59:05 - src.models.model_loader - INFO -   PAD token: <|endoftext|> (ID: 100257)
+2025-12-07 23:59:05 - src.models.model_loader - INFO - Loading model from stabilityai/stablelm-2-1_6b
+2025-12-07 23:59:05 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-07 23:59:06 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-07 23:59:06 - src.models.model_loader - INFO -   GPU Memory: 3.07GB allocated, 3.26GB reserved
+2025-12-07 23:59:07 - src.utils.gpu - INFO - [model_loading] Duration: 2462.95ms | GPU Memory: 9.1MB -> 3145.8MB (delta +3136.7MB)
+2025-12-07 23:59:07 - src.utils.gpu - INFO - [after_model_load_stablelm-2-1.6b] GPU State: Allocated: 3145.8MB | Reserved: 3336.0MB | Free: 78009.9MB | Utilization: 100.0%
+2025-12-07 23:59:07 - __main__ - INFO - Using batch size: 32
+2025-12-07 23:59:07 - __main__ - INFO -   Strategy: base
+2025-12-07 23:59:07 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: rc
+2025-12-07 23:59:07 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-07 23:59:07 - src.prompting.prompt_builder - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+2025-12-07 23:59:07 - src.models.inference_engine - INFO - Initialized InferenceEngine for stablelm-2-1.6b_float16
+2025-12-07 23:59:07 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-07 23:59:07 - src.models.inference_engine - INFO -   Batch size: 32
+2025-12-07 23:59:07 - src.models.inference_engine - INFO -   Option tokens: {'A': 362, 'B': 426, 'C': 356, 'D': 423, 'E': 469, 'F': 435}
+2025-12-08 00:02:56 - src.utils.gpu - INFO - [inference_calibration] Duration: 229237.62ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:07:54 - src.utils.gpu - INFO - [inference_test] Duration: 297795.50ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:07:54 - __main__ - INFO -     Inference: 527.04s for 10000 samples (18.97 samples/sec)
+2025-12-08 00:07:54 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-08 00:07:54 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-08 00:07:54 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-08 00:07:54 - src.utils.gpu - INFO - [probability_extraction] Duration: 239.50ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:07:54 - __main__ - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_stablelm-2-1.6b_rc_float16_base_20251207_234559.npz
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:07:54 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Threshold: 0.9943
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Score range: [0.0000, 1.0000]
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Average set size: 5.28
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Coverage rate: 90.52%
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 90.52% >= 90.00%
+2025-12-08 00:07:54 - __main__ - INFO -     LAC: Acc=21.86%, CR=90.52%, SS=5.28
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:07:54 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Score range: [0.2046, 1.0000]
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:07:54 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Average set size: 5.04
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Coverage rate: 90.22%
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:07:54 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 90.22% >= 90.00%
+2025-12-08 00:07:54 - __main__ - INFO -     APS: Acc=21.86%, CR=90.22%, SS=5.04
+2025-12-08 00:07:57 - src.models.model_loader - INFO - Unloaded model: stablelm-2-1.6b_float16
+2025-12-08 00:07:58 - __main__ - INFO - Checkpoint saved after completing: stablelm-2-1.6b | rc | float16
+2025-12-08 00:07:58 - __main__ - INFO - 
+================================================================================
+2025-12-08 00:07:58 - __main__ - INFO - Run 3/5: stablelm-2-1.6b | ci | float16
+2025-12-08 00:07:58 - __main__ - INFO - ================================================================================
+2025-12-08 00:07:58 - src.utils.gpu - INFO - [start_stablelm-2-1.6b_ci] GPU State: Allocated: 9.1MB | Reserved: 22.0MB | Free: 81146.6MB | Utilization: 100.0%
+2025-12-08 00:07:58 - __main__ - INFO - Loading ci dataset (10000 samples)...
+2025-12-08 00:07:58 - src.data.dataset_loader - INFO - Loading HellaSwag dataset with 10000 samples...
+2025-12-08 00:08:02 - src.data.dataset_loader - INFO - Loaded 10000 HellaSwag instances
+2025-12-08 00:08:02 - src.utils.gpu - INFO - [dataset_loading] Duration: 3843.69ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:08:02 - src.data.dataset_processor - INFO - Processing ci dataset to 6-option format...
+2025-12-08 00:08:02 - src.data.dataset_processor - INFO - Processed 10000 instances for ci
+2025-12-08 00:08:02 - src.data.data_splitter - INFO - Splitting ci dataset (calibration: 50%, test: 50%)
+2025-12-08 00:08:02 - src.data.data_splitter - INFO - Split complete:
+2025-12-08 00:08:02 - src.data.data_splitter - INFO -   Calibration: 4999 instances
+2025-12-08 00:08:02 - src.data.data_splitter - INFO -   Test: 5001 instances
+2025-12-08 00:08:02 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-08 00:08:02 - src.data.data_splitter - INFO -   Calibration: {'A': 1240, 'B': 1242, 'C': 1256, 'D': 1261}
+2025-12-08 00:08:02 - src.data.data_splitter - INFO -   Test: {'A': 1240, 'B': 1242, 'C': 1257, 'D': 1262}
+2025-12-08 00:08:02 - src.utils.gpu - INFO - [dataset_processing] Duration: 38.20ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO - Selecting 5 demonstrations using 'random' strategy
+2025-12-08 00:08:02 - src.prompting.demonstration_manager - INFO - Selected and cached 5 demonstrations for ci
+2025-12-08 00:08:02 - __main__ - INFO - Loading model: stablelm-2-1.6b (float16)
+2025-12-08 00:08:02 - src.models.model_loader - INFO - Loading model: stablelm-2-1.6b_float16 (stabilityai/stablelm-2-1_6b)
+2025-12-08 00:08:02 - src.models.model_loader - INFO - Loading tokenizer from stabilityai/stablelm-2-1_6b
+2025-12-08 00:08:02 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-08 00:08:02 - src.models.model_loader - INFO -   Vocab size: 100289
+2025-12-08 00:08:02 - src.models.model_loader - INFO -   Padding side: left
+2025-12-08 00:08:02 - src.models.model_loader - INFO -   PAD token: <|endoftext|> (ID: 100257)
+2025-12-08 00:08:02 - src.models.model_loader - INFO - Loading model from stabilityai/stablelm-2-1_6b
+2025-12-08 00:08:02 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-08 00:08:04 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-08 00:08:04 - src.models.model_loader - INFO -   GPU Memory: 3.07GB allocated, 3.26GB reserved
+2025-12-08 00:08:04 - src.utils.gpu - INFO - [model_loading] Duration: 2731.66ms | GPU Memory: 9.1MB -> 3145.8MB (delta +3136.7MB)
+2025-12-08 00:08:04 - src.utils.gpu - INFO - [after_model_load_stablelm-2-1.6b] GPU State: Allocated: 3145.8MB | Reserved: 3336.0MB | Free: 78009.9MB | Utilization: 85.0%
+2025-12-08 00:08:04 - __main__ - INFO - Using batch size: 32
+2025-12-08 00:08:04 - __main__ - INFO -   Strategy: base
+2025-12-08 00:08:04 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ci
+2025-12-08 00:08:04 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-08 00:08:04 - src.prompting.prompt_builder - INFO - Building 10000 prompts using 'base' strategy with 5 demonstrations
+2025-12-08 00:08:04 - src.models.inference_engine - INFO - Initialized InferenceEngine for stablelm-2-1.6b_float16
+2025-12-08 00:08:04 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-08 00:08:04 - src.models.inference_engine - INFO -   Batch size: 32
+2025-12-08 00:08:04 - src.models.inference_engine - INFO -   Option tokens: {'A': 362, 'B': 426, 'C': 356, 'D': 423, 'E': 469, 'F': 435}
+2025-12-08 00:13:07 - src.utils.gpu - INFO - [inference_calibration] Duration: 302197.83ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:16:58 - src.utils.gpu - INFO - [inference_test] Duration: 231519.85ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:16:58 - __main__ - INFO -     Inference: 533.72s for 10000 samples (18.74 samples/sec)
+2025-12-08 00:16:58 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-08 00:16:58 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-08 00:16:58 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-08 00:16:58 - src.utils.gpu - INFO - [probability_extraction] Duration: 249.72ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:16:58 - __main__ - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_stablelm-2-1.6b_ci_float16_base_20251207_234559.npz
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:16:58 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Threshold: 0.9924
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Score range: [0.0000, 1.0000]
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Average set size: 5.25
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Coverage rate: 90.00%
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 90.00% >= 90.00%
+2025-12-08 00:16:58 - __main__ - INFO -     LAC: Acc=22.20%, CR=90.00%, SS=5.25
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:16:58 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:16:58 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-08 00:16:58 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO -   Score range: [0.2050, 1.0000]
+2025-12-08 00:16:59 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:16:59 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO -   Average set size: 5.19
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO -   Coverage rate: 92.02%
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:16:59 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 92.02% >= 90.00%
+2025-12-08 00:16:59 - __main__ - INFO -     APS: Acc=22.20%, CR=92.02%, SS=5.19
+2025-12-08 00:17:02 - src.models.model_loader - INFO - Unloaded model: stablelm-2-1.6b_float16
+2025-12-08 00:17:02 - __main__ - INFO - Checkpoint saved after completing: stablelm-2-1.6b | ci | float16
+2025-12-08 00:17:02 - __main__ - INFO - 
+================================================================================
+2025-12-08 00:17:02 - __main__ - INFO - Run 4/5: stablelm-2-1.6b | drs | float16
+2025-12-08 00:17:02 - __main__ - INFO - ================================================================================
+2025-12-08 00:17:02 - src.utils.gpu - INFO - [start_stablelm-2-1.6b_drs] GPU State: Allocated: 9.1MB | Reserved: 22.0MB | Free: 81146.6MB | Utilization: 100.0%
+2025-12-08 00:17:02 - __main__ - INFO - Loading drs dataset (10000 samples)...
+2025-12-08 00:17:02 - src.data.dataset_loader - INFO - Loading HaluDial dataset with 10000 samples...
+2025-12-08 00:17:04 - src.data.dataset_loader - INFO - Loaded 10000 HaluDial instances
+2025-12-08 00:17:04 - src.utils.gpu - INFO - [dataset_loading] Duration: 1698.69ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:17:04 - src.data.dataset_processor - INFO - Processing drs dataset to 6-option format...
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO - Processed 10000 instances for drs
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO - Option expansion statistics for drs:
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 10000
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO -   Total options sampled: 20000
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO -   Duplicate options avoided: 2
+2025-12-08 00:17:35 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-08 00:17:35 - src.data.data_splitter - INFO - Splitting drs dataset (calibration: 50%, test: 50%)
+2025-12-08 00:17:35 - src.data.data_splitter - INFO - Split complete:
+2025-12-08 00:17:35 - src.data.data_splitter - INFO -   Calibration: 4999 instances
+2025-12-08 00:17:35 - src.data.data_splitter - INFO -   Test: 5001 instances
+2025-12-08 00:17:35 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-08 00:17:35 - src.data.data_splitter - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+2025-12-08 00:17:35 - src.data.data_splitter - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+2025-12-08 00:17:35 - src.utils.gpu - INFO - [dataset_processing] Duration: 30687.64ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO - Selecting 3 demonstrations using 'random' strategy
+2025-12-08 00:17:35 - src.prompting.demonstration_manager - INFO - Selected and cached 3 demonstrations for drs
+2025-12-08 00:17:35 - __main__ - INFO - Loading model: stablelm-2-1.6b (float16)
+2025-12-08 00:17:35 - src.models.model_loader - INFO - Loading model: stablelm-2-1.6b_float16 (stabilityai/stablelm-2-1_6b)
+2025-12-08 00:17:35 - src.models.model_loader - INFO - Loading tokenizer from stabilityai/stablelm-2-1_6b
+2025-12-08 00:17:35 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-08 00:17:35 - src.models.model_loader - INFO -   Vocab size: 100289
+2025-12-08 00:17:35 - src.models.model_loader - INFO -   Padding side: left
+2025-12-08 00:17:35 - src.models.model_loader - INFO -   PAD token: <|endoftext|> (ID: 100257)
+2025-12-08 00:17:35 - src.models.model_loader - INFO - Loading model from stabilityai/stablelm-2-1_6b
+2025-12-08 00:17:35 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-08 00:17:37 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-08 00:17:37 - src.models.model_loader - INFO -   GPU Memory: 3.07GB allocated, 3.26GB reserved
+2025-12-08 00:17:37 - src.utils.gpu - INFO - [model_loading] Duration: 2375.42ms | GPU Memory: 9.1MB -> 3145.8MB (delta +3136.7MB)
+2025-12-08 00:17:37 - src.utils.gpu - INFO - [after_model_load_stablelm-2-1.6b] GPU State: Allocated: 3145.8MB | Reserved: 3336.0MB | Free: 78009.9MB | Utilization: 100.0%
+2025-12-08 00:17:37 - __main__ - INFO - Using batch size: 32
+2025-12-08 00:17:37 - __main__ - INFO -   Strategy: base
+2025-12-08 00:17:37 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: drs
+2025-12-08 00:17:37 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-08 00:17:37 - src.prompting.prompt_builder - INFO - Building 10000 prompts using 'base' strategy with 3 demonstrations
+2025-12-08 00:17:37 - src.models.inference_engine - INFO - Initialized InferenceEngine for stablelm-2-1.6b_float16
+2025-12-08 00:17:37 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-08 00:17:37 - src.models.inference_engine - INFO -   Batch size: 32
+2025-12-08 00:17:37 - src.models.inference_engine - INFO -   Option tokens: {'A': 362, 'B': 426, 'C': 356, 'D': 423, 'E': 469, 'F': 435}
+2025-12-08 00:20:38 - src.utils.gpu - INFO - [inference_calibration] Duration: 181476.12ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:23:37 - src.utils.gpu - INFO - [inference_test] Duration: 178358.73ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:23:37 - __main__ - INFO -     Inference: 359.84s for 10000 samples (27.79 samples/sec)
+2025-12-08 00:23:37 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-08 00:23:37 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-08 00:23:37 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-08 00:23:37 - src.utils.gpu - INFO - [probability_extraction] Duration: 484.31ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:23:37 - __main__ - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_stablelm-2-1.6b_drs_float16_base_20251207_234559.npz
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:23:37 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Threshold: 0.9895
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Score range: [0.0000, 1.0000]
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Average set size: 5.24
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Coverage rate: 89.52%
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-08 00:23:37 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 89.52% < 90.00%
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - WARNING - LAC does not meet coverage guarantee: 89.52% < 90.00%
+2025-12-08 00:23:37 - __main__ - INFO -     LAC: Acc=21.28%, CR=89.52%, SS=5.24
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:23:37 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Threshold: 1.0000
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO -   Score range: [0.1890, 1.0000]
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:23:37 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-08 00:23:37 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:23:38 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:23:38 - src.conformal.conformal_base - INFO -   Average set size: 4.89
+2025-12-08 00:23:38 - src.conformal.conformal_base - INFO -   Coverage rate: 89.98%
+2025-12-08 00:23:38 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: False
+2025-12-08 00:23:38 - src.conformal.conformal_base - WARNING - ✗ Coverage guarantee NOT met: 89.98% < 90.00%
+2025-12-08 00:23:38 - src.conformal.prediction_set_generator - WARNING - APS does not meet coverage guarantee: 89.98% < 90.00%
+2025-12-08 00:23:38 - __main__ - INFO -     APS: Acc=21.28%, CR=89.98%, SS=4.89
+2025-12-08 00:23:41 - src.models.model_loader - INFO - Unloaded model: stablelm-2-1.6b_float16
+2025-12-08 00:23:41 - __main__ - INFO - Checkpoint saved after completing: stablelm-2-1.6b | drs | float16
+2025-12-08 00:23:41 - __main__ - INFO - 
+================================================================================
+2025-12-08 00:23:41 - __main__ - INFO - Run 5/5: stablelm-2-1.6b | ds | float16
+2025-12-08 00:23:41 - __main__ - INFO - ================================================================================
+2025-12-08 00:23:41 - src.utils.gpu - INFO - [start_stablelm-2-1.6b_ds] GPU State: Allocated: 9.1MB | Reserved: 22.0MB | Free: 81146.6MB | Utilization: 100.0%
+2025-12-08 00:23:41 - __main__ - INFO - Loading ds dataset (10000 samples)...
+2025-12-08 00:23:41 - src.data.dataset_loader - INFO - Loading HaluSum dataset with 10000 samples...
+2025-12-08 00:23:42 - src.data.dataset_loader - INFO - Loaded 10000 HaluSum instances
+2025-12-08 00:23:42 - src.utils.gpu - INFO - [dataset_loading] Duration: 781.38ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:23:42 - src.data.dataset_processor - INFO - Processing ds dataset to 6-option format...
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO - Processed 10000 instances for ds
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO - Option expansion statistics for ds:
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO -   Instances expanded (2→4 options): 10000
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO -   Total options sampled: 20000
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO -   Duplicate options avoided: 0
+2025-12-08 00:24:16 - src.data.dataset_processor - INFO -   Fallback options used: 0
+2025-12-08 00:24:16 - src.data.data_splitter - INFO - Splitting ds dataset (calibration: 50%, test: 50%)
+2025-12-08 00:24:16 - src.data.data_splitter - INFO - Split complete:
+2025-12-08 00:24:16 - src.data.data_splitter - INFO -   Calibration: 4999 instances
+2025-12-08 00:24:16 - src.data.data_splitter - INFO -   Test: 5001 instances
+2025-12-08 00:24:16 - src.data.data_splitter - INFO - Answer distribution:
+2025-12-08 00:24:16 - src.data.data_splitter - INFO -   Calibration: {'A': 1258, 'B': 1203, 'C': 1264, 'D': 1274}
+2025-12-08 00:24:16 - src.data.data_splitter - INFO -   Test: {'A': 1258, 'B': 1204, 'C': 1265, 'D': 1274}
+2025-12-08 00:24:16 - src.utils.gpu - INFO - [dataset_processing] Duration: 34517.60ms | GPU Memory: 9.1MB -> 9.1MB (delta +0.0MB)
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationSelector
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO -   Strategy: random
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO -   Num demonstrations: 5
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO - Initialized DemonstrationManager
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO - Selecting 1 demonstrations using 'random' strategy
+2025-12-08 00:24:16 - src.prompting.demonstration_manager - INFO - Selected and cached 1 demonstrations for ds
+2025-12-08 00:24:16 - __main__ - INFO - Loading model: stablelm-2-1.6b (float16)
+2025-12-08 00:24:16 - src.models.model_loader - INFO - Loading model: stablelm-2-1.6b_float16 (stabilityai/stablelm-2-1_6b)
+2025-12-08 00:24:16 - src.models.model_loader - INFO - Loading tokenizer from stabilityai/stablelm-2-1_6b
+2025-12-08 00:24:17 - src.models.model_loader - INFO - Tokenizer loaded successfully
+2025-12-08 00:24:17 - src.models.model_loader - INFO -   Vocab size: 100289
+2025-12-08 00:24:17 - src.models.model_loader - INFO -   Padding side: left
+2025-12-08 00:24:17 - src.models.model_loader - INFO -   PAD token: <|endoftext|> (ID: 100257)
+2025-12-08 00:24:17 - src.models.model_loader - INFO - Loading model from stabilityai/stablelm-2-1_6b
+2025-12-08 00:24:17 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-12-08 00:24:19 - src.models.model_loader - INFO - Model loaded successfully
+2025-12-08 00:24:19 - src.models.model_loader - INFO -   GPU Memory: 3.07GB allocated, 3.26GB reserved
+2025-12-08 00:24:19 - src.utils.gpu - INFO - [model_loading] Duration: 2409.42ms | GPU Memory: 9.1MB -> 3145.8MB (delta +3136.7MB)
+2025-12-08 00:24:19 - src.utils.gpu - INFO - [after_model_load_stablelm-2-1.6b] GPU State: Allocated: 3145.8MB | Reserved: 3336.0MB | Free: 78009.9MB | Utilization: 100.0%
+2025-12-08 00:24:19 - __main__ - INFO - Using batch size: 32
+2025-12-08 00:24:19 - __main__ - INFO -   Strategy: base
+2025-12-08 00:24:19 - src.prompting.prompt_builder - INFO - Initialized PromptBuilder for task: ds
+2025-12-08 00:24:19 - src.prompting.prompt_builder - INFO -   Available strategies: ['base', 'shared_instruction', 'task_specific']
+2025-12-08 00:24:19 - src.prompting.prompt_builder - INFO - Building 10000 prompts using 'base' strategy with 1 demonstrations
+2025-12-08 00:24:19 - src.models.inference_engine - INFO - Initialized InferenceEngine for stablelm-2-1.6b_float16
+2025-12-08 00:24:19 - src.models.inference_engine - INFO -   Device: cuda:0
+2025-12-08 00:24:19 - src.models.inference_engine - INFO -   Batch size: 32
+2025-12-08 00:24:19 - src.models.inference_engine - INFO -   Option tokens: {'A': 362, 'B': 426, 'C': 356, 'D': 423, 'E': 469, 'F': 435}
+2025-12-08 00:36:09 - src.utils.gpu - INFO - [inference_calibration] Duration: 710213.52ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:47:58 - src.utils.gpu - INFO - [inference_test] Duration: 708291.33ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:47:58 - __main__ - INFO -     Inference: 1418.51s for 10000 samples (7.05 samples/sec)
+2025-12-08 00:47:58 - src.models.probability_extractor - INFO - Initialized ProbabilityExtractor
+2025-12-08 00:47:58 - src.models.probability_extractor - INFO -   Temperature: 1.0
+2025-12-08 00:47:58 - src.models.probability_extractor - INFO -   Calibration method: None
+2025-12-08 00:47:58 - src.utils.gpu - INFO - [probability_extraction] Duration: 274.79ms | GPU Memory: 3145.8MB -> 3145.8MB (delta +0.0MB)
+2025-12-08 00:47:58 - __main__ - INFO -     Raw probabilities saved to: outputs/results/probabilities/probs_stablelm-2-1.6b_ds_float16_base_20251207_234559.npz
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Initialized LACScorer
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:47:58 - src.conformal.scorers - INFO - Initialized LAC (Least Ambiguous set-valued Classifiers) scorer
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['lac']
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Calibrating LAC...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Threshold: 0.9719
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Score range: [0.0001, 1.0000]
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using LAC...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Average set size: 5.03
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Coverage rate: 90.32%
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 90.32% >= 90.00%
+2025-12-08 00:47:58 - __main__ - INFO -     LAC: Acc=23.58%, CR=90.32%, SS=5.03
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Initialized APSScorer
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Alpha: 0.1
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Target coverage: 90.0%
+2025-12-08 00:47:58 - src.conformal.scorers - INFO - Initialized APS (Adaptive Prediction Sets) scorer
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Initialized PredictionSetGenerator
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Methods: ['aps']
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Alpha: 0.1
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Aggregation: separate
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Calibrating 1 conformal predictors...
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO -   Calibrating APS...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Calibrating with 4999 samples...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Calibration complete
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Threshold: 0.9950
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Score range: [0.2119, 1.0000]
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Calibration complete
+2025-12-08 00:47:58 - src.conformal.prediction_set_generator - INFO - Generating prediction sets using APS...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Generating prediction sets for 5001 test instances...
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - Prediction complete
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Average set size: 4.85
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Coverage rate: 90.58%
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO -   Meets coverage guarantee: True
+2025-12-08 00:47:58 - src.conformal.conformal_base - INFO - [PASS] Coverage guarantee met: 90.58% >= 90.00%
+2025-12-08 00:47:58 - __main__ - INFO -     APS: Acc=23.58%, CR=90.58%, SS=4.85
+2025-12-08 00:48:02 - src.models.model_loader - INFO - Unloaded model: stablelm-2-1.6b_float16
+2025-12-08 00:48:02 - __main__ - INFO - Checkpoint saved after completing: stablelm-2-1.6b | ds | float16
+2025-12-08 00:48:02 - src.visualization.result_visualizer - INFO - Generating all visualizations...
+2025-12-08 00:48:03 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_accuracy.png
+2025-12-08 00:48:03 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_coverage_rate.png
+2025-12-08 00:48:04 - src.visualization.result_visualizer - INFO - Saved heatmap to outputs/results/figures/heatmap_avg_set_size.png
+2025-12-08 00:48:05 - src.visualization.result_visualizer - INFO - Saved dashboard to outputs/results/figures/dashboard.png
+2025-12-08 00:48:06 - src.visualization.result_visualizer - INFO - Saved bar chart to outputs/results/figures/bar_comparison_accuracy.png
+2025-12-08 00:48:06 - src.visualization.result_visualizer - INFO - Saved bar chart to outputs/results/figures/bar_comparison_avg_set_size.png
+2025-12-08 00:48:07 - src.visualization.result_visualizer - INFO - Saved radar chart to outputs/results/figures/radar_chart.png
+2025-12-08 00:48:08 - src.visualization.result_visualizer - INFO - Saved uncertainty analysis to outputs/results/figures/uncertainty_analysis.png
+2025-12-08 00:48:08 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary.md
+2025-12-08 00:48:08 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary_lac.md
+2025-12-08 00:48:08 - src.visualization.result_visualizer - INFO - Saved summary table to outputs/results/figures/results_summary_aps.md
+2025-12-08 00:48:08 - src.visualization.result_visualizer - INFO - All visualizations saved to outputs/results/figures
+2025-12-08 00:48:08 - __main__ - INFO - Visualizations saved to: outputs/results/figures
+2025-12-08 00:48:08 - src.utils.gpu - INFO - Stopped GPU monitoring. Collected 1275 snapshots.
+2025-12-08 00:48:08 - src.utils.gpu - INFO - Saved GPU profiling report to outputs/results/gpu_profile_20251207_234559.json
+2025-12-08 00:48:08 - __main__ - INFO - GPU profiling report saved to: outputs/results/gpu_profile_20251207_234559.json
+2025-12-08 00:48:08 - __main__ - INFO - 
+================================================================================
+2025-12-08 00:48:08 - __main__ - INFO - BENCHMARK COMPLETE
+2025-12-08 00:48:08 - __main__ - INFO - ================================================================================
+2025-12-08 00:48:08 - __main__ - INFO - Total time: 62.02 minutes
+2025-12-08 00:48:08 - __main__ - INFO - Results saved to: outputs/results
+2025-12-08 00:48:08 - __main__ - INFO - Benchmark completed successfully
+2025-12-08 00:48:08 - __main__ - INFO - Total runs: 10
+2025-12-08 00:48:08 - __main__ - INFO - Overall accuracy: 21.87%
+2025-12-08 00:48:08 - __main__ - INFO - Overall coverage: 91.10%
+2025-12-08 00:48:08 - __main__ - INFO - Log file saved to: outputs/results/logs/benchmark_20251207_234559.log

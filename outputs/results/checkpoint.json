@@ -1,167 +1,167 @@
 {
-  "timestamp": "20251207_224643",
+  "timestamp": "20251207_231938",
   "completed_combinations": [
     [
-      "tinyllama-1.1b",
-      "ci",
-      "float16"
-    ],
-    [
-      "tinyllama-1.1b",
-      "drs",
-      "float16"
-    ],
-    [
-      "tinyllama-1.1b",
+      "phi-2",
       "ds",
       "float16"
     ],
     [
-      "tinyllama-1.1b",
+      "phi-2",
+      "ci",
+      "float16"
+    ],
+    [
+      "phi-2",
+      "rc",
+      "float16"
+    ],
+    [
+      "phi-2",
       "qa",
       "float16"
     ],
     [
-      "tinyllama-1.1b",
-      "rc",
+      "phi-2",
+      "drs",
       "float16"
     ]
   ],
   "results": [
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "qa",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.2185125949620152,
-      "coverage_rate": 0.892842862854858,
-      "avg_set_size": 5.169932027189124,
-      "meets_guarantee": false,
-      "inference_time": 308.362820148468,
+      "accuracy": 0.21651339464214314,
+      "coverage_rate": 0.90343862455018,
+      "avg_set_size": 5.385245901639344,
+      "meets_guarantee": true,
+      "inference_time": 698.5418977737427,
       "num_samples": 5002
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "qa",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.2185125949620152,
-      "coverage_rate": 0.9024390243902439,
-      "avg_set_size": 4.951819272291083,
+      "accuracy": 0.21651339464214314,
+      "coverage_rate": 0.9772091163534586,
+      "avg_set_size": 5.835265893642543,
       "meets_guarantee": true,
-      "inference_time": 308.362820148468,
+      "inference_time": 698.5418977737427,
       "num_samples": 5002
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "rc",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.20895820835832835,
-      "coverage_rate": 0.9068186362727455,
-      "avg_set_size": 5.182363527294541,
-      "meets_guarantee": true,
-      "inference_time": 219.24919247627258,
-      "num_samples": 5001
-    },
-    {
-      "model": "tinyllama-1.1b",
-      "task": "rc",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.20895820835832835,
+      "accuracy": 0.23815236952609478,
       "coverage_rate": 0.9090181963607279,
-      "avg_set_size": 5.001799640071986,
+      "avg_set_size": 5.2381523695260945,
       "meets_guarantee": true,
-      "inference_time": 219.24919247627258,
+      "inference_time": 563.3319909572601,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
+      "task": "rc",
+      "dtype": "float16",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.23815236952609478,
+      "coverage_rate": 0.9092181563687263,
+      "avg_set_size": 5.165366926614677,
+      "meets_guarantee": true,
+      "inference_time": 563.3319909572601,
+      "num_samples": 5001
+    },
+    {
+      "model": "phi-2",
       "task": "ci",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.20335932813437313,
-      "coverage_rate": 0.9024195160967806,
-      "avg_set_size": 5.255348930213957,
-      "meets_guarantee": true,
-      "inference_time": 222.77851748466492,
+      "accuracy": 0.22395520895820836,
+      "coverage_rate": 0.8996200759848031,
+      "avg_set_size": 5.243351329734053,
+      "meets_guarantee": false,
+      "inference_time": 1072.5675933361053,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "ci",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.20335932813437313,
-      "coverage_rate": 0.9196160767846431,
-      "avg_set_size": 5.170965806838632,
+      "accuracy": 0.22395520895820836,
+      "coverage_rate": 0.9828034393121375,
+      "avg_set_size": 5.8454309138172365,
       "meets_guarantee": true,
-      "inference_time": 222.77851748466492,
+      "inference_time": 1072.5675933361053,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "drs",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.2001599680063987,
-      "coverage_rate": 0.8946210757848431,
-      "avg_set_size": 5.155368926214757,
+      "accuracy": 0.21995600879824034,
+      "coverage_rate": 0.8956208758248351,
+      "avg_set_size": 5.254949010197961,
       "meets_guarantee": false,
-      "inference_time": 139.8429639339447,
+      "inference_time": 983.3962550163269,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "drs",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.2001599680063987,
-      "coverage_rate": 0.8984203159368126,
-      "avg_set_size": 4.9192161567686465,
-      "meets_guarantee": false,
-      "inference_time": 139.8429639339447,
+      "accuracy": 0.21995600879824034,
+      "coverage_rate": 0.9822035592881424,
+      "avg_set_size": 5.833833233353329,
+      "meets_guarantee": true,
+      "inference_time": 983.3962550163269,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "ds",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.22675464907018597,
-      "coverage_rate": 0.9018196360727855,
-      "avg_set_size": 4.657668466306738,
-      "meets_guarantee": true,
-      "inference_time": 479.16874265670776,
+      "accuracy": 0.3235352929414117,
+      "coverage_rate": 0.8980203959208158,
+      "avg_set_size": 5.168566286742651,
+      "meets_guarantee": false,
+      "inference_time": 2387.3975043296814,
       "num_samples": 5001
     },
     {
-      "model": "tinyllama-1.1b",
+      "model": "phi-2",
       "task": "ds",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.22675464907018597,
-      "coverage_rate": 0.9088182363527294,
-      "avg_set_size": 4.3625274945011,
-      "meets_guarantee": true,
-      "inference_time": 479.16874265670776,
+      "accuracy": 0.3235352929414117,
+      "coverage_rate": 0.8928214357128574,
+      "avg_set_size": 4.936812637472506,
+      "meets_guarantee": false,
+      "inference_time": 2387.3975043296814,
       "num_samples": 5001
     }
   ],
   "config": {
     "models": [
-      "tinyllama-1.1b"
+      "phi-2"
     ],
     "tasks": [
       "qa",
@@ -185,8 +185,8 @@
       "aps"
     ],
     "seed": 42,
-    "use_dynamic_batch_size": true,
-    "max_batch_size": null,
+    "use_dynamic_batch_size": false,
+    "max_batch_size": 32,
     "resume": false,
     "enable_profiling": true
   }
