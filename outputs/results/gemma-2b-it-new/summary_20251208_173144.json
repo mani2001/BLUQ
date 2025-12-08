@@ -1,0 +1,19 @@
+{
+  "timestamp": "20251208_173144",
+  "total_time_seconds": 1162.7117228507996,
+  "total_runs": 4,
+  "models": [
+    "gemma-2b-it"
+  ],
+  "tasks": [
+    "ds",
+    "qa"
+  ],
+  "dtypes": [
+    "float16"
+  ],
+  "overall_accuracy": 0.2446267443832305,
+  "overall_coverage": 0.8980806697516954,
+  "overall_set_size": 4.660945219992387,
+  "guarantee_met_ratio": 0.25
+}

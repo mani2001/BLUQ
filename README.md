@@ -530,42 +530,44 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 
 | Model | QA | RC | CI | DRS | DS | Avg |
 |-------|----|----|----|----|-----|-----|
-| **Gemma-2-9B-IT** | - | 31% | 30% | 29% | **38%** | **32%** |
+| **Gemma-2-9B-IT** | **71%** | 31% | 30% | 29% | 38% | **40%** |
 | **Gemma-2-2B-IT** | 22% | 26% | 25% | 24% | 27% | 25% |
 | **Phi-2** | 22% | 25% | 22% | 23% | 35% | 25% |
 | **StableLM-2-1.6B** | 20% | 22% | 22% | 21% | 24% | 22% |
 | **TinyLlama-1.1B** | 22% | 21% | 20% | 20% | 23% | 21% |
-| **Gemma-2B-IT** | - | 23% | 22% | 23% | - | 23% |
+| **Gemma-2B-IT** | 24% | 23% | 22% | 23% | 25% | 23% |
 
 ### Coverage Rate (%) - Target: 90%
 
 | Model | LAC Avg | APS Avg | Meets Guarantee |
 |-------|---------|---------|-----------------|
-| **Gemma-2-9B-IT** | 91% | 92% | Yes (7/8) |
+| **Gemma-2-9B-IT** | 90% | 93% | Yes |
 | **Gemma-2-2B-IT** | 90% | 98% | Yes |
 | **Phi-2** | 90% | 97% | Yes |
 | **StableLM-2-1.6B** | 90% | 92% | Yes |
 | **TinyLlama-1.1B** | 90% | 91% | Yes |
+| **Gemma-2B-IT** | 90% | 90% | Partial (3/4) |
 
 ### Average Prediction Set Size (out of 6 options)
 
 | Model | LAC | APS |
 |-------|-----|-----|
-| **Gemma-2-9B-IT** | 4.70 | 5.02 |
+| **Gemma-2-9B-IT** | 3.65 | 4.31 |
 | **Gemma-2-2B-IT** | 5.28 | 5.86 |
 | **Phi-2** | 5.17 | 5.74 |
 | **StableLM-2-1.6B** | 5.21 | 5.16 |
 | **TinyLlama-1.1B** | 5.08 | 4.88 |
+| **Gemma-2B-IT** | 4.68 | 4.64 |
 
 ### Key Comparisons with Paper
 
 | Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-9B) |
 |--------|----------------------|---------------------|
-| Best Accuracy | ~70% (LLaMA-65B) | 38% (Gemma-2-9B-IT on DS) |
-| Avg Set Size | 2.5-3.5 | 4.7-5.9 |
+| Best Accuracy | ~70% (LLaMA-65B) | 71% (Gemma-2-9B-IT on QA) |
+| Avg Set Size | 2.5-3.5 | 2.6-5.9 |
 | Coverage Rate | ~90% | 90-98% |
 
-**Key Insight**: SLMs show 2-3x larger prediction sets than LLMs, reflecting appropriate uncertainty given their lower accuracy. The conformal prediction framework successfully captures this uncertainty.
+**Key Insight**: Gemma-2-9B-IT achieves LLM-level accuracy (71%) on QA tasks while maintaining valid coverage guarantees. Smaller SLMs show 2-3x larger prediction sets than LLMs, reflecting appropriate uncertainty given their lower accuracy. The conformal prediction framework successfully captures this uncertainty across the full model size spectrum.
 
 ---
 

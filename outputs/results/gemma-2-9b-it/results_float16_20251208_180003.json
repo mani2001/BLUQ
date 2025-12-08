@@ -1,0 +1,28 @@
+[
+  {
+    "model": "gemma-2-9b-it",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "lac",
+    "accuracy": 0.7075169932027189,
+    "coverage_rate": 0.906437425029988,
+    "avg_set_size": 2.6027588964414234,
+    "meets_guarantee": true,
+    "inference_time": 1273.0572125911713,
+    "num_samples": 5002
+  },
+  {
+    "model": "gemma-2-9b-it",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "aps",
+    "accuracy": 0.7075169932027189,
+    "coverage_rate": 0.9362255097960815,
+    "avg_set_size": 3.59656137544982,
+    "meets_guarantee": true,
+    "inference_time": 1273.0572125911713,
+    "num_samples": 5002
+  }
+]

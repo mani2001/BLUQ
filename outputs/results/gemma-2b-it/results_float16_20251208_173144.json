@@ -1,0 +1,54 @@
+[
+  {
+    "model": "gemma-2b-it",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "lac",
+    "accuracy": 0.24330267892842863,
+    "coverage_rate": 0.8954418232706918,
+    "avg_set_size": 4.7157137145141945,
+    "meets_guarantee": false,
+    "inference_time": 353.28921699523926,
+    "num_samples": 5002
+  },
+  {
+    "model": "gemma-2b-it",
+    "task": "qa",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "aps",
+    "accuracy": 0.24330267892842863,
+    "coverage_rate": 0.8988404638144742,
+    "avg_set_size": 4.736105557776889,
+    "meets_guarantee": false,
+    "inference_time": 353.28921699523926,
+    "num_samples": 5002
+  },
+  {
+    "model": "gemma-2b-it",
+    "task": "ds",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "lac",
+    "accuracy": 0.24595080983803239,
+    "coverage_rate": 0.9008198360327935,
+    "avg_set_size": 4.645670865826834,
+    "meets_guarantee": true,
+    "inference_time": 729.3827769756317,
+    "num_samples": 5001
+  },
+  {
+    "model": "gemma-2b-it",
+    "task": "ds",
+    "dtype": "float16",
+    "strategy": "base",
+    "conformal_method": "aps",
+    "accuracy": 0.24595080983803239,
+    "coverage_rate": 0.8972205558888222,
+    "avg_set_size": 4.54629074185163,
+    "meets_guarantee": false,
+    "inference_time": 729.3827769756317,
+    "num_samples": 5001
+  }
+]

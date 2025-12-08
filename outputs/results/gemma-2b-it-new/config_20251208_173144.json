@@ -1,0 +1,28 @@
+{
+  "models": [
+    "gemma-2b-it"
+  ],
+  "tasks": [
+    "qa",
+    "ds"
+  ],
+  "dtypes": [
+    "float16"
+  ],
+  "num_samples": 10000,
+  "alpha": 0.1,
+  "calibration_ratio": 0.5,
+  "output_dir": "./outputs/results",
+  "strategies": [
+    "base"
+  ],
+  "conformal_methods": [
+    "lac",
+    "aps"
+  ],
+  "seed": 42,
+  "use_dynamic_batch_size": true,
+  "max_batch_size": null,
+  "resume": false,
+  "enable_profiling": true
+}

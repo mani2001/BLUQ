@@ -158,13 +158,11 @@ Load with: `data = np.load('probs_*.npz'); cal_probs = data['cal_probs']`
 ### Pending Benchmarks
 - [ ] Qwen-1.8B: Tokenizer compatibility issue ("Adding unknown special tokens is not supported")
 - [ ] TinyLlama-1.1B float32 RC task: Network timeout during dataset download
-- [ ] Gemma-2B-IT: QA and DS tasks not run
-- [ ] Gemma-2-9B-IT QA task: Errored during model unload (probabilities saved)
 
 ### Completed Benchmarks (A100 80GB, 10k samples)
 - TinyLlama-1.1B: float16 5/5, float32 4/5
 - Phi-2: float16 5/5
 - StableLM-2-1.6B: float16 5/5
-- Gemma-2B-IT: float16 3/5 (RC, CI, DRS)
+- Gemma-2B-IT: float16 5/5
 - Gemma-2-2B-IT: float16 5/5
-- Gemma-2-9B-IT: float16 4/5 (RC, CI, DRS, DS)
+- Gemma-2-9B-IT: float16 5/5
