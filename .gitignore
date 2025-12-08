@@ -3,7 +3,6 @@
 venv/
 env/
 ENV/
-CLAUDE.md
 
 # Python
 __pycache__/
