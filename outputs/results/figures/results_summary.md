@@ -2,18 +2,18 @@
 
 ## Accuracy (%)
 
-| Model | Question Answering | Reading Comprehension | Commonsense Inference | Dialogue Response | Document Summarization | Avg |
-|---|---|---|---|---|---|---|
-| phi-2 | 0.2 | 0.2 | 0.2 | 0.2 | 0.3 | **0.2** |
+| Model | Reading Comprehension | Commonsense Inference | Dialogue Response | Avg |
+|---|---|---|---|---|
+| gemma-2b-it | 0.2 | 0.2 | 0.2 | **0.2** |
 
 ## Coverage Rate (%)
 
-| Model | Question Answering | Reading Comprehension | Commonsense Inference | Dialogue Response | Document Summarization | Avg |
-|---|---|---|---|---|---|---|
-| phi-2 | 0.9 | 0.9 | 0.9 | 0.9 | 0.9 | **0.9** |
+| Model | Reading Comprehension | Commonsense Inference | Dialogue Response | Avg |
+|---|---|---|---|---|
+| gemma-2b-it | 0.9 | 0.9 | 0.9 | **0.9** |
 
 ## Average Set Size
 
-| Model | Question Answering | Reading Comprehension | Commonsense Inference | Dialogue Response | Document Summarization | Avg |
-|---|---|---|---|---|---|---|
-| phi-2 | 5.61 | 5.20 | 5.54 | 5.54 | 5.05 | **5.39** |
+| Model | Reading Comprehension | Commonsense Inference | Dialogue Response | Avg |
+|---|---|---|---|---|
+| gemma-2b-it | 5.22 | 5.59 | 5.21 | **5.34** |

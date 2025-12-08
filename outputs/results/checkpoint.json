@@ -1,167 +1,105 @@
 {
-  "timestamp": "20251207_231938",
+  "timestamp": "20251208_010140",
   "completed_combinations": [
     [
-      "phi-2",
-      "ds",
-      "float16"
-    ],
-    [
-      "phi-2",
-      "ci",
-      "float16"
-    ],
-    [
-      "phi-2",
+      "gemma-2b-it",
       "rc",
       "float16"
     ],
     [
-      "phi-2",
-      "qa",
+      "gemma-2b-it",
+      "drs",
       "float16"
     ],
     [
-      "phi-2",
-      "drs",
+      "gemma-2b-it",
+      "ci",
       "float16"
     ]
   ],
   "results": [
     {
-      "model": "phi-2",
-      "task": "qa",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.21651339464214314,
-      "coverage_rate": 0.90343862455018,
-      "avg_set_size": 5.385245901639344,
-      "meets_guarantee": true,
-      "inference_time": 698.5418977737427,
-      "num_samples": 5002
-    },
-    {
-      "model": "phi-2",
-      "task": "qa",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.21651339464214314,
-      "coverage_rate": 0.9772091163534586,
-      "avg_set_size": 5.835265893642543,
-      "meets_guarantee": true,
-      "inference_time": 698.5418977737427,
-      "num_samples": 5002
-    },
-    {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "rc",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.23815236952609478,
-      "coverage_rate": 0.9090181963607279,
-      "avg_set_size": 5.2381523695260945,
+      "accuracy": 0.22855428914217157,
+      "coverage_rate": 0.9040191961607679,
+      "avg_set_size": 5.270945810837833,
       "meets_guarantee": true,
-      "inference_time": 563.3319909572601,
+      "inference_time": 339.1536355018616,
       "num_samples": 5001
     },
     {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "rc",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.23815236952609478,
-      "coverage_rate": 0.9092181563687263,
-      "avg_set_size": 5.165366926614677,
+      "accuracy": 0.22855428914217157,
+      "coverage_rate": 0.906618676264747,
+      "avg_set_size": 5.166566686662668,
       "meets_guarantee": true,
-      "inference_time": 563.3319909572601,
+      "inference_time": 339.1536355018616,
       "num_samples": 5001
     },
     {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "ci",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.22395520895820836,
-      "coverage_rate": 0.8996200759848031,
-      "avg_set_size": 5.243351329734053,
-      "meets_guarantee": false,
-      "inference_time": 1072.5675933361053,
+      "accuracy": 0.22075584883023394,
+      "coverage_rate": 0.9044191161767646,
+      "avg_set_size": 5.3161367726454705,
+      "meets_guarantee": true,
+      "inference_time": 337.3487365245819,
       "num_samples": 5001
     },
     {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "ci",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.22395520895820836,
-      "coverage_rate": 0.9828034393121375,
-      "avg_set_size": 5.8454309138172365,
+      "accuracy": 0.22075584883023394,
+      "coverage_rate": 0.9854029194161168,
+      "avg_set_size": 5.862627474505099,
       "meets_guarantee": true,
-      "inference_time": 1072.5675933361053,
+      "inference_time": 337.3487365245819,
       "num_samples": 5001
     },
     {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "drs",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "lac",
-      "accuracy": 0.21995600879824034,
-      "coverage_rate": 0.8956208758248351,
-      "avg_set_size": 5.254949010197961,
-      "meets_guarantee": false,
-      "inference_time": 983.3962550163269,
+      "accuracy": 0.22795440911817635,
+      "coverage_rate": 0.9024195160967806,
+      "avg_set_size": 5.256948610277944,
+      "meets_guarantee": true,
+      "inference_time": 212.4755380153656,
       "num_samples": 5001
     },
     {
-      "model": "phi-2",
+      "model": "gemma-2b-it",
       "task": "drs",
       "dtype": "float16",
       "strategy": "base",
       "conformal_method": "aps",
-      "accuracy": 0.21995600879824034,
-      "coverage_rate": 0.9822035592881424,
-      "avg_set_size": 5.833833233353329,
+      "accuracy": 0.22795440911817635,
+      "coverage_rate": 0.9080183963207359,
+      "avg_set_size": 5.161567686462708,
       "meets_guarantee": true,
-      "inference_time": 983.3962550163269,
-      "num_samples": 5001
-    },
-    {
-      "model": "phi-2",
-      "task": "ds",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "lac",
-      "accuracy": 0.3235352929414117,
-      "coverage_rate": 0.8980203959208158,
-      "avg_set_size": 5.168566286742651,
-      "meets_guarantee": false,
-      "inference_time": 2387.3975043296814,
-      "num_samples": 5001
-    },
-    {
-      "model": "phi-2",
-      "task": "ds",
-      "dtype": "float16",
-      "strategy": "base",
-      "conformal_method": "aps",
-      "accuracy": 0.3235352929414117,
-      "coverage_rate": 0.8928214357128574,
-      "avg_set_size": 4.936812637472506,
-      "meets_guarantee": false,
-      "inference_time": 2387.3975043296814,
+      "inference_time": 212.4755380153656,
       "num_samples": 5001
     }
   ],
   "config": {
     "models": [
-      "phi-2"
+      "gemma-2b-it"
     ],
     "tasks": [
       "qa",
@@ -186,7 +124,7 @@
     ],
     "seed": 42,
     "use_dynamic_batch_size": false,
-    "max_batch_size": 32,
+    "max_batch_size": 64,
     "resume": false,
     "enable_profiling": true
   }
