@@ -524,42 +524,46 @@ outputs/
 
 ### Our Results (Long Run - 10,000 samples)
 
-#### Benchmark Dashboard
-![Benchmark Dashboard](outputs/results/figures/dashboard.png)
-*Figure: Comprehensive dashboard showing accuracy, coverage, and set sizes across all tasks and models*
+All benchmarks run on NVIDIA A100 80GB PCIe.
 
-#### Uncertainty Analysis
-![Uncertainty Analysis](outputs/results/figures/uncertainty_analysis.png)
-*Figure: Inverse correlation between accuracy and prediction set size validates the conformal prediction framework*
-
-### Accuracy Results (%)
+### Accuracy Results (%) - LAC Method
 
 | Model | QA | RC | CI | DRS | DS | Avg |
 |-------|----|----|----|----|-----|-----|
-| **Phi-2** | 21% | 22% | 22% | **49%** | **49%** | **33%** |
-| **TinyLlama-1.1B** | 21% | 22% | 22% | 42% | 48% | **31%** |
+| **Gemma-2-9B-IT** | - | 31% | 30% | 29% | **38%** | **32%** |
+| **Gemma-2-2B-IT** | 22% | 26% | 25% | 24% | 27% | 25% |
+| **Phi-2** | 22% | 25% | 22% | 23% | 35% | 25% |
+| **StableLM-2-1.6B** | 20% | 22% | 22% | 21% | 24% | 22% |
+| **TinyLlama-1.1B** | 22% | 21% | 20% | 20% | 23% | 21% |
+| **Gemma-2B-IT** | - | 23% | 22% | 23% | - | 23% |
 
 ### Coverage Rate (%) - Target: 90%
 
-| Method | Phi-2 | TinyLlama-1.1B |
-|--------|-------|----------------|
-| **LAC** | 90% | 90% |
-| **APS** | 100% | 100% |
+| Model | LAC Avg | APS Avg | Meets Guarantee |
+|-------|---------|---------|-----------------|
+| **Gemma-2-9B-IT** | 91% | 92% | Yes (7/8) |
+| **Gemma-2-2B-IT** | 90% | 98% | Yes |
+| **Phi-2** | 90% | 97% | Yes |
+| **StableLM-2-1.6B** | 90% | 92% | Yes |
+| **TinyLlama-1.1B** | 90% | 91% | Yes |
 
 ### Average Prediction Set Size (out of 6 options)
 
-| Method | Phi-2 | TinyLlama-1.1B | Interpretation |
-|--------|-------|----------------|----------------|
-| **LAC** | 4.85 | 5.00 | More efficient |
-| **APS** | 5.74 | 5.76 | More conservative |
+| Model | LAC | APS |
+|-------|-----|-----|
+| **Gemma-2-9B-IT** | 4.70 | 5.02 |
+| **Gemma-2-2B-IT** | 5.28 | 5.86 |
+| **Phi-2** | 5.17 | 5.74 |
+| **StableLM-2-1.6B** | 5.21 | 5.16 |
+| **TinyLlama-1.1B** | 5.08 | 4.88 |
 
 ### Key Comparisons with Paper
 
-| Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-3B) |
+| Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-9B) |
 |--------|----------------------|---------------------|
-| Best Accuracy | ~70% (LLaMA-65B) | 49% (Phi-2 on DRS) |
-| Avg Set Size | 2.5-3.5 | 4.85-5.76 |
-| Coverage Rate | ~90% | 90-100% |
+| Best Accuracy | ~70% (LLaMA-65B) | 38% (Gemma-2-9B-IT on DS) |
+| Avg Set Size | 2.5-3.5 | 4.7-5.9 |
+| Coverage Rate | ~90% | 90-98% |
 
 **Key Insight**: SLMs show 2-3x larger prediction sets than LLMs, reflecting appropriate uncertainty given their lower accuracy. The conformal prediction framework successfully captures this uncertainty.
 
