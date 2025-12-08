@@ -146,6 +146,10 @@ class FullBenchmarkRunner:
         self.output_dir = Path(config.output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
+        # Track current model for model-specific subdirectories
+        self.current_model: Optional[str] = None
+        self.current_dtype: Optional[str] = None
+
         # Results storage
         self.results: List[SingleRunResult] = []
         self.completed_combinations: set = set()  # Track completed (model, task, dtype) tuples
@@ -221,6 +225,12 @@ class FullBenchmarkRunner:
     def _mark_combination_completed(self, model: str, task: str, dtype: str):
         """Mark a combination as completed."""
         self.completed_combinations.add((model, task, dtype))
+
+    def _get_model_dir(self, model_name: str) -> Path:
+        """Get model-specific output directory, creating it if necessary."""
+        model_dir = self.output_dir / model_name
+        model_dir.mkdir(parents=True, exist_ok=True)
+        return model_dir
 
     def _init_components(self):
         """Initialize benchmark components."""
@@ -318,6 +328,16 @@ class FullBenchmarkRunner:
         skipped_count = 0
         for model_name in self.config.models:
             for dtype in self.config.dtypes:
+                # Track current model/dtype for saving to model subdirectory
+                self.current_model = model_name
+                self.current_dtype = dtype
+
+                # Save model-specific config at start of each model/dtype combo
+                model_dir = self._get_model_dir(model_name)
+                model_config_path = model_dir / f"config_{dtype}_{self.run_timestamp}.json"
+                with open(model_config_path, 'w') as f:
+                    json.dump(self.config.to_dict(), f, indent=2)
+
                 for task in self.config.tasks:
                     current_run += 1
 
@@ -345,7 +365,7 @@ class FullBenchmarkRunner:
                         self._mark_combination_completed(model_name, task, dtype)
                         self._save_checkpoint()
 
-                        # Save intermediate results
+                        # Save intermediate results (to model subdirectory)
                         self._save_results()
 
                         logger.info(f"Checkpoint saved after completing: {model_name} | {task} | {dtype}")
@@ -369,8 +389,12 @@ class FullBenchmarkRunner:
             self.profiler.stop_monitoring()
             self.profiler.print_summary()
 
-            # Save profiling report
-            profile_path = self.output_dir / f"gpu_profile_{self.run_timestamp}.json"
+            # Save profiling report to each model subdirectory (if single model) or root
+            if len(self.config.models) == 1 and self.current_model:
+                model_dir = self._get_model_dir(self.current_model)
+                profile_path = model_dir / f"gpu_profile_{self.current_dtype}_{self.run_timestamp}.json"
+            else:
+                profile_path = self.output_dir / f"gpu_profile_{self.run_timestamp}.json"
             self.profiler.save_report(str(profile_path))
             logger.info(f"GPU profiling report saved to: {profile_path}")
 
@@ -642,12 +666,23 @@ class FullBenchmarkRunner:
         return results
 
     def _save_results(self):
-        """Save current results to file."""
-        results_path = self.output_dir / f"results_{self.run_timestamp}.json"
+        """Save current results to model-specific subdirectory."""
+        if self.current_model and self.current_dtype:
+            # Filter results for current model
+            model_results = [r for r in self.results if r.model == self.current_model]
+            if model_results:
+                model_dir = self._get_model_dir(self.current_model)
+                results_path = model_dir / f"results_{self.current_dtype}_{self.run_timestamp}.json"
 
-        results_data = [asdict(r) for r in self.results]
-        with open(results_path, 'w') as f:
-            json.dump(results_data, f, indent=2)
+                results_data = [asdict(r) for r in model_results]
+                with open(results_path, 'w') as f:
+                    json.dump(results_data, f, indent=2)
+        else:
+            # Fallback to root directory
+            results_path = self.output_dir / f"results_{self.run_timestamp}.json"
+            results_data = [asdict(r) for r in self.results]
+            with open(results_path, 'w') as f:
+                json.dump(results_data, f, indent=2)
 
     def _save_raw_probabilities(
         self,
@@ -679,12 +714,13 @@ class FullBenchmarkRunner:
             test_labels: Test set true labels (n_test,)
             option_letters: List of option labels (e.g., ['A', 'B', 'C', 'D', 'E', 'F'])
         """
-        # Create probabilities directory
-        probs_dir = self.output_dir / "probabilities"
+        # Create probabilities directory inside model subdirectory
+        model_dir = self._get_model_dir(model_name)
+        probs_dir = model_dir / "probabilities"
         probs_dir.mkdir(parents=True, exist_ok=True)
 
         # Create filename with all identifying info
-        filename = f"probs_{model_name}_{task}_{dtype}_{strategy}_{self.run_timestamp}.npz"
+        filename = f"probs_{task}_{dtype}_{strategy}_{self.run_timestamp}.npz"
         filepath = probs_dir / filename
 
         # Save as compressed numpy archive
@@ -708,18 +744,49 @@ class FullBenchmarkRunner:
         logger.info(f"    Raw probabilities saved to: {filepath}")
 
     def _generate_summary(self, total_time: float) -> Dict:
-        """Generate summary statistics."""
+        """Generate summary statistics per model and overall."""
+        # Generate per-model summaries
+        models = list(set(r.model for r in self.results))
+        for model_name in models:
+            model_results = [r for r in self.results if r.model == model_name]
+            if not model_results:
+                continue
+
+            model_dtypes = list(set(r.dtype for r in model_results))
+            for dtype in model_dtypes:
+                dtype_results = [r for r in model_results if r.dtype == dtype]
+                if not dtype_results:
+                    continue
+
+                model_summary = {
+                    'timestamp': self.run_timestamp,
+                    'model': model_name,
+                    'dtype': dtype,
+                    'total_runs': len(dtype_results),
+                    'tasks': list(set(r.task for r in dtype_results)),
+                    'overall_accuracy': float(np.mean([r.accuracy for r in dtype_results])),
+                    'overall_coverage': float(np.mean([r.coverage_rate for r in dtype_results])),
+                    'overall_set_size': float(np.mean([r.avg_set_size for r in dtype_results])),
+                    'guarantee_met_ratio': float(np.mean([r.meets_guarantee for r in dtype_results])),
+                }
+
+                model_dir = self._get_model_dir(model_name)
+                summary_path = model_dir / f"summary_{dtype}_{self.run_timestamp}.json"
+                with open(summary_path, 'w') as f:
+                    json.dump(model_summary, f, indent=2)
+
+        # Generate overall summary
         summary = {
             'timestamp': self.run_timestamp,
             'total_time_seconds': total_time,
             'total_runs': len(self.results),
-            'models': list(set(r.model for r in self.results)),
+            'models': models,
             'tasks': list(set(r.task for r in self.results)),
             'dtypes': list(set(r.dtype for r in self.results)),
-            'overall_accuracy': np.mean([r.accuracy for r in self.results]),
-            'overall_coverage': np.mean([r.coverage_rate for r in self.results]),
-            'overall_set_size': np.mean([r.avg_set_size for r in self.results]),
-            'guarantee_met_ratio': np.mean([r.meets_guarantee for r in self.results]),
+            'overall_accuracy': float(np.mean([r.accuracy for r in self.results])),
+            'overall_coverage': float(np.mean([r.coverage_rate for r in self.results])),
+            'overall_set_size': float(np.mean([r.avg_set_size for r in self.results])),
+            'guarantee_met_ratio': float(np.mean([r.meets_guarantee for r in self.results])),
         }
 
         summary_path = self.output_dir / f"summary_{self.run_timestamp}.json"

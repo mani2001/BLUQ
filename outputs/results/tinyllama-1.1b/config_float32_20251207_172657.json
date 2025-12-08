@@ -1,6 +1,6 @@
 {
   "models": [
-    "qwen-1.8b"
+    "tinyllama-1.1b"
   ],
   "tasks": [
     "qa",
@@ -10,7 +10,7 @@
     "ds"
   ],
   "dtypes": [
-    "float16"
+    "float32"
   ],
   "num_samples": 10000,
   "alpha": 0.1,
@@ -24,8 +24,8 @@
     "aps"
   ],
   "seed": 42,
-  "use_dynamic_batch_size": false,
-  "max_batch_size": 32,
+  "use_dynamic_batch_size": true,
+  "max_batch_size": null,
   "resume": false,
   "enable_profiling": true
 }
