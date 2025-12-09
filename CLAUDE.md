@@ -161,8 +161,8 @@ Load with: `data = np.load('probs_*.npz'); cal_probs = data['cal_probs']`
 
 ### Completed Benchmarks (A100 80GB, 10k samples)
 - TinyLlama-1.1B: float16 5/5, float32 4/5
-- Phi-2: float16 5/5
-- StableLM-2-1.6B: float16 5/5
+- Phi-2: float16 5/5, float32 5/5
+- StableLM-2-1.6B: float16 5/5, float32 5/5
 - Gemma-2B-IT: float16 5/5
 - Gemma-2-2B-IT: float16 5/5
-- Gemma-2-9B-IT: float16 5/5
+- Gemma-2-9B-IT: float16 5/5, float32 5/5

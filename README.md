@@ -559,6 +559,24 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | **StableLM-2-1.6B** | 5.21 | 5.16 | High uncertainty |
 | **TinyLlama-1.1B** | 5.08 | 4.88 | High uncertainty |
 
+### FP32 Results (Float32 Precision)
+
+| Model | Accuracy | Coverage | Avg Set Size | Notes |
+|-------|----------|----------|--------------|-------|
+| **Gemma-2-9B-IT** | 71.86% | 91.34% | 2.89 | Best performer |
+| **Phi-2** | 27.39% | 91.99% | 5.21 | High uncertainty |
+| **StableLM-2-1.6B** | 25.47% | 90.05% | 5.04 | Baseline |
+
+### FP16 vs FP32 Comparison
+
+| Model | FP16 Acc | FP32 Acc | FP16 Set Size | FP32 Set Size |
+|-------|----------|----------|---------------|---------------|
+| **Gemma-2-9B-IT** | 72.00% | 71.86% | 2.87 | 2.89 |
+| **Phi-2** | 27.40% | 27.39% | 5.20 | 5.21 |
+| **StableLM-2-1.6B** | 25.50% | 25.47% | 5.18 | 5.04 |
+
+Key insight: FP16 and FP32 produce nearly identical results, with FP16 being 2x faster and using 50% less memory.
+
 ### Key Comparisons with Paper
 
 | Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-9B) |

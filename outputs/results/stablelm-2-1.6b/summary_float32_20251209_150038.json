@@ -1,0 +1,17 @@
+{
+  "timestamp": "20251209_150038",
+  "model": "stablelm-2-1.6b",
+  "dtype": "float32",
+  "total_runs": 10,
+  "tasks": [
+    "rc",
+    "ci",
+    "qa",
+    "ds",
+    "drs"
+  ],
+  "overall_accuracy": 0.25470014353786574,
+  "overall_coverage": 0.900503481870599,
+  "overall_set_size": 5.037145125952819,
+  "guarantee_met_ratio": 0.6
+}
