@@ -1,0 +1,17 @@
+{
+  "timestamp": "20251209_172603",
+  "model": "mistral-7b",
+  "dtype": "float32",
+  "total_runs": 10,
+  "tasks": [
+    "drs",
+    "rc",
+    "qa",
+    "ci",
+    "ds"
+  ],
+  "overall_accuracy": 0.47360960434862254,
+  "overall_coverage": 0.9065027818106911,
+  "overall_set_size": 4.005309745727784,
+  "guarantee_met_ratio": 0.8
+}

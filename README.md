@@ -531,6 +531,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | Model | Parameters | QA | RC | CI | DRS | DS | Avg |
 |-------|------------|----|----|----|----|-----|-----|
 | **Gemma-2-9B-IT** | 9B | **71** | **31** | **30** | **29** | **38** | **40** |
+| **Mistral-7B** | 7B | 27 | 31 | 28 | 25 | **55** | 33 |
 | **Gemma-2-2B-IT** | 2B | 22 | 26 | 25 | 24 | 27 | 25 |
 | **Phi-2** | 2.7B | 22 | 24 | 22 | 22 | 32 | 24 |
 | **Gemma-2B-IT** | 2B | 24 | 23 | 22 | 23 | 25 | 23 |
@@ -542,6 +543,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | Model | LAC Avg | APS Avg | LAC Met | APS Met |
 |-------|---------|---------|---------|---------|
 | **Gemma-2-9B-IT** | 90.4 | 92.5 | 4/5 | 4/5 |
+| **Mistral-7B** | 89.7 | 89.9 | 2/5 | 2/5 |
 | **Gemma-2-2B-IT** | 90.0 | 98.2 | 3/5 | 5/5 |
 | **Phi-2** | 90.1 | 94.9 | 3/5 | 4/5 |
 | **Gemma-2B-IT** | 90.2 | 92.0 | 5/5 | 5/5 |
@@ -553,6 +555,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | Model | LAC | APS | Interpretation |
 |-------|-----|-----|----------------|
 | **Gemma-2-9B-IT** | 4.28 | 4.74 | Lower uncertainty |
+| **Mistral-7B** | 4.76 | 4.69 | Moderate uncertainty |
 | **Gemma-2-2B-IT** | 5.28 | 5.86 | High uncertainty |
 | **Phi-2** | 5.26 | 5.53 | High uncertainty |
 | **Gemma-2B-IT** | 5.04 | 5.10 | High uncertainty |
@@ -564,6 +567,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | Model | Accuracy | Coverage | Avg Set Size | Notes |
 |-------|----------|----------|--------------|-------|
 | **Gemma-2-9B-IT** | 71.86% | 91.34% | 2.89 | Best performer |
+| **Mistral-7B** | 47.36% | 90.65% | 4.01 | Strong performer |
 | **Phi-2** | 27.39% | 91.99% | 5.21 | High uncertainty |
 | **StableLM-2-1.6B** | 25.47% | 90.05% | 5.04 | Baseline |
 
@@ -572,19 +576,20 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | Model | FP16 Acc | FP32 Acc | FP16 Set Size | FP32 Set Size |
 |-------|----------|----------|---------------|---------------|
 | **Gemma-2-9B-IT** | 72.00% | 71.86% | 2.87 | 2.89 |
+| **Mistral-7B** | 33.32% | 47.36% | 4.73 | 4.01 |
 | **Phi-2** | 27.40% | 27.39% | 5.20 | 5.21 |
 | **StableLM-2-1.6B** | 25.50% | 25.47% | 5.18 | 5.04 |
 
-Key insight: FP16 and FP32 produce nearly identical results, with FP16 being 2x faster and using 50% less memory.
+Key insight: Most models show minimal difference between FP16 and FP32. However, Mistral-7B shows a notable improvement with FP32 (47% vs 33% accuracy), suggesting the base model benefits from higher precision.
 
 ### Key Comparisons with Paper
 
 | Metric | LLMs (Paper - 7B-70B) | SLMs (Ours - 1B-9B) |
 |--------|----------------------|---------------------|
 | Best Accuracy | ~70% (LLaMA-65B) | 71% (Gemma-2-9B-IT on QA) |
-| Avg Set Size | 2.5-3.5 | 4.3-5.9 |
+| Avg Set Size | 2.5-3.5 | 4.0-5.9 |
 | Coverage Rate | ~90% | 90-98% |
-| Models Tested | 11 models | 6 models |
+| Models Tested | 11 models | 7 models |
 
 ### Key Findings
 
