@@ -287,25 +287,17 @@ Answer:
 - LLaMA-2 (7B, 13B, 70B)
 - Vicuna, Falcon, MPT, Mistral
 
-#### This Project (SLMs - 135M to 2B parameters)
-| Model | Parameters | Type |
-|-------|------------|------|
-| Phi-2 | 2.7B | Base |
-| Phi-1.5 | 1.3B | Base |
-| TinyLlama | 1.1B | Instruct |
-| Qwen-1.8B | 1.8B | Base |
-| Qwen-1.8B-Chat | 1.8B | Instruct |
-| Gemma-2B | 2B | Base |
-| Gemma-2B-it | 2B | Instruct |
-| SmolLM-135M | 135M | Base |
-| SmolLM-360M | 360M | Base |
-| SmolLM-1.7B | 1.7B | Base |
-| OpenELM-270M | 270M | Base |
-| OpenELM-450M | 450M | Base |
-| OpenELM-1.1B | 1.1B | Base |
-| StableLM-2-1.6B | 1.6B | Base |
-| StableLM-2-Zephyr-1.6B | 1.6B | Instruct |
-| H2O-Danube-1.8B | 1.8B | Base/Instruct |
+#### This Project (SLMs - 1.1B to 9B parameters)
+| Model | Parameters | Type | HuggingFace ID |
+|-------|------------|------|----------------|
+| TinyLlama-1.1B | 1.1B | Base | TinyLlama/TinyLlama-1.1B-Chat-v1.0 |
+| StableLM-2-1.6B | 1.6B | Base | stabilityai/stablelm-2-1_6b |
+| Gemma-2B-IT | 2B | Instruct | google/gemma-2b-it |
+| Gemma-2-2B-IT | 2B | Instruct | google/gemma-2-2b-it |
+| Phi-2 | 2.7B | Base | microsoft/phi-2 |
+| Mistral-7B | 7B | Base | mistralai/Mistral-7B-v0.1 |
+| Mistral-7B-Instruct | 7B | Instruct | mistralai/Mistral-7B-Instruct-v0.2 |
+| Gemma-2-9B-IT | 9B | Instruct | google/gemma-2-9b-it |
 
 ### Evaluation Metrics
 
