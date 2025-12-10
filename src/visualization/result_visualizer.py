@@ -70,13 +70,13 @@ class ResultVisualizer:
         'set_size_aps': 'Set Size (APS)'
     }
 
-    # Color schemes - using YlGnBu (Yellow-Green-Blue) for better visual distinction
+    # Color schemes - using RdYlGn for intuitive good/bad visualization
     COLORS = {
-        'accuracy': 'YlGnBu',
-        'coverage_rate': 'YlGnBu',
-        'avg_set_size': 'YlGnBu_r',  # Reversed - smaller is better
-        'set_size_lac': 'YlGnBu_r',
-        'set_size_aps': 'YlGnBu_r'
+        'accuracy': 'RdYlGn',        # Red (low) to Green (high) - higher is better
+        'coverage_rate': 'RdYlGn',   # Red (low) to Green (high) - higher is better
+        'avg_set_size': 'RdYlGn_r',  # Reversed - smaller is better (green)
+        'set_size_lac': 'RdYlGn_r',
+        'set_size_aps': 'RdYlGn_r'
     }
 
     def __init__(
@@ -272,12 +272,13 @@ class ResultVisualizer:
     def plot_comprehensive_dashboard(
         self,
         dtype_filter: Optional[str] = None,
-        figsize: Tuple[int, int] = (20, 16),
+        figsize: Tuple[int, int] = (22, 16),
         save: bool = True
     ) -> plt.Figure:
         """
         Create a comprehensive dashboard with multiple metrics.
         Shows: Accuracy, Coverage, Set Size (LAC), Set Size (APS)
+        Each heatmap includes an 'Avg' column showing the mean across tasks.
         """
         fig = plt.figure(figsize=figsize)
 
@@ -304,11 +305,15 @@ class ResultVisualizer:
                 ax.set_title(title)
                 continue
 
-            task_labels = [self.TASK_NAMES.get(t, t) for t in tasks]
+            # Add average column
+            avg_col = np.nanmean(matrix, axis=1, keepdims=True)
+            matrix_with_avg = np.hstack([matrix, avg_col])
+
+            task_labels = [self.TASK_NAMES.get(t, t) for t in tasks] + ['Avg']
             cmap = self.COLORS.get(metric, 'viridis')
 
             sns.heatmap(
-                matrix,
+                matrix_with_avg,
                 annot=True,
                 fmt='.1f',
                 cmap=cmap,
