@@ -1,0 +1,13 @@
+{
+  "timestamp": "20251210_021822",
+  "model": "tinyllama-1.1b",
+  "dtype": "float32",
+  "total_runs": 2,
+  "tasks": [
+    "rc"
+  ],
+  "overall_accuracy": 0.21995600879824034,
+  "overall_coverage": 0.897620475904819,
+  "overall_set_size": 5.016596680663866,
+  "guarantee_met_ratio": 0.0
+}

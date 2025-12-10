@@ -574,6 +574,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | **Mistral-7B-Instruct** | 47.42% | 90.48% | 3.62 | Similar to base |
 | **Phi-2** | 27.39% | 91.99% | 5.21 | High uncertainty |
 | **StableLM-2-1.6B** | 25.47% | 90.05% | 5.04 | Baseline |
+| **TinyLlama-1.1B** | 21.76% | 89.76% | 5.00 | Smallest model |
 
 ### FP16 vs FP32 Comparison
 
@@ -584,6 +585,7 @@ All benchmarks run on NVIDIA A100 80GB PCIe.
 | **Mistral-7B-Instruct** | 32.94% | 47.42% | 4.64 | 3.94 |
 | **Phi-2** | 27.40% | 27.39% | 5.20 | 5.21 |
 | **StableLM-2-1.6B** | 25.50% | 25.47% | 5.18 | 5.04 |
+| **TinyLlama-1.1B** | 21.16% | 21.76% | 5.08 | 5.00 |
 
 Key insight: Most models show minimal difference between FP16 and FP32. However, both Mistral-7B variants show a notable ~14% accuracy improvement with FP32, suggesting the Mistral architecture benefits significantly from higher precision.
 

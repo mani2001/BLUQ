@@ -70,13 +70,13 @@ class ResultVisualizer:
         'set_size_aps': 'Set Size (APS)'
     }
 
-    # Color schemes
+    # Color schemes - using YlGnBu (Yellow-Green-Blue) for better visual distinction
     COLORS = {
-        'accuracy': 'RdYlGn',
-        'coverage_rate': 'RdYlGn',
-        'avg_set_size': 'RdYlGn_r',  # Reversed - smaller is better
-        'set_size_lac': 'RdYlGn_r',
-        'set_size_aps': 'RdYlGn_r'
+        'accuracy': 'YlGnBu',
+        'coverage_rate': 'YlGnBu',
+        'avg_set_size': 'YlGnBu_r',  # Reversed - smaller is better
+        'set_size_lac': 'YlGnBu_r',
+        'set_size_aps': 'YlGnBu_r'
     }
 
     def __init__(
