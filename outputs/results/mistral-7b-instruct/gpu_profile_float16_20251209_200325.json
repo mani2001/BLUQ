@@ -1,0 +1,624 @@
+{
+  "timestamp": "2025-12-09T21:46:15.507580",
+  "summary": {
+    "total_operations": 30,
+    "total_time_ms": 6075471.6260917485,
+    "operations": {
+      "dataset_loading": {
+        "count": 5,
+        "total_time_ms": 14254.9396045506,
+        "avg_time_ms": 2850.98792091012,
+        "min_time_ms": 779.775507748127,
+        "max_time_ms": 5709.873978048563,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 5,
+        "total_time_ms": 62895.45261487365,
+        "avg_time_ms": 12579.09052297473,
+        "min_time_ms": 35.80811992287636,
+        "max_time_ms": 32394.716013222933,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 5,
+        "total_time_ms": 139514.3958926201,
+        "avg_time_ms": 27902.879178524017,
+        "min_time_ms": 21600.959662348032,
+        "max_time_ms": 31683.187916874886,
+        "avg_memory_delta_mb": 13812.60595703125
+      },
+      "inference_calibration": {
+        "count": 5,
+        "total_time_ms": 2927027.9579162598,
+        "avg_time_ms": 585405.591583252,
+        "min_time_ms": 330762.6123279333,
+        "max_time_ms": 1031146.4412659407,
+        "avg_memory_delta_mb": 1.625
+      },
+      "inference_test": {
+        "count": 5,
+        "total_time_ms": 2930464.5428471267,
+        "avg_time_ms": 586092.9085694253,
+        "min_time_ms": 331817.05364212394,
+        "max_time_ms": 1032001.8365867436,
+        "avg_memory_delta_mb": 0.0
+      },
+      "probability_extraction": {
+        "count": 5,
+        "total_time_ms": 1314.3372163176537,
+        "avg_time_ms": 262.86744326353073,
+        "min_time_ms": 251.00785121321678,
+        "max_time_ms": 269.96440067887306,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 14743.25830078125,
+      "avg_allocated_mb": 13782.186768596535,
+      "avg_utilization_percent": 94.35987864998104,
+      "snapshots_count": 2637
+    },
+    "bottlenecks": [
+      {
+        "operation": "inference_calibration",
+        "time_percent": 48.17778994055099,
+        "recommendation": "Inference is slow. Consider: larger batch size, Flash Attention, or quantization."
+      },
+      {
+        "operation": "inference_test",
+        "time_percent": 48.23435484846872,
+        "recommendation": "Inference is slow. Consider: larger batch size, Flash Attention, or quantization."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 5709.873978048563,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 297.48135805130005,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 28042.030684649944,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 13812.50830078125,
+      "gpu_memory_delta_mb": 13812.50830078125,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 565264.3397413194,
+      "gpu_memory_before_mb": 13812.50830078125,
+      "gpu_memory_after_mb": 13820.63330078125,
+      "gpu_memory_delta_mb": 8.125,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 4998,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 565840.142313391,
+      "gpu_memory_before_mb": 13820.63330078125,
+      "gpu_memory_after_mb": 13820.63330078125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 5002,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 262.71267235279083,
+      "gpu_memory_before_mb": 13820.63330078125,
+      "gpu_memory_after_mb": 13820.63330078125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 2754.033222794533,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 35.80811992287636,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 30494.49359625578,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 13812.63037109375,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 496356.77701607347,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 497271.0323035717,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 266.1179415881634,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 3736.4570014178753,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 40.826667100191116,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 31683.187916874886,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 13812.63037109375,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 503497.7875649929,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 503534.4780012965,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 251.00785121321678,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 1274.799894541502,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 30126.620456576347,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 27693.724032491446,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 13812.63037109375,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 330762.6123279333,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 331817.05364212394,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 264.5343504846096,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 779.775507748127,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 32394.716013222933,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 8.125,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 21600.959662348032,
+      "gpu_memory_before_mb": 8.125,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 13812.63037109375,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "dtype": "float16"
+      }
+    },
+    {
+      "name": "inference_calibration",
+      "duration_ms": 1031146.4412659407,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 4999,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "inference_test",
+      "duration_ms": 1032001.8365867436,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct",
+        "strategy": "base",
+        "num_samples": 5001,
+        "batch_size": 7
+      }
+    },
+    {
+      "name": "probability_extraction",
+      "duration_ms": 269.96440067887306,
+      "gpu_memory_before_mb": 13820.75537109375,
+      "gpu_memory_after_mb": 13820.75537109375,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "mistral-7b-instruct"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 2637,
+    "memory_allocated_mb": [
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14549.98974609375,
+      14696.974609375,
+      14696.974609375,
+      14674.607421875,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14696.974609375,
+      14195.849609375,
+      12658.72412109375,
+      10770.66162109375,
+      8530.56787109375,
+      6450.48974609375,
+      4226.41162109375,
+      1730.31787109375,
+      8.125,
+      8.125,
+      8.125,
+      8.125
+    ],
+    "utilization_percent": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      32,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      100,
+      14,
+      46,
+      14,
+      14,
+      37,
+      34,
+      46,
+      0,
+      0,
+      0
+    ]
+  }
+}
