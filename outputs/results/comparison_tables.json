@@ -1,0 +1,78 @@
+{
+  "models": [
+    "gemma-2-2b-it",
+    "gemma-2-9b-it",
+    "gemma-2b-it",
+    "mistral-7b",
+    "mistral-7b-instruct",
+    "phi-2",
+    "stablelm-2-1.6b",
+    "tinyllama-1.1b"
+  ],
+  "tasks": [
+    "ci",
+    "drs",
+    "ds",
+    "qa",
+    "rc"
+  ],
+  "dtypes": [
+    "float16",
+    "float32"
+  ],
+  "methods": [
+    "aps",
+    "lac"
+  ],
+  "total_experiments": 140,
+  "per_model": {
+    "gemma-2-2b-it": {
+      "mean_accuracy": 0.24718163124672143,
+      "mean_coverage": 0.9411742761403736,
+      "mean_set_size": 5.570182117115161,
+      "experiments": 10
+    },
+    "gemma-2-9b-it": {
+      "mean_accuracy": 0.5583400393092112,
+      "mean_coverage": 0.9139503506735679,
+      "mean_set_size": 3.701135776443272,
+      "experiments": 20
+    },
+    "gemma-2b-it": {
+      "mean_accuracy": 0.23330360717140858,
+      "mean_coverage": 0.9103220499442694,
+      "mean_set_size": 5.067857392136127,
+      "experiments": 10
+    },
+    "mistral-7b": {
+      "mean_accuracy": 0.40342604809705795,
+      "mean_coverage": 0.9026634737027004,
+      "mean_set_size": 4.365283080928797,
+      "experiments": 20
+    },
+    "mistral-7b-instruct": {
+      "mean_accuracy": 0.4018067318163716,
+      "mean_coverage": 0.9034433497147033,
+      "mean_set_size": 4.287674266426203,
+      "experiments": 20
+    },
+    "phi-2": {
+      "mean_accuracy": 0.2591985161544261,
+      "mean_coverage": 0.9232677974601001,
+      "mean_set_size": 5.357335686001544,
+      "experiments": 20
+    },
+    "stablelm-2-1.6b": {
+      "mean_accuracy": 0.23670411059731275,
+      "mean_coverage": 0.9057418624231971,
+      "mean_set_size": 5.112022823344168,
+      "experiments": 20
+    },
+    "tinyllama-1.1b": {
+      "mean_accuracy": 0.2145482938598206,
+      "mean_coverage": 0.9188293748687288,
+      "mean_set_size": 5.145438629187397,
+      "experiments": 20
+    }
+  }
+}

@@ -608,6 +608,29 @@ Key insight: Most models show minimal difference between FP16 and FP32. However,
 
 4. **Conformal prediction works across scales**: Both LAC and APS methods achieve the 90% coverage target, validating the framework for SLMs.
 
+### Claims Verification Results
+
+The original paper makes three key claims about LLM behavior. We tested these claims on SLMs (1.1B-9B parameters):
+
+**Claim 1: Higher accuracy correlates with lower uncertainty**
+- Result: SUPPORTED
+- Pearson correlation r=-0.926, p<0.0001
+- Models with higher accuracy produce smaller prediction sets (higher certainty)
+
+**Claim 2: Larger models display greater uncertainty**
+- Result: NOT SUPPORTED on SLMs
+- Correlation r=-0.928, p=0.0009 (opposite direction)
+- On SLMs, larger models show LOWER uncertainty because they have higher accuracy
+- This differs from the paper's findings on large models (7B-70B)
+
+**Claim 3: Instruction-tuning increases uncertainty**
+- Result: PARTIALLY SUPPORTED
+- APS method float32: Supported (p=0.0022)
+- LAC method: Not significant
+- Mistral-7B-Instruct shows larger prediction sets than Mistral-7B base in most tasks
+
+**Interpretation**: The key finding is that Claim 2 behaves differently for SLMs versus large LLMs. For SLMs in the 1-9B range, model size primarily affects accuracy, which in turn affects uncertainty through Claim 1. The paper's finding that larger models show greater uncertainty appears to be a phenomenon specific to larger LLMs (7B-70B range), where models may be overconfident despite having the knowledge, while SLMs lack the knowledge itself and are appropriately uncertain.
+
 ---
 
 ## Project Structure

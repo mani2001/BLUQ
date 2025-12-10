@@ -25,6 +25,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.pptx
 
 # IDE
 .vscode/
@@ -56,7 +57,7 @@ nul
 Thumbs.db
 
 .claude/
-# NOTE: CLAUDE.md is tracked (contains important project documentation)
+CLAUDE.md
 
 # Local setup scripts (contain user-specific config)
 startup.sh

@@ -1,0 +1,269 @@
+{
+  "claim1": {
+    "claim_id": 1,
+    "claim_description": "Higher accuracy may exhibit lower certainty (smaller prediction sets)",
+    "supported": true,
+    "evidence": {
+      "pearson_correlation": -0.9264065443382626,
+      "pearson_p_value": 1.048984516531583e-17,
+      "spearman_correlation": -0.6863039399624766,
+      "spearman_p_value": 1.0154428337026444e-06,
+      "n_data_points": 40,
+      "accuracy_range": [
+        0.2001599680063987,
+        0.7075169932027189
+      ],
+      "set_size_range": [
+        2.6027588964414234,
+        5.385245901639344
+      ],
+      "per_task_correlations": {
+        "ds": {
+          "correlation": -0.8261914745183591,
+          "p_value": 0.011474971740610266,
+          "n": 8
+        },
+        "rc": {
+          "correlation": -0.8874585763605347,
+          "p_value": 0.00326949250149889,
+          "n": 8
+        },
+        "ci": {
+          "correlation": -0.8236240428238192,
+          "p_value": 0.011966468520010909,
+          "n": 8
+        },
+        "drs": {
+          "correlation": -0.6538887600552036,
+          "p_value": 0.07860988299420334,
+          "n": 8
+        },
+        "qa": {
+          "correlation": -0.9836503375939325,
+          "p_value": 1.0792589548042062e-05,
+          "n": 8
+        }
+      },
+      "per_model_stats": {
+        "gemma-2-9b-it": {
+          "mean_accuracy": 0.3980520889024914,
+          "mean_set_size": 4.277880313581425,
+          "n_tasks": 5
+        },
+        "gemma-2-2b-it": {
+          "mean_accuracy": 0.2471816312467215,
+          "mean_set_size": 5.2822095396994175,
+          "n_tasks": 5
+        },
+        "mistral-7b": {
+          "mean_accuracy": 0.3332424918454933,
+          "mean_set_size": 4.759250309074531,
+          "n_tasks": 5
+        },
+        "stablelm-2-1.6b": {
+          "mean_accuracy": 0.21870807765675973,
+          "mean_set_size": 5.210307726539458,
+          "n_tasks": 5
+        },
+        "mistral-7b-instruct": {
+          "mean_accuracy": 0.3294035075431935,
+          "mean_set_size": 4.486382259733579,
+          "n_tasks": 5
+        },
+        "phi-2": {
+          "mean_accuracy": 0.24442245497321968,
+          "mean_set_size": 5.258052979568021,
+          "n_tasks": 5
+        },
+        "gemma-2b-it": {
+          "mean_accuracy": 0.23330360717140858,
+          "mean_set_size": 5.0410831548204555,
+          "n_tasks": 5
+        },
+        "tinyllama-1.1b": {
+          "mean_accuracy": 0.2115489497062603,
+          "mean_set_size": 5.084136375443824,
+          "n_tasks": 5
+        }
+      },
+      "conformal_method": "lac",
+      "dtype": "float16"
+    },
+    "interpretation": "Claim SUPPORTED: Significant negative correlation (r=-0.926, p=0.0000). Higher accuracy is associated with smaller prediction sets (higher certainty).",
+    "statistical_significance": 1.048984516531583e-17
+  },
+  "claim2": {
+    "claim_id": 2,
+    "claim_description": "Larger models may display greater uncertainty (larger prediction sets)",
+    "supported": false,
+    "evidence": {
+      "size_setsize_pearson_correlation": -0.9277058993861063,
+      "size_setsize_pearson_p_value": 0.0008941251061686911,
+      "size_setsize_spearman_correlation": -0.6626987024788349,
+      "size_setsize_spearman_p_value": 0.07330582330837652,
+      "size_accuracy_correlation": 0.9900443553633618,
+      "size_accuracy_p_value": 2.448497948308224e-06,
+      "n_models": 8,
+      "model_breakdown": {
+        "gemma-2-2b-it": {
+          "size_billions": 2.0,
+          "mean_set_size": 5.2822095396994175,
+          "std_set_size": 0.08765412316279136,
+          "mean_accuracy": 0.2471816312467215,
+          "n_tasks": 5
+        },
+        "gemma-2-9b-it": {
+          "size_billions": 9.0,
+          "mean_set_size": 4.277880313581425,
+          "std_set_size": 0.8863868927618929,
+          "mean_accuracy": 0.3980520889024914,
+          "n_tasks": 5
+        },
+        "gemma-2b-it": {
+          "size_billions": 2.0,
+          "mean_set_size": 5.0410831548204555,
+          "std_set_size": 0.2957381879778958,
+          "mean_accuracy": 0.23330360717140858,
+          "n_tasks": 5
+        },
+        "mistral-7b": {
+          "size_billions": 7.0,
+          "mean_set_size": 4.759250309074531,
+          "std_set_size": 0.36229525291060555,
+          "mean_accuracy": 0.3332424918454933,
+          "n_tasks": 5
+        },
+        "mistral-7b-instruct": {
+          "size_billions": 7.0,
+          "mean_set_size": 4.486382259733579,
+          "std_set_size": 0.7558886534282429,
+          "mean_accuracy": 0.3294035075431935,
+          "n_tasks": 5
+        },
+        "phi-2": {
+          "size_billions": 2.7,
+          "mean_set_size": 5.258052979568021,
+          "std_set_size": 0.07043822120354179,
+          "mean_accuracy": 0.24442245497321968,
+          "n_tasks": 5
+        },
+        "stablelm-2-1.6b": {
+          "size_billions": 1.6,
+          "mean_set_size": 5.210307726539458,
+          "std_set_size": 0.09147499944188264,
+          "mean_accuracy": 0.21870807765675973,
+          "n_tasks": 5
+        },
+        "tinyllama-1.1b": {
+          "size_billions": 1.1,
+          "mean_set_size": 5.084136375443824,
+          "std_set_size": 0.21599637031353633,
+          "mean_accuracy": 0.2115489497062603,
+          "n_tasks": 5
+        }
+      },
+      "models_sorted_by_size": [
+        "tinyllama-1.1b",
+        "stablelm-2-1.6b",
+        "gemma-2-2b-it",
+        "gemma-2b-it",
+        "phi-2",
+        "mistral-7b",
+        "mistral-7b-instruct",
+        "gemma-2-9b-it"
+      ],
+      "conformal_method": "lac",
+      "dtype": "float16"
+    },
+    "interpretation": "Claim NOT SUPPORTED: Correlation is negative or zero (r=-0.928, p=0.0009). Larger models do not show greater uncertainty in this data.",
+    "statistical_significance": 0.0008941251061686911
+  },
+  "claim3": {
+    "claim_id": 3,
+    "claim_description": "Instruction-tuning increases uncertainty (larger prediction sets)",
+    "supported": false,
+    "evidence": {
+      "paired_ttest_t_stat": -1.3734571506362405,
+      "paired_ttest_p_value": 0.24156193913525242,
+      "wilcoxon_stat": 2.0,
+      "wilcoxon_p_value": 0.9375,
+      "mean_difference_instruct_minus_base": -0.27286804934095166,
+      "n_comparisons": 5,
+      "instruct_larger_count": 1,
+      "pair_comparisons": {
+        "mistral-7b_vs_mistral-7b-instruct": {
+          "base_model": "mistral-7b",
+          "instruct_model": "mistral-7b-instruct",
+          "n_tasks_compared": 5,
+          "tasks": {
+            "ds": {
+              "base_set_size": 4.037992401519696,
+              "instruct_set_size": 2.9932013597280545,
+              "difference": -1.0447910417916413,
+              "instruct_larger": false,
+              "base_accuracy": 0.5538892221555689,
+              "instruct_accuracy": 0.5574885022995401
+            },
+            "rc": {
+              "base_set_size": 4.874625074985003,
+              "instruct_set_size": 4.663467306538692,
+              "difference": -0.21115776844631107,
+              "instruct_larger": false,
+              "base_accuracy": 0.30553889222155567,
+              "instruct_accuracy": 0.3027394521095781
+            },
+            "ci": {
+              "base_set_size": 4.963607278544291,
+              "instruct_set_size": 4.821435712857428,
+              "difference": -0.14217156568686296,
+              "instruct_larger": false,
+              "base_accuracy": 0.28334333133373324,
+              "instruct_accuracy": 0.27074585082983404
+            },
+            "drs": {
+              "base_set_size": 4.974005198960208,
+              "instruct_set_size": 4.942211557688462,
+              "difference": -0.03179364127174633,
+              "instruct_larger": false,
+              "base_accuracy": 0.2519496100779844,
+              "instruct_accuracy": 0.250749850029994
+            },
+            "qa": {
+              "base_set_size": 4.946021591363454,
+              "instruct_set_size": 5.011595361855258,
+              "difference": 0.06557377049180335,
+              "instruct_larger": true,
+              "base_accuracy": 0.27149140343862455,
+              "instruct_accuracy": 0.2652938824470212
+            }
+          },
+          "mean_base_set_size": 4.759250309074531,
+          "mean_instruct_set_size": 4.486382259733579,
+          "tasks_where_instruct_larger": 1
+        }
+      },
+      "conformal_method": "lac",
+      "dtype": "float16"
+    },
+    "interpretation": "Claim NOT SUPPORTED: Instruction-tuned models do NOT have larger prediction sets (mean diff=-0.273, p=0.2416). Base models may actually show more uncertainty.",
+    "statistical_significance": 0.24156193913525242
+  },
+  "summary": {
+    "conformal_method": "lac",
+    "dtype": "float16",
+    "claims_supported": 1,
+    "claims_total": 3,
+    "claim1_supported": true,
+    "claim2_supported": false,
+    "claim3_supported": false,
+    "overall_assessment": "PARTIALLY CONSISTENT: 1/3 claims verified on SLMs"
+  },
+  "methodology_notes": [
+    "Analysis performed using LAC conformal method",
+    "Data type: float16",
+    "Statistical significance threshold: p < 0.05",
+    "Claim 1 uses Pearson/Spearman correlation between accuracy and set size",
+    "Claim 2 uses correlation between model size (billions params) and mean set size",
+    "Claim 3 uses paired t-test comparing base vs instruction-tuned models"
+  ]
+}

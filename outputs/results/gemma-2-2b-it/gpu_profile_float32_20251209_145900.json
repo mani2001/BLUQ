@@ -1,0 +1,309 @@
+{
+  "timestamp": "2025-12-09T15:00:37.125900",
+  "summary": {
+    "total_operations": 15,
+    "total_time_ms": 88361.33548617363,
+    "operations": {
+      "dataset_loading": {
+        "count": 5,
+        "total_time_ms": 17388.88167962432,
+        "avg_time_ms": 3477.776335924864,
+        "min_time_ms": 908.3760268986225,
+        "max_time_ms": 5507.498648017645,
+        "avg_memory_delta_mb": 0.0
+      },
+      "dataset_processing": {
+        "count": 5,
+        "total_time_ms": 70971.46228700876,
+        "avg_time_ms": 14194.292457401752,
+        "min_time_ms": 34.19080004096031,
+        "max_time_ms": 37242.03812330961,
+        "avg_memory_delta_mb": 0.0
+      },
+      "model_loading": {
+        "count": 5,
+        "total_time_ms": 0.9915195405483246,
+        "avg_time_ms": 0.19830390810966492,
+        "min_time_ms": 0.16440078616142273,
+        "max_time_ms": 0.228244811296463,
+        "avg_memory_delta_mb": 0.0
+      }
+    },
+    "memory": {
+      "peak_allocated_mb": 0.0,
+      "avg_allocated_mb": 0.0,
+      "avg_utilization_percent": 0.0425531914893617,
+      "snapshots_count": 47
+    },
+    "bottlenecks": [
+      {
+        "operation": "dataset_processing",
+        "time_percent": 80.31958989360686,
+        "recommendation": "Data transfer overhead detected. Consider pinned memory or larger batch sizes."
+      }
+    ]
+  },
+  "timing_records": [
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4750.0354535877705,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 213.3282832801342,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "qa"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 0.21757185459136963,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "gemma-2-2b-it",
+        "dtype": "float32"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 2145.172644406557,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 34.19080004096031,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "rc"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 0.1897178590297699,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "gemma-2-2b-it",
+        "dtype": "float32"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 4077.798906713724,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 42.16161370277405,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ci"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 0.16440078616142273,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "gemma-2-2b-it",
+        "dtype": "float32"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 5507.498648017645,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 33439.74346667528,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "drs"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 0.228244811296463,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "gemma-2-2b-it",
+        "dtype": "float32"
+      }
+    },
+    {
+      "name": "dataset_loading",
+      "duration_ms": 908.3760268986225,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds",
+        "num_samples": 10000
+      }
+    },
+    {
+      "name": "dataset_processing",
+      "duration_ms": 37242.03812330961,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "task": "ds"
+      }
+    },
+    {
+      "name": "model_loading",
+      "duration_ms": 0.19158422946929932,
+      "gpu_memory_before_mb": 0.0,
+      "gpu_memory_after_mb": 0.0,
+      "gpu_memory_delta_mb": 0.0,
+      "metadata": {
+        "model": "gemma-2-2b-it",
+        "dtype": "float32"
+      }
+    }
+  ],
+  "snapshots_summary": {
+    "count": 47,
+    "memory_allocated_mb": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "utilization_percent": [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

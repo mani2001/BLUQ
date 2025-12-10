@@ -1,0 +1,193 @@
+{
+  "timestamp": "20251209_150038",
+  "completed_combinations": [
+    [
+      "stablelm-2-1.6b",
+      "ds",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "drs",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "ci",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "rc",
+      "float32"
+    ],
+    [
+      "stablelm-2-1.6b",
+      "qa",
+      "float32"
+    ]
+  ],
+  "results": [
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "qa",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.22291083566573372,
+      "coverage_rate": 0.90343862455018,
+      "avg_set_size": 5.179728108756497,
+      "meets_guarantee": true,
+      "inference_time": 275.068984746933,
+      "num_samples": 5002
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "qa",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.22291083566573372,
+      "coverage_rate": 0.9174330267892843,
+      "avg_set_size": 5.1925229908036785,
+      "meets_guarantee": true,
+      "inference_time": 275.068984746933,
+      "num_samples": 5002
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "rc",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.28214357128574286,
+      "coverage_rate": 0.9006198760247951,
+      "avg_set_size": 5.166366726654669,
+      "meets_guarantee": true,
+      "inference_time": 252.92436861991882,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "rc",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.28214357128574286,
+      "coverage_rate": 0.8990201959608078,
+      "avg_set_size": 4.968606278744251,
+      "meets_guarantee": false,
+      "inference_time": 252.92436861991882,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ci",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.30353929214157166,
+      "coverage_rate": 0.885622875424915,
+      "avg_set_size": 4.917216556688662,
+      "meets_guarantee": false,
+      "inference_time": 256.2214503288269,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ci",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.30353929214157166,
+      "coverage_rate": 0.9028194361127775,
+      "avg_set_size": 4.905218956208758,
+      "meets_guarantee": true,
+      "inference_time": 256.2214503288269,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "drs",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.22615476904619075,
+      "coverage_rate": 0.8952209558088382,
+      "avg_set_size": 5.319936012797441,
+      "meets_guarantee": false,
+      "inference_time": 163.49783086776733,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "drs",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.22615476904619075,
+      "coverage_rate": 0.8948210357928414,
+      "avg_set_size": 4.891021795640872,
+      "meets_guarantee": false,
+      "inference_time": 163.49783086776733,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ds",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "lac",
+      "accuracy": 0.23875224955008997,
+      "coverage_rate": 0.9000199960007998,
+      "avg_set_size": 4.992001599680064,
+      "meets_guarantee": true,
+      "inference_time": 608.9293446540833,
+      "num_samples": 5001
+    },
+    {
+      "model": "stablelm-2-1.6b",
+      "task": "ds",
+      "dtype": "float32",
+      "strategy": "base",
+      "conformal_method": "aps",
+      "accuracy": 0.23875224955008997,
+      "coverage_rate": 0.9060187962407519,
+      "avg_set_size": 4.83883223355329,
+      "meets_guarantee": true,
+      "inference_time": 608.9293446540833,
+      "num_samples": 5001
+    }
+  ],
+  "config": {
+    "models": [
+      "stablelm-2-1.6b"
+    ],
+    "tasks": [
+      "qa",
+      "rc",
+      "ci",
+      "drs",
+      "ds"
+    ],
+    "dtypes": [
+      "float32"
+    ],
+    "num_samples": 10000,
+    "alpha": 0.1,
+    "calibration_ratio": 0.5,
+    "output_dir": "./outputs/results",
+    "strategies": [
+      "base"
+    ],
+    "conformal_methods": [
+      "lac",
+      "aps"
+    ],
+    "seed": 42,
+    "use_dynamic_batch_size": true,
+    "max_batch_size": 24,
+    "resume": false,
+    "enable_profiling": true
+  }
+}
