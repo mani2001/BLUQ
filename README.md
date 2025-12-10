@@ -303,10 +303,10 @@ Answer:
 
 | Metric | Description | Good Value |
 |--------|-------------|------------|
-| **Accuracy** | % of correct predictions | Higher is better |
-| **Coverage** | % of true answers in prediction sets | Should be >= 90% |
-| **Set Size** | Average number of options in prediction set | Smaller is better |
-| **ECE** | Expected Calibration Error | Lower is better |
+| **Accuracy** | % of correct predictions (top-1) | Higher is better |
+| **Coverage Rate** | % of prediction sets containing the true answer | Should be >= 90% (1-alpha) |
+| **Avg Set Size** | Mean number of options in prediction sets | Smaller is better (indicates higher certainty) |
+| **Meets Guarantee** | Whether coverage >= 90% target is achieved | Yes |
 
 ---
 
